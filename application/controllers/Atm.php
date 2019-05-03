@@ -22,4 +22,14 @@ class Atm extends CI_Controller {
 	{
 		$this->load->view('templates/lte/atm');
 	}
+        
+        public function in()
+	{
+		$this->load->view('templates/lte/in');
+	}
+        
+        public function out()
+	{
+		$this->load->view('templates/lte/out');
+	}
 }
