@@ -560,8 +560,7 @@
 
                                     <!-- Adicional -->
                                     <div class="form-group" id="adicional">
-                                        <label>Adicional Ciclomotor:</label>
-
+                                        <label>Opcional:</label>
                                         <div class="input-group">
                                             <input type="text" class="form-control input-lg">
                                         </div>
@@ -575,7 +574,7 @@
                                             <label>Hora Entrada:</label>
 
                                             <div class="input-group">
-                                                <input type="text" class="form-control input-lg timepicker" required="">
+                                                <input type="text" value="<?= date("H:i:s")?>" class="form-control input-lg timepicker" required="">
 
                                                 <div class="input-group-addon">
                                                     <i class="fa fa-clock-o"></i>
@@ -913,9 +912,9 @@
                         $('#adicional').hide();
                     }
                     if($('#tipo').val() == 2){
-                        $('#placa').attr('placeholder','3 Letras + 2 Números + Opcional');
+                        $('#placa').attr('placeholder','3 Letras + 2 Números');
                         $('#placa').attr('pattern','[A-Za-z]{3}[0-9]{2}');
-                        $('#adicional').hide();
+                        $('#adicional').show();
                     }
                     if($('#tipo').val() == 3){
                         $('#placa').attr('placeholder','MC');
