@@ -11,7 +11,7 @@ class Login_model extends CI_Model {
     public function very_sesion($user,$passw) {
 
         $sql = $this->db->get_where('Users', array('user' => $user,
-            'pass' => sha1($passw)));
+            'passw' => sha1($passw)));
 
         if ($sql->num_rows() > 0) {
             return $sql->row();

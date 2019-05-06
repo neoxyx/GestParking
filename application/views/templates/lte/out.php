@@ -295,7 +295,7 @@
                                             <a href="#" class="btn btn-default btn-flat">Profile</a>
                                         </div>
                                         <div class="pull-right">
-                                            <a href="<?= base_url('index.php/Login/logout')?>" class="btn btn-default btn-flat">Salir</a>
+                                            <a href="<?= base_url('index.php/Login/logout') ?>" class="btn btn-default btn-flat">Salir</a>
                                         </div>
                                     </li>
                                 </ul>
@@ -525,16 +525,16 @@
                 <!-- Main content -->
                 <section class="content">
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <div class="box box-info">
                                 <div class="box-body">
-                                    <form action="#">
+                                    <form id="frmOut">
 
                                         <!-- Placa -->
                                         <div class="form-group">
                                             <label>Placa Vehiculo:</label>
                                             <div class="input-group">
-                                                <input type="text" id="placa" class="form-control input-lg" required="">
+                                                <input type="text" id="placa" name="placa" class="form-control input-lg" required="">
                                             </div>
                                             <!-- /.input group -->
                                         </div>
@@ -546,7 +546,7 @@
                                                 <label>Hora Salida:</label>
 
                                                 <div class="input-group">
-                                                    <input type="text" value="<?= date("H:i:s") ?>" class="form-control input-lg timepicker" required="">
+                                                    <input type="datetime-local" name="date_out" value="<?= date("Y-m-d H:i:s") ?>" class="form-control input-lg" required="">
 
                                                     <div class="input-group-addon">
                                                         <i class="fa fa-clock-o"></i>
@@ -568,31 +568,25 @@
                             <!-- /.box -->
 
                         </div>
-                    </div>
-                    <!-- /.row -->
-                    <div class="row" id="salida">
-                        <div class="col-md-12">
-                            <div class="box box-warning">
-                                <div class="box-body">
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th>PLACA</th>
-                                                <th>HORA INGRESO</th>
-                                                <th>HORA SALIDA</th>
-                                                <th>TIEMPO</th>
-                                                <th>VALOR HORA/FRACCIÓN</th>                                    
-                                                <th>VALOR A PAGAR</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
 
-                                        </tbody>
-                                    </table>
+                        <div class="col-md-6">
+                            <div class="box box-success">
+                                <div class="box-body">
+                                    <div id="typeout"></div>
+                                    <div id="placaout"></div>
+                                    <div id="colorout"></div>
+                                    <div id="timein"></div>
+                                    <div id="timeout"></div>
+                                    <div id="vrfracc"></div>
+                                    <div id="vrtotal"></div>
                                 </div>
+                                <!-- /.box-body -->
                             </div>
+                            <!-- /.box -->
+
                         </div>
                     </div>
+                    <!-- /.row -->                    
                 </section>
                 <!-- /.content -->
             </div>
@@ -861,9 +855,9 @@
                             startDate: moment().subtract(29, 'days'),
                             endDate: moment()
                         },
-                        function (start, end) {
-                            $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
-                        }
+                function (start, end) {
+                    $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
+                }
                 )
 
                 //Date picker
@@ -897,13 +891,27 @@
                     showInputs: false
                 })
 
-                //Tabla Salida
-                $('#salida').hide();
-
-                //Registrar Salida
-                $('#registrar').click(function () {
-                    $('#salida').show();
+                $("#placa").blur(function () {
+                    var url = "<?= base_url() ?>index.php/Atm/get_registry?jsoncallback=?";
+                    $.getJSON(url, {placa: $("#placa").val()}).done(function (res) {                        
+                        $("#typeout").html("Tipo: " + res.vehicle.type);
+                        $("#placaout").html("Placa: " + res.vehicle.placa);
+                        $("#colorout").html("Color: " + res.vehicle.color);
+                    })
                 })
+                $("#frmOut").submit(function (event) {
+                    event.preventDefault();
+                    var url = "<?= base_url() ?>index.php/Atm/set_registry_out";
+                    $.ajax({
+                        type: "POST",
+                        url: url,
+                        data: $("#frmOut").serialize(),
+                        success: function (response) {
+                            alert(response);
+                        }
+                    });
+                });
+
             })
         </script>
     </body>

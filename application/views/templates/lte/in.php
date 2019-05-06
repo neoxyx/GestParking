@@ -295,7 +295,7 @@
                                             <a href="#" class="btn btn-default btn-flat">Profile</a>
                                         </div>
                                         <div class="pull-right">
-                                            <a href="<?= base_url('index.php/Login/logout')?>" class="btn btn-default btn-flat">Salir</a>
+                                            <a href="<?= base_url('index.php/Login/logout') ?>" class="btn btn-default btn-flat">Salir</a>
                                         </div>
                                     </li>
                                 </ul>
@@ -525,70 +525,86 @@
                 <!-- Main content -->
                 <section class="content">
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <div class="box box-info">
                                 <div class="box-body">
-                                    <form action="#">
-                                    <!-- Tipo Vehiculo -->
-                                    <div class="form-group">
-                                        <label>Tipo Vehiculo:</label>
-                                        <div class="input-group">
-                                            <select class="form-control input-lg" id="tipo" required="">
-                                                <option value="">Seleccione Tipo(*)</option>
-                                                <option value="1">Cicla</option>
-                                                <option value="2">Moto</option>
-                                                <option value="3">Moto Cicla</option>
-                                                <option value="4">Moto Electrica</option>
-                                                <option value="5">Moto Carro</option>
-                                                <option value="6">Carro</option>
-                                                <option value="7">Otros</option>
-                                            </select>
-                                        </div>
-                                        <!-- /.input group -->
-                                    </div>
-                                    <!-- /.form group -->
-                                    
-                                    <!-- Placa -->
-                                    <div class="form-group">
-                                        <label>Placa Vehiculo:</label>
-                                        <div class="input-group">
-                                            <input type="text" id="placa" class="form-control input-lg" required="">
-                                        </div>
-                                        <!-- /.input group -->
-                                    </div>
-                                    <!-- /.form group -->
-
-                                    <!-- Adicional -->
-                                    <div class="form-group" id="adicional">
-                                        <label>Opcional:</label>
-                                        <div class="input-group">
-                                            <input type="text" class="form-control input-lg">
-                                        </div>
-                                        <!-- /.input group -->
-                                    </div>
-                                    <!-- /.form group -->
-
-                                    <!-- Hora -->
-                                    <div class="input-group">
+                                    <form id="frmIn">
+                                        <!-- Tipo Vehiculo -->
                                         <div class="form-group">
-                                            <label>Hora Entrada:</label>
-
+                                            <label>Tipo Vehiculo(*):</label>
                                             <div class="input-group">
-                                                <input type="text" value="<?= date("H:i:s")?>" class="form-control input-lg timepicker" required="">
-
-                                                <div class="input-group-addon">
-                                                    <i class="fa fa-clock-o"></i>
-                                                </div>
+                                                <select class="form-control input-lg" name="type" id="type" required="">
+                                                    <option value="">Seleccionar</option>
+                                                    <option value="1">Cicla</option>
+                                                    <option value="2">Moto</option>
+                                                    <option value="3">Moto Cicla</option>
+                                                    <option value="4">Moto Electrica</option>
+                                                    <option value="5">Moto Carro</option>
+                                                    <option value="6">Carro</option>
+                                                    <option value="7">Otros</option>
+                                                </select>
                                             </div>
                                             <!-- /.input group -->
                                         </div>
                                         <!-- /.form group -->
-                                    </div>
+                                        <!-- Color Vehiculo -->
+                                        <div class="form-group">
+                                            <label>Color Vehiculo:</label>
+                                            <div class="input-group">
+                                                <input type="text" name="color" id="color" class="form-control input-lg" placeholder="Opcional">
+                                            </div>
+                                            <!-- /.input group -->
+                                        </div>
+                                        <!-- /.form group -->
+                                        <!-- Observaciones Vehiculo -->
+                                        <div class="form-group">
+                                            <label>Observaciones:</label>
+                                            <div class="input-group">
+                                                <textarea name="obsv" id="obsv" class="form-control input-lg" placeholder="Opcional"></textarea>
+                                            </div>
+                                            <!-- /.input group -->
+                                        </div>
+                                        <!-- /.form group -->
+                                        <!-- Placa -->
+                                        <div class="form-group">
+                                            <label>Placa Vehiculo(*):</label>
+                                            <div class="input-group">
+                                                <input type="text" name="placa" id="placa" class="form-control input-lg" required="">
+                                            </div>
+                                            <!-- /.input group -->
+                                        </div>
+                                        <!-- /.form group -->
 
-                                    <div class="input-group">
+                                        <!-- Adicional -->
+                                        <div class="form-group" id="adicional">
+                                            <label>Opcional:</label>
+                                            <div class="input-group">
+                                                <input type="text" name="opc" id="opc" class="form-control input-lg">
+                                            </div>
+                                            <!-- /.input group -->
+                                        </div>
+                                        <!-- /.form group -->
+
+                                        <!-- Hora -->
+                                        <div class="input-group">
+                                            <div class="form-group">
+                                                <label>Hora Entrada(*):</label>
+
+                                                <div class="input-group">
+                                                    <input type="datetime-local" name="date_in" value="<?= date("Y-m-d H:i:s") ?>" class="form-control input-lg" required="">
+                                                    <div class="input-group-addon">
+                                                        <i class="fa fa-clock-o"></i>
+                                                    </div>
+                                                </div>
+                                                <!-- /.input group -->
+                                            </div>
+                                            <!-- /.form group -->
+                                        </div>
+
+                                        <div class="input-group">
                                             <button type="submit" name="Registrar" class="btn btn-success">Registrar
                                             </button>
-                                    </div>
+                                        </div>
                                     </form>
                                 </div>
                                 <!-- /.box-body -->
@@ -596,8 +612,22 @@
                             <!-- /.box -->
 
                         </div>
+
+                        <div class="col-md-6">
+                            <div class="box box-success">
+                                <div class="box-body" id="dataVehicle">
+
+                                </div>
+                                <!-- /.box-body -->
+                            </div>
+                            <!-- /.box -->
+
+                        </div>
+
                     </div>
                     <!-- /.row -->
+
+
 
                 </section>
                 <!-- /.content -->
@@ -902,43 +932,69 @@
                 $('.timepicker').timepicker({
                     showInputs: false
                 })
-                
+
                 $('#adicional').hide();
-                
-                $('#tipo').change(function(){
-                    if($('#tipo').val() == 1){
-                        $('#placa').attr('placeholder','Número de 3 digitos');
-                        $('#placa').attr('pattern','[0-9]{3}');
+
+                $('#tipo').change(function () {
+                    if ($('#tipo').val() == 1) {
+                        $('#placa').attr('placeholder', 'Número de 3 digitos');
+                        $('#placa').attr('pattern', '[0-9]{3}');
                         $('#adicional').hide();
                     }
-                    if($('#tipo').val() == 2){
-                        $('#placa').attr('placeholder','3 Letras + 2 Números');
-                        $('#placa').attr('pattern','[A-Za-z]{3}[0-9]{2}');
+                    if ($('#tipo').val() == 2) {
+                        $('#placa').attr('placeholder', '3 Letras + 2 Números');
+                        $('#placa').attr('pattern', '[A-Za-z]{3}[0-9]{2}');
                         $('#adicional').show();
                     }
-                    if($('#tipo').val() == 3){
-                        $('#placa').attr('placeholder','MC');
+                    if ($('#tipo').val() == 3) {
+                        $('#placa').attr('placeholder', 'MC');
                         $('#adicional').show();
                     }
-                    if($('#tipo').val() == 4){
-                        $('#placa').attr('placeholder','ME');
+                    if ($('#tipo').val() == 4) {
+                        $('#placa').attr('placeholder', 'ME');
                         $('#adicional').show();
                     }
-                    if($('#tipo').val() == 5){
-                        $('#placa').attr('placeholder','3 Números + 3 Letras');
-                        $('#placa').attr('pattern','[0-9]{3}[A-Za-z]{3}');
+                    if ($('#tipo').val() == 5) {
+                        $('#placa').attr('placeholder', '3 Números + 3 Letras');
+                        $('#placa').attr('pattern', '[0-9]{3}[A-Za-z]{3}');
                         $('#adicional').hide();
                     }
-                    if($('#tipo').val() == 6){  
-                        $('#placa').attr('placeholder','3 Números + 3 Letras');
-                        $('#placa').attr('pattern','[0-9]{3}[A-Za-z]{3}');
+                    if ($('#tipo').val() == 6) {
+                        $('#placa').attr('placeholder', '3 Números + 3 Letras');
+                        $('#placa').attr('pattern', '[0-9]{3}[A-Za-z]{3}');
                         $('#adicional').hide();
                     }
-                    if($('#tipo').val() == 7){
-                        $('#placa').attr('placeholder','Otros');
+                    if ($('#tipo').val() == 7) {
+                        $('#placa').attr('placeholder', 'Otros');
                         $('#adicional').hide();
                     }
                 })
+
+                $("#placa").blur(function () {
+                    $("#color").val('');
+                    $("#obsv").val('');
+                    $("#dataVehicle").html('');
+                    var url = "<?= base_url() ?>index.php/Atm/get_registry?jsoncallback=?";
+                    $.getJSON(url, {placa: $("#placa").val()}).done(function (res) {
+                        $("#type option[value=" + res.vehicle.idType + "]").attr('selected', 'selected');
+                        $("#color").val(res.vehicle.color);
+                        $("#obsv").val(res.vehicle.observations);
+                        $("#dataVehicle").html("<h1>" + res.vehicle.placa + "</h1>");
+                    })
+                })
+                $("#frmIn").submit(function (event) {
+                    event.preventDefault();
+                    var url = "<?= base_url() ?>index.php/Atm/set_registry";
+                    $.ajax({
+                        type: "POST",
+                        url: url,
+                        data: $("#frmIn").serialize(),
+                        success: function (response) {
+                            alert(response);
+                            location.reload();
+                        }
+                    });
+                });
             })
         </script>
     </body>
