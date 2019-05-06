@@ -126,7 +126,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 transform: scale(0.95);
             }
 
-            input[type=text] {
+            input[type=text],input[type=password] {
                 background-color: #f6f6f6;
                 border: none;
                 color: #0d0d0d;
@@ -147,15 +147,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 border-radius: 5px 5px 5px 5px;
             }
 
-            input[type=text]:focus {
+            input[type=text]:focus,input[type=password]:focus {
                 background-color: #fff;
                 border-bottom: 2px solid #5fbae9;
             }
 
-            input[type=text]:placeholder {
+            input[type=text]:placeholder,input[type=password]:placeholder {
                 color: #cccccc;
             }
-
 
 
             /* ANIMATIONS */
@@ -287,10 +286,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 </div>
 
                 <!-- Login Form -->
-                <form action="#">
-                    <input type="text" id="login" class="fadeIn second" name="login" placeholder="Usuario">
-                    <input type="text" id="password" class="fadeIn third" name="login" placeholder="Contraseña">
-                    <a href="<?= base_url() ?>index.php/atm"><input type="button" class="fadeIn fourth" value="INGRESAR"></a>
+                <form action="<?= base_url() ?>index.php/Login/very_sesion" method="post">
+                    <input type="text" class="fadeIn second" name="user" placeholder="Usuario" required="">
+                    <input type="password" class="fadeIn third" name="passw" placeholder="Contraseña" required="">
+                    <label><?= $msn?></label>
+                    <input type="submit" class="fadeIn fourth" value="INGRESAR">
                 </form>
 
             </div>

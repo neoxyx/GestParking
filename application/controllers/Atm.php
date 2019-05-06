@@ -22,7 +22,7 @@ class Atm extends CI_Controller {
     public function index() {
         $this->load->view('templates/lte/atm');
     }
-
+    
     public function in() {
         $this->load->helper('date');
         $this->load->view('templates/lte/in');
