@@ -935,51 +935,48 @@
 
                 $('#adicional').hide();
 
-                $('#tipo').change(function () {
-                    if ($('#tipo').val() == 1) {
+                $('#type').change(function () {
+                    if ($('#type').val() == 1) {
                         $('#placa').attr('placeholder', 'Número de 3 digitos');
                         $('#placa').attr('pattern', '[0-9]{3}');
                         $('#adicional').hide();
                     }
-                    if ($('#tipo').val() == 2) {
+                    if ($('#type').val() == 2) {
                         $('#placa').attr('placeholder', '3 Letras + 2 Números');
                         $('#placa').attr('pattern', '[A-Za-z]{3}[0-9]{2}');
                         $('#adicional').show();
                     }
-                    if ($('#tipo').val() == 3) {
+                    if ($('#type').val() == 3) {
                         $('#placa').attr('placeholder', 'MC');
                         $('#adicional').show();
                     }
-                    if ($('#tipo').val() == 4) {
+                    if ($('#type').val() == 4) {
                         $('#placa').attr('placeholder', 'ME');
                         $('#adicional').show();
                     }
-                    if ($('#tipo').val() == 5) {
+                    if ($('#type').val() == 5) {
                         $('#placa').attr('placeholder', '3 Números + 3 Letras');
                         $('#placa').attr('pattern', '[0-9]{3}[A-Za-z]{3}');
                         $('#adicional').hide();
                     }
-                    if ($('#tipo').val() == 6) {
+                    if ($('#type').val() == 6) {
                         $('#placa').attr('placeholder', '3 Números + 3 Letras');
                         $('#placa').attr('pattern', '[0-9]{3}[A-Za-z]{3}');
                         $('#adicional').hide();
                     }
-                    if ($('#tipo').val() == 7) {
+                    if ($('#type').val() == 7) {
                         $('#placa').attr('placeholder', 'Otros');
                         $('#adicional').hide();
                     }
                 })
 
                 $("#placa").blur(function () {
-                    $("#color").val('');
-                    $("#obsv").val('');
-                    $("#dataVehicle").html('');
                     var url = "<?= base_url() ?>index.php/Atm/get_registry?jsoncallback=?";
                     $.getJSON(url, {placa: $("#placa").val()}).done(function (res) {
                         $("#type option[value=" + res.vehicle.idType + "]").attr('selected', 'selected');
                         $("#color").val(res.vehicle.color);
                         $("#obsv").val(res.vehicle.observations);
-                        $("#dataVehicle").html("<h1>" + res.vehicle.placa + "</h1>");
+                        $("#dataVehicle").html("<h1>" + res.vehicle.type + "</h1>");
                     })
                 })
                 $("#frmIn").submit(function (event) {

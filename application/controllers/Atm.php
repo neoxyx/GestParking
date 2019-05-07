@@ -33,11 +33,12 @@ class Atm extends CI_Controller {
     }
 
     public function get_registry() {
-        $this->load->model('Vehicles_model');
+        $this->load->model(array('Vehicles_model','Records_model'));
         $placa = $this->input->get("placa");
         $vehicle = $this->Vehicles_model->get_vehicle($placa);
         if ($vehicle) {
             $data['vehicle'] = $this->Vehicles_model->get_vehicle($placa);
+            $data['record'] = $this->Records_model->get_last_record($vehicle->idVehicle);
             $resultadosJson = json_encode($data);
             echo $_GET["jsoncallback"] . '(' . $resultadosJson . ');';
         }
@@ -62,7 +63,7 @@ class Atm extends CI_Controller {
             $res = 'Ingreso realizado exitosamente';
         } else {
             $post_vehicle = array(
-                'placa' => $this->input->post('placa'),
+                'plate' => $this->input->post('placa'),
                 'opt' => $this->input->post('opc'),
                 'color' => $this->input->post('color'),
                 'observations' => $this->input->post('obsv'),

@@ -546,7 +546,7 @@
                                                 <label>Hora Salida:</label>
 
                                                 <div class="input-group">
-                                                    <input type="datetime-local" name="date_out" value="<?= date("Y-m-d H:i:s") ?>" class="form-control input-lg" required="">
+                                                    <input type="datetime-local" name="date_out" id="date_out" class="form-control input-lg" required="">
 
                                                     <div class="input-group-addon">
                                                         <i class="fa fa-clock-o"></i>
@@ -577,6 +577,7 @@
                                     <div id="colorout"></div>
                                     <div id="timein"></div>
                                     <div id="timeout"></div>
+                                    <div id="totaltime"></div>
                                     <div id="vrfracc"></div>
                                     <div id="vrtotal"></div>
                                 </div>
@@ -855,9 +856,9 @@
                             startDate: moment().subtract(29, 'days'),
                             endDate: moment()
                         },
-                function (start, end) {
-                    $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
-                }
+                        function (start, end) {
+                            $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
+                        }
                 )
 
                 //Date picker
@@ -893,10 +894,12 @@
 
                 $("#placa").blur(function () {
                     var url = "<?= base_url() ?>index.php/Atm/get_registry?jsoncallback=?";
-                    $.getJSON(url, {placa: $("#placa").val()}).done(function (res) {                        
+                    $.getJSON(url, {placa: $("#placa").val()}).done(function (res) {
                         $("#typeout").html("Tipo: " + res.vehicle.type);
-                        $("#placaout").html("Placa: " + res.vehicle.placa);
+                        $("#placaout").html("Placa: " + res.vehicle.plate);
                         $("#colorout").html("Color: " + res.vehicle.color);
+                        $("#vrfracc").html("Valor Hora/Fracción: $" + res.vehicle.rate + "<input type='hidden' id='vrf' value=" + res.vehicle.rate + ">");
+                        $("#timein").html("Fecha y hora ingreso: " + res.record.date_in + "<input type='hidden' id='dtin' value=" + res.record.date_in + ">");
                     })
                 })
                 $("#frmOut").submit(function (event) {
@@ -908,6 +911,13 @@
                         data: $("#frmOut").serialize(),
                         success: function (response) {
                             alert(response);
+                            $("#timeout").html("Fecha y hora salida: " + $("#date_out").val()+ "<input type='hidden' id='dtin' value=" + $("#date_out").val() + ">");
+                            var fecha1 = moment($("#dtin").val());
+                            var fecha2 = moment($("#date_out").val());
+                            var timeparking = fecha2.diff(fecha1, 'hours');
+                            var total = timeparking * $("#vrf").val();
+                            $("#vrtotal").html("Total a pagar: " + total);
+                            console.log(fecha2.diff(fecha1, 'hours'), ' horas de diferencia');
                         }
                     });
                 });
