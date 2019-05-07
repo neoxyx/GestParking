@@ -584,14 +584,25 @@
                                             <!-- /.input group -->
                                         </div>
                                         <!-- /.form group -->
+                                        <!-- Fecha -->
+                                        <div class="input-group">
+                                            <div class="form-group">
+                                                <label>Fecha Entrada(*):</label>
 
+                                                <div class="input-group">
+                                                    <input type="date" name="date_in" value="<?= date("Y-m-d") ?>" class="form-control input-lg" required="">                                                    
+                                                </div>
+                                                <!-- /.input group -->
+                                            </div>
+                                            <!-- /.form group -->
+                                        </div>
                                         <!-- Hora -->
                                         <div class="input-group">
                                             <div class="form-group">
                                                 <label>Hora Entrada(*):</label>
 
                                                 <div class="input-group">
-                                                    <input type="datetime-local" name="date_in" value="<?= date("Y-m-d H:i:s") ?>" class="form-control input-lg" required="">
+                                                    <input type="time" name="hour_in" value="<?= date("H:i:s") ?>" class="form-control input-lg" required="">
                                                     <div class="input-group-addon">
                                                         <i class="fa fa-clock-o"></i>
                                                     </div>

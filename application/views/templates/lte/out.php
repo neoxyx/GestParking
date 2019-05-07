@@ -538,24 +538,7 @@
                                             </div>
                                             <!-- /.input group -->
                                         </div>
-                                        <!-- /.form group -->
-
-                                        <!-- Hora -->
-                                        <div class="input-group">
-                                            <div class="form-group">
-                                                <label>Hora Salida:</label>
-
-                                                <div class="input-group">
-                                                    <input type="datetime-local" name="date_out" id="date_out" class="form-control input-lg" required="">
-
-                                                    <div class="input-group-addon">
-                                                        <i class="fa fa-clock-o"></i>
-                                                    </div>
-                                                </div>
-                                                <!-- /.input group -->
-                                            </div>
-                                            <!-- /.form group -->
-                                        </div>
+                                        <!-- /.form group -->                                        
 
                                         <div class="input-group">
                                             <button type="submit" id="registrar" name="registrar" class="btn btn-success">Registrar
@@ -575,8 +558,10 @@
                                     <div id="typeout"></div>
                                     <div id="placaout"></div>
                                     <div id="colorout"></div>
-                                    <div id="timein"></div>
-                                    <div id="timeout"></div>
+                                    <div id="datein"></div>
+                                    <div id="hourin"></div>
+                                    <div id="dateout"></div>
+                                    <div id="hourout"></div>
                                     <div id="totaltime"></div>
                                     <div id="vrfracc"></div>
                                     <div id="vrtotal"></div>
@@ -856,9 +841,9 @@
                             startDate: moment().subtract(29, 'days'),
                             endDate: moment()
                         },
-                        function (start, end) {
-                            $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
-                        }
+                function (start, end) {
+                    $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
+                }
                 )
 
                 //Date picker
@@ -899,7 +884,8 @@
                         $("#placaout").html("Placa: " + res.vehicle.plate);
                         $("#colorout").html("Color: " + res.vehicle.color);
                         $("#vrfracc").html("Valor Hora/Fracción: $" + res.vehicle.rate + "<input type='hidden' id='vrf' value=" + res.vehicle.rate + ">");
-                        $("#timein").html("Fecha y hora ingreso: " + res.record.date_in + "<input type='hidden' id='dtin' value=" + res.record.date_in + ">");
+                        $("#datein").html("Fecha ingreso: " + res.record.date_in + "<input type='hidden' id='dtin' value=" + res.record.date_in + ">");
+                        $("#hourin").html("Hora ingreso: " + res.record.hour_in + "<input type='hidden' id='hin' value=" + res.record.hour_in + ">");
                     })
                 })
                 $("#frmOut").submit(function (event) {
@@ -911,13 +897,16 @@
                         data: $("#frmOut").serialize(),
                         success: function (response) {
                             alert(response);
-                            $("#timeout").html("Fecha y hora salida: " + $("#date_out").val()+ "<input type='hidden' id='dtin' value=" + $("#date_out").val() + ">");
-                            var fecha1 = moment($("#dtin").val());
-                            var fecha2 = moment($("#date_out").val());
-                            var timeparking = fecha2.diff(fecha1, 'hours');
+                            $("#timeout").html("Fecha y hora salida: " + $("#date_out").val() + "<input type='hidden' id='dtin' value=" + $("#date_out").val() + ">");
+                            var difDays = moment($("#dtin").val(),'YYYY-MM-DD').fromNow();
+                            var hourIn = moment($("#hin").val(),'HH:mm:ss');
+                            var now = moment('<?= date('Y-m-d')?>','YYYY MMM DD');
+                            var hnow = moment('<?= date('H:i:s')?>','HH:mm:ss');
+                            var timeparking = hnow.diff(hourIn, 'hours');
                             var total = timeparking * $("#vrf").val();
                             $("#vrtotal").html("Total a pagar: " + total);
-                            console.log(fecha2.diff(fecha1, 'hours'), ' horas de diferencia');
+                            console.log(difDays);
+                            console.log(hnow.diff(hourIn, 'hours'), ' horas de diferencia');
                         }
                     });
                 });

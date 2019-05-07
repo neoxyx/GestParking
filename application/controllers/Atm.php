@@ -57,6 +57,7 @@ class Atm extends CI_Controller {
 
             $record = array(
                 'date_in' => $this->input->post('date_in'),
+                'hour_in' => $this->input->post('hour_in'),
                 'idVehicle' => $vehicle->idVehicle
             );
             $this->Records_model->set_record($record);
@@ -73,6 +74,7 @@ class Atm extends CI_Controller {
             if ($idVehicle != FALSE) {
                 $record = array(
                     'date_in' => $this->input->post('date_in'),
+                    'hour_in' => $this->input->post('hour_in'),
                     'idVehicle' => $idVehicle
                 );
                 $this->Records_model->set_record($record);
