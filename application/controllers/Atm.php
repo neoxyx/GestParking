@@ -33,7 +33,7 @@ class Atm extends CI_Controller {
     }
 
     public function get_registry() {
-        $this->load->model(array('Vehicles_model','Records_model'));
+        $this->load->model(array('Vehicles_model', 'Records_model'));
         $placa = $this->input->get("placa");
         $vehicle = $this->Vehicles_model->get_vehicle($placa);
         if ($vehicle) {
@@ -89,12 +89,31 @@ class Atm extends CI_Controller {
     public function set_registry_out() {
         $this->load->model(array('Vehicles_model', 'Records_model'));
         $placa = $this->input->post("placa");
+        $vr = $this->input->post("vr");
+        $dateIn = $this->input->post("date_in");
+        $dateOut = $this->input->post("date_out");
+        $hourIn = $this->input->post("hour_in");
+        $hourOut = $this->input->post("hour_out");
         $idVehicle = $this->Vehicles_model->get_vehicle($placa)->idVehicle;
         $record = array(
-            'date_out' => $this->input->post('date_out'),
+            'date_out' => $dateOut,
+            'hour_out' => $hourOut
         );
-        $this->Records_model->update_record($idVehicle,$record);
-        $res = 'Salida registrada exitosamente';
+        $this->Records_model->update_record($idVehicle, $record);
+        $date1 = new DateTime($dateIn);
+        $date2 = new DateTime($dateOut);
+        $difDays = $date1->diff($date2);
+        $hour1 = new DateTime($hourIn);
+        $hour2 = new DateTime($hourOut);
+        $totalSegundos = abs($hour1->getTimestamp() - $hour2->getTimestamp());
+        $totalMinutos = $totalSegundos / 60;
+        $totalHoras = $totalMinutos / 60;
+        setlocale(LC_MONETARY, 'es_CO');
+        //echo money_format('%.0n', $row->vrflete);
+        $vrtotal = $vr * $totalHoras;
+        $vrformat = number_format($vrtotal, 2, ",", ".");
+        $res = $difDays->days . ' Días ' . $totalHoras .
+                ' Horas<br>Valor a pagar: $' . $vrformat;
         echo $res;
     }
 

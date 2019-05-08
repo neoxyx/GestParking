@@ -561,10 +561,9 @@
                                     <div id="datein"></div>
                                     <div id="hourin"></div>
                                     <div id="dateout"></div>
-                                    <div id="hourout"></div>
-                                    <div id="totaltime"></div>
+                                    <div id="hourout"></div>                                    
                                     <div id="vrfracc"></div>
-                                    <div id="vrtotal"></div>
+                                    <div id="totaltime"></div>
                                 </div>
                                 <!-- /.box-body -->
                             </div>
@@ -891,26 +890,21 @@
                 $("#frmOut").submit(function (event) {
                     event.preventDefault();
                     var url = "<?= base_url() ?>index.php/Atm/set_registry_out";
+                    var placa = $("#placa").val();
+                    var vr = $("#vrf").val();
+                    var date_in = $("#dtin").val();
+                    var hour_in = $("#hin").val();
                     $.ajax({
                         type: "POST",
                         url: url,
-                        data: $("#frmOut").serialize(),
+                        data: {placa: placa, vr: vr, date_in: date_in, hour_in: hour_in, date_out: '<?= date('Y-m-d') ?>', hour_out: '<?= date('H:i:s') ?>'},
                         success: function (response) {
-                            alert(response);
-                            $("#timeout").html("Fecha y hora salida: " + $("#date_out").val() + "<input type='hidden' id='dtin' value=" + $("#date_out").val() + ">");
-                            var difDays = moment($("#dtin").val(),'YYYY-MM-DD').fromNow();
-                            var hourIn = moment($("#hin").val(),'HH:mm:ss');
-                            var now = moment('<?= date('Y-m-d')?>','YYYY MMM DD');
-                            var hnow = moment('<?= date('H:i:s')?>','HH:mm:ss');
-                            var timeparking = hnow.diff(hourIn, 'hours');
-                            var total = timeparking * $("#vrf").val();
-                            $("#vrtotal").html("Total a pagar: " + total);
-                            console.log(difDays);
-                            console.log(hnow.diff(hourIn, 'hours'), ' horas de diferencia');
+                            $("#dateout").html("Fecha salida: " + '<?= date('Y-m-d'); ?>');
+                            $("#hourout").html("Hora salida: " + '<?= date('H:i:s'); ?>');
+                            $("#totaltime").html(response);
                         }
                     });
                 });
-
             })
         </script>
     </body>

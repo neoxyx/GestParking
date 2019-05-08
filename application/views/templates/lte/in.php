@@ -954,7 +954,6 @@
                     }
                     if ($('#type').val() == 2) {
                         $('#placa').attr('placeholder', '3 Letras + 2 Números');
-                        $('#placa').attr('pattern', '[A-Za-z]{3}[0-9]{2}');
                         $('#adicional').show();
                     }
                     if ($('#type').val() == 3) {
@@ -967,12 +966,10 @@
                     }
                     if ($('#type').val() == 5) {
                         $('#placa').attr('placeholder', '3 Números + 3 Letras');
-                        $('#placa').attr('pattern', '[0-9]{3}[A-Za-z]{3}');
                         $('#adicional').hide();
                     }
                     if ($('#type').val() == 6) {
                         $('#placa').attr('placeholder', '3 Números + 3 Letras');
-                        $('#placa').attr('pattern', '[0-9]{3}[A-Za-z]{3}');
                         $('#adicional').hide();
                     }
                     if ($('#type').val() == 7) {
