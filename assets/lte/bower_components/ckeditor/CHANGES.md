@@ -359,7 +359,7 @@ Other Changes:
 
 New Features:
 
-* Added a new Mexican Spanish localization. Thanks to [David Alexandro Rodriguez](https://www.transifex.com/user/profile/darsco16/)!
+* Added a new Mexican Spanish localization. Thanks to [David Alexandro Rodriguez](https://www.transifex.com/user/Perfil/darsco16/)!
 * [#413](https://github.com/ckeditor/ckeditor-dev/issues/413): Added Paste as Plain Text keyboard shortcut to the [Accessibility Help](https://ckeditor.com/cke4/addon/a11yhelp) instructions.
 
 Fixed Issues:

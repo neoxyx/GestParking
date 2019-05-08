@@ -109,11 +109,11 @@ class Atm extends CI_Controller {
         $totalMinutos = $totalSegundos / 60;
         $totalHoras = $totalMinutos / 60;
         setlocale(LC_MONETARY, 'es_CO');
-        //echo money_format('%.0n', $row->vrflete);
-        $vrtotal = $vr * $totalHoras;
-        $vrformat = number_format($vrtotal, 2, ",", ".");
-        $res = $difDays->days . ' Días ' . $totalHoras .
-                ' Horas<br>Valor a pagar: $' . $vrformat;
+        $totalHorasFormat = number_format($totalHoras, 0, ",", ".");
+        $vrtotal = $vr * $totalHorasFormat;
+        $vrformat = number_format($vrtotal, 0, ",", ".");
+        $res = $difDays->days . ' Días ' . $totalHorasFormat .
+                ' Horas<br>Valor a pagar: $ ' . $vrformat;
         echo $res;
     }
 

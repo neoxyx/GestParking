@@ -555,7 +555,7 @@
 <ul class="simple">
 <li>Fixed a bug (#5164) - <a class="reference internal" href="libraries/loader.html"><span class="doc">Loader Library</span></a> method <code class="docutils literal"><span class="pre">library()</span></code> ignored requests to load libraries previously assigned to super-object properties named differently than the library name.</li>
 <li>Fixed a bug (#5168) - <a class="reference internal" href="database/query_builder.html"><span class="doc">Query Builder</span></a> method <code class="docutils literal"><span class="pre">count_all_results()</span></code> produced erroneous queries on Microsoft SQL Server when <code class="docutils literal"><span class="pre">ORDER</span> <span class="pre">BY</span></code> clauses are cached.</li>
-<li>Fixed a bug (#5128) - <a class="reference internal" href="general/profiling.html"><span class="doc">Profiler</span></a> didn’t wrap <code class="docutils literal"><span class="pre">$_SESSION</span></code> and configuration arrays in <code class="docutils literal"><span class="pre">&lt;pre&gt;</span></code> tags.</li>
+<li>Fixed a bug (#5128) - <a class="reference internal" href="general/profiling.html"><span class="doc">Perfilr</span></a> didn’t wrap <code class="docutils literal"><span class="pre">$_SESSION</span></code> and configuration arrays in <code class="docutils literal"><span class="pre">&lt;pre&gt;</span></code> tags.</li>
 <li>Fixed a bug (#5183) - <a class="reference internal" href="database/index.html"><span class="doc">Database Library</span></a> method <code class="docutils literal"><span class="pre">is_write_type()</span></code> didn’t return TRUE for <code class="docutils literal"><span class="pre">MERGE</span></code> statements.</li>
 <li>Fixed a bug where <a class="reference internal" href="libraries/image_lib.html"><span class="doc">Image Manipulation Library</span></a> didn’t escape image source paths passed to NetPBM as shell arguments.</li>
 <li>Fixed a bug (#5236) - <a class="reference internal" href="database/query_builder.html"><span class="doc">Query Builder</span></a> methods <code class="docutils literal"><span class="pre">limit()</span></code>, <code class="docutils literal"><span class="pre">offset()</span></code> break SQL Server 2005, 2008 queries with <code class="docutils literal"><span class="pre">&quot;&lt;tablename&gt;&quot;.*</span></code> in the <code class="docutils literal"><span class="pre">SELECT</span></code> clause.</li>
@@ -618,8 +618,8 @@
 <li>Fixed a bug where <a class="reference internal" href="helpers/text_helper.html"><span class="doc">Text Helper</span></a> function <code class="docutils literal"><span class="pre">ascii_to_entities()</span></code> wasn’t byte-safe when <code class="docutils literal"><span class="pre">mbstring.func_overload</span></code> is enabled.</li>
 <li>Fixed a bug where <code class="docutils literal"><span class="pre">CI_Log</span></code>, <code class="docutils literal"><span class="pre">CI_Output</span></code>, <code class="docutils literal"><span class="pre">CI_Email</span></code> and <code class="docutils literal"><span class="pre">CI_Zip</span></code> didn’t handle strings in a byte-safe manner when <code class="docutils literal"><span class="pre">mbstring.func_overload</span></code> is enabled.</li>
 <li>Fixed a bug where <a class="reference internal" href="libraries/sessions.html"><span class="doc">Session Library</span></a> didn’t read session data in a byte-safe manner when <code class="docutils literal"><span class="pre">mbstring.func_overload</span></code> is enabled.</li>
-<li>Fixed a bug (#4990) - <a class="reference internal" href="general/profiling.html"><span class="doc">Profiler</span></a> didn’t close <code class="docutils literal"><span class="pre">&lt;pre&gt;</span></code> tags it generated.</li>
-<li>Fixed a bug (#4990) - <a class="reference internal" href="general/profiling.html"><span class="doc">Profiler</span></a> didn’t HTML-escape quotes for <code class="docutils literal"><span class="pre">$_SESSION</span></code> variables.</li>
+<li>Fixed a bug (#4990) - <a class="reference internal" href="general/profiling.html"><span class="doc">Perfilr</span></a> didn’t close <code class="docutils literal"><span class="pre">&lt;pre&gt;</span></code> tags it generated.</li>
+<li>Fixed a bug (#4990) - <a class="reference internal" href="general/profiling.html"><span class="doc">Perfilr</span></a> didn’t HTML-escape quotes for <code class="docutils literal"><span class="pre">$_SESSION</span></code> variables.</li>
 <li>Fixed a bug where <a class="reference internal" href="libraries/input.html"><span class="doc">Input Library</span></a> method <code class="docutils literal"><span class="pre">set_cookie()</span></code> didn’t allow its <em>httponly</em> and <em>secure</em> parameters to be overriden to <code class="docutils literal"><span class="pre">FALSE</span></code>.</li>
 <li>Fixed a bug (#5006) - <a class="reference internal" href="general/common_functions.html"><span class="doc">common function</span></a> <a class="reference internal" href="general/common_functions.html#get_mimes" title="get_mimes"><code class="xref php php-func docutils literal"><span class="pre">get_mimes()</span></code></a> didn’t load <em>application/config/mimes.php</em> if an environment specific config exists.</li>
 <li>Fixed a bug (#5006) - <a class="reference internal" href="general/common_functions.html"><span class="doc">common function</span></a> <a class="reference internal" href="general/common_functions.html#remove_invisible_characters" title="remove_invisible_characters"><code class="xref php php-func docutils literal"><span class="pre">remove_invisible_characters()</span></code></a> didn’t remove URL-encoded <code class="docutils literal"><span class="pre">0x7F</span></code>.</li>
@@ -859,7 +859,7 @@ and <a class="reference external" href="https://tools.ietf.org/html/rfc6585">658
 <li>Fixed a bug where <a class="reference internal" href="libraries/sessions.html"><span class="doc">Session Library</span></a> didn’t clean-up internal variables for emulated locks with the ‘memcached’ driver.</li>
 <li>Fixed a bug where <a class="reference internal" href="database/index.html"><span class="doc">Database</span></a> transactions didn’t work with the ‘ibase’ driver.</li>
 <li>Fixed a bug (#4475) - <a class="reference internal" href="libraries/security.html"><span class="doc">Security Library</span></a> method <code class="docutils literal"><span class="pre">strip_image_tags()</span></code> preserves only the first URL character from non-quoted <em>src</em> attributes.</li>
-<li>Fixed a bug where <a class="reference internal" href="general/profiling.html"><span class="doc">Profiler Library</span></a> didn’t apply <code class="docutils literal"><span class="pre">htmlspecialchars()</span></code> to all displayed inputs.</li>
+<li>Fixed a bug where <a class="reference internal" href="general/profiling.html"><span class="doc">Perfilr Library</span></a> didn’t apply <code class="docutils literal"><span class="pre">htmlspecialchars()</span></code> to all displayed inputs.</li>
 <li>Fixed a bug (#4277) - <a class="reference internal" href="libraries/caching.html"><span class="doc">Cache Library</span></a> triggered fatal errors if accessing the Memcache(d) and/or Redis driver and they are not available on the system.</li>
 <li>Fixed a bug where <a class="reference internal" href="libraries/caching.html"><span class="doc">Cache Library</span></a> method <code class="docutils literal"><span class="pre">is_supported()</span></code> logged an error message when it returns <code class="docutils literal"><span class="pre">FALSE</span></code> for the APC and Wincache drivers.</li>
 </ul>
@@ -1458,7 +1458,7 @@ Only entries in <code class="docutils literal"><span class="pre">$autoload['libr
 <li>Removed the default <code class="docutils literal"><span class="pre">&amp;nbsp;</span></code> from a number of the configuration variables.</li>
 </ul>
 </li>
-<li><a class="reference internal" href="general/profiling.html"><span class="doc">Profiler Library</span></a> changes include:<ul>
+<li><a class="reference internal" href="general/profiling.html"><span class="doc">Perfilr Library</span></a> changes include:<ul>
 <li>Database object names are now being displayed.</li>
 <li>The sum of all queries running times in seconds is now being displayed.</li>
 <li>Added support for displaying the HTTP DNT (“Do Not Track”) header.</li>
@@ -1766,7 +1766,7 @@ Only entries in <code class="docutils literal"><span class="pre">$autoload['libr
 <li>Fixed a bug (#122) - <a class="reference internal" href="libraries/uri.html"><span class="doc">URI Library</span></a> method <code class="docutils literal"><span class="pre">ruri_string()</span></code> didn’t include a directory if one is used.</li>
 <li>Fixed a bug - <a class="reference internal" href="general/routing.html"><span class="doc">Routing Library</span></a> didn’t properly handle <em>default_controller</em> in a subdirectory when a method is also specified.</li>
 <li>Fixed a bug (#953) - <a class="reference internal" href="general/hooks.html"><span class="doc">post_controller_constructor hook</span></a> wasn’t called with a <em>404_override</em>.</li>
-<li>Fixed a bug (#1220) - <a class="reference internal" href="general/profiling.html"><span class="doc">Profiler Library</span></a> didn’t display information for database objects that are instantiated inside models.</li>
+<li>Fixed a bug (#1220) - <a class="reference internal" href="general/profiling.html"><span class="doc">Perfilr Library</span></a> didn’t display information for database objects that are instantiated inside models.</li>
 <li>Fixed a bug (#1978) - <a class="reference internal" href="helpers/directory_helper.html"><span class="doc">Directory Helper</span></a> function <a class="reference internal" href="helpers/directory_helper.html#directory_map" title="directory_map"><code class="xref php php-func docutils literal"><span class="pre">directory_map()</span></code></a>’s return array didn’t make a distinction between directories and file indexes when a directory with a numeric name is present.</li>
 <li>Fixed a bug (#777) - <a class="reference internal" href="libraries/loader.html"><span class="doc">Loader Library</span></a> didn’t look for helper extensions in added package paths.</li>
 <li>Fixed a bug (#18) - <a class="reference internal" href="libraries/caching.html"><span class="doc">APC Cache</span></a> driver didn’t (un)serialize data, resulting in failure to store objects.</li>
@@ -1937,7 +1937,7 @@ Only entries in <code class="docutils literal"><span class="pre">$autoload['libr
 <ul class="simple">
 <li>Fixed a bug (#1543) - File-based <a class="reference internal" href="libraries/caching.html"><span class="doc">Caching</span></a> method <code class="docutils literal"><span class="pre">get_metadata()</span></code> used a non-existent array key to look for the TTL value.</li>
 <li>Fixed a bug (#1314) - <a class="reference internal" href="libraries/sessions.html"><span class="doc">Session Library</span></a> method <code class="docutils literal"><span class="pre">sess_destroy()</span></code> didn’t destroy the userdata array.</li>
-<li>Fixed a bug (#804) - <a class="reference internal" href="general/profiling.html"><span class="doc">Profiler library</span></a> was trying to handle objects as strings in some cases, resulting in <em>E_WARNING</em> messages being issued by <code class="docutils literal"><span class="pre">htmlspecialchars()</span></code>.</li>
+<li>Fixed a bug (#804) - <a class="reference internal" href="general/profiling.html"><span class="doc">Perfilr library</span></a> was trying to handle objects as strings in some cases, resulting in <em>E_WARNING</em> messages being issued by <code class="docutils literal"><span class="pre">htmlspecialchars()</span></code>.</li>
 <li>Fixed a bug (#1699) - <a class="reference internal" href="libraries/migration.html"><span class="doc">Migration Library</span></a> ignored the <code class="docutils literal"><span class="pre">$config['migration_path']</span></code> setting.</li>
 <li>Fixed a bug (#227) - <a class="reference internal" href="libraries/input.html"><span class="doc">Input Library</span></a> allowed unconditional spoofing of HTTP clients’ IP addresses through the <em>HTTP_CLIENT_IP</em> header.</li>
 <li>Fixed a bug (#907) - <a class="reference internal" href="libraries/input.html"><span class="doc">Input Library</span></a> ignored <em>HTTP_X_CLUSTER_CLIENT_IP</em> and <em>HTTP_X_CLIENT_IP</em> headers when checking for proxies.</li>
@@ -2115,7 +2115,7 @@ vulnerable.</p>
 <ul class="simple">
 <li>Fixed a bug where there was a misspelling within a code comment in
 the index.php file.</li>
-<li>Added Session Class userdata to the output profiler. Additionally,
+<li>Added Session Class userdata to the output Perfilr. Additionally,
 added a show/hide toggle on HTTP Headers, Session Data and Config
 Variables.</li>
 <li>Removed internal usage of the EXT constant.</li>
@@ -2363,7 +2363,7 @@ other security related functions.</li>
 <a class="reference internal" href="libraries/security.html"><span class="doc">Security library</span></a>.</li>
 <li>Added $parse_exec_vars property to Output library.</li>
 <li>Added ability to enable / disable individual sections of the
-<a class="reference internal" href="general/profiling.html"><span class="doc">Profiler</span></a></li>
+<a class="reference internal" href="general/profiling.html"><span class="doc">Perfilr</span></a></li>
 <li>Added a wildcard option $config[‘allowed_types’] = ‘*’ to the
 <a class="reference internal" href="libraries/file_uploading.html"><span class="doc">File Uploading Class</span></a>.</li>
 <li>Added an ‘object’ config variable to the XML-RPC Server library so
@@ -2378,7 +2378,7 @@ Table library</li>
 <li>Added a parse_string() method to the <a class="reference internal" href="libraries/parser.html"><span class="doc">Parser
 Class</span></a>.</li>
 <li>Added HTTP headers and Config information to the
-<a class="reference internal" href="general/profiling.html"><span class="doc">Profiler</span></a> output.</li>
+<a class="reference internal" href="general/profiling.html"><span class="doc">Perfilr</span></a> output.</li>
 <li>Added Chrome and Flock to the list of detectable browsers by
 browser() in the <a class="reference internal" href="libraries/user_agent.html"><span class="doc">User Agent Class</span></a>.</li>
 <li>The <a class="reference internal" href="libraries/unit_testing.html"><span class="doc">Unit Test Class</span></a> now has an
@@ -2537,13 +2537,13 @@ email.</li>
 <li>Fixed a bug where the Output class would send incorrect cached output
 for controllers implementing their own _output() method.</li>
 <li>Fixed a bug where a failed query would not have a saved query
-execution time causing errors in the Profiler</li>
+execution time causing errors in the Perfilr</li>
 <li>Fixed a bug that was writing log entries when multiple identical
 helpers and plugins were loaded.</li>
 <li>Fixed assorted user guide typos or examples (#10693, #8951, #7825,
 #8660, #7883, #6771, #10656).</li>
-<li>Fixed a language key in the profiler: “profiler_no_memory_usage”
-to “profiler_no_memory”.</li>
+<li>Fixed a language key in the Perfilr: “Perfilr_no_memory_usage”
+to “Perfilr_no_memory”.</li>
 <li>Fixed an error in the Zip library that didn’t allow downloading on
 PHP 4 servers.</li>
 <li>Fixed a bug in the Form Validation library where fields passed as
@@ -2588,7 +2588,7 @@ value was not found.</li>
 an array to load-&gt;library()</li>
 <li>Fixed a bug in the html helper where too much white space was
 rendered between the src and alt tags in the img() function.</li>
-<li>Fixed a bug in the profilers _compile_queries() function.</li>
+<li>Fixed a bug in the Perfilrs _compile_queries() function.</li>
 <li>Fixed a bug in the date helper where the DATE_ISO8601 variable was
 returning an incorrectly formatted date string.</li>
 </ul>
@@ -2851,7 +2851,7 @@ more info.</li>
 <li>Added the ability to assign library objects to your own variable
 names when you use $this-&gt;load-&gt;library(). Please see the <a class="reference internal" href="libraries/loader.html"><span class="doc">Loader
 class</span></a> for more info.</li>
-<li>Added controller class/method info to <a class="reference internal" href="general/profiling.html"><span class="doc">Profiler
+<li>Added controller class/method info to <a class="reference internal" href="general/profiling.html"><span class="doc">Perfilr
 class</span></a> and support for multiple database
 connections.</li>
 <li>Improved the “auto typography” feature and moved it out of the
@@ -2933,8 +2933,8 @@ the file.</li>
 <li>Modified Cookie key cleaning to unset a few troublesome key names
 that can be present in certain environments, preventing CI from
 halting execution.</li>
-<li>Changed the output of the profiler to use style attribute rather
-than clear, and added the id “codeigniter_profiler” to the
+<li>Changed the output of the Perfilr to use style attribute rather
+than clear, and added the id “codeigniter_Perfilr” to the
 container div.</li>
 </ul>
 </li>
@@ -3289,7 +3289,7 @@ clause optional (#3395).</li>
 <li>Fixed a bug (#3396) where certain POST variables would cause a PHP
 warning.</li>
 <li>Fixed a bug in query binding (#3402).</li>
-<li>Changed order of SQL keywords in the Profiler $highlight array so OR
+<li>Changed order of SQL keywords in the Perfilr $highlight array so OR
 would not be highlighted before ORDER BY.</li>
 <li>Fixed a bug (#3404) where the MySQLi driver was testing if
 $this-&gt;conn_id was a resource instead of an object.</li>
@@ -3375,7 +3375,7 @@ appended to the output in the order loaded.</li>
 <li>Added Compat.php to allow function overrides for older versions of
 PHP or PHP environments missing certain extensions / libraries</li>
 <li>Added memory usage, GET, URI string data, and individual query
-execution time to Profiler output.</li>
+execution time to Perfilr output.</li>
 <li>Deprecated Scaffolding.</li>
 <li>Added is_really_writable() to Common.php to provide a
 cross-platform reliable method of testing file/folder writability.</li>
@@ -3528,7 +3528,7 @@ deleted in delete_files() of the File helper.</li>
 variable.</li>
 <li>Fixed a bug (#3330) in the FTP class where a comparison wasn’t
 getting made.</li>
-<li>Removed an unused parameter from Profiler (#3332).</li>
+<li>Removed an unused parameter from Perfilr (#3332).</li>
 <li>Fixed a bug in database driver where num_rows property wasn’t
 getting updated.</li>
 <li>Fixed a bug in the <a class="reference internal" href="libraries/file_uploading.html"><span class="doc">upload
@@ -3578,7 +3578,7 @@ files.</li>
 <li>Added stripslashes() to the _clean_input_data() function in the
 <a class="reference internal" href="libraries/input.html"><span class="doc">Input class</span></a> when magic quotes is on so
 that data will always be un-slashed within the framework.</li>
-<li>Added array to string into the <a class="reference internal" href="general/profiling.html"><span class="doc">profiler</span></a>.</li>
+<li>Added array to string into the <a class="reference internal" href="general/profiling.html"><span class="doc">Perfilr</span></a>.</li>
 <li>Added some additional mime types in application/config/mimes.php.</li>
 <li>Added filename_security() method to <a class="reference internal" href="libraries/input.html"><span class="doc">Input
 library</span></a>.</li>
@@ -3604,9 +3604,9 @@ PC Zip file compatibility with Mac OS X</li>
 optimization</li>
 <li>Fixed an IP validation bug.</li>
 <li>Fixed a bug in display of POST keys in the
-<a class="reference internal" href="general/profiling.html"><span class="doc">Profiler</span></a> output</li>
+<a class="reference internal" href="general/profiling.html"><span class="doc">Perfilr</span></a> output</li>
 <li>Fixed a bug in display of queries with characters that would be
-interpreted as HTML in the <a class="reference internal" href="general/profiling.html"><span class="doc">Profiler</span></a>
+interpreted as HTML in the <a class="reference internal" href="general/profiling.html"><span class="doc">Perfilr</span></a>
 output</li>
 <li>Fixed a bug in display of Email class print debugger with characters
 that would be interpreted as HTML in the debugging output</li>
@@ -3647,7 +3647,7 @@ for clarity.</li>
 <h2>Version 1.5.3<a class="headerlink" href="#version-1-5-3" title="Permalink to this headline">¶</a></h2>
 <p>Release Date: April 15, 2007</p>
 <ul class="simple">
-<li>Added array to string into the profiler</li>
+<li>Added array to string into the Perfilr</li>
 <li>Code Igniter references updated to CodeIgniter</li>
 <li>pMachine references updated to EllisLab</li>
 <li>Fixed a bug in the repeater function of <a class="reference internal" href="helpers/string_helper.html"><span class="doc">string
@@ -3717,7 +3717,7 @@ input sanitize function.</li>
 <li>Fixed a problem in which duplicate attempts to load helpers and
 classes were not being stopped.</li>
 <li>Fixed a bug in the word_wrap() helper function.</li>
-<li>Fixed an invalid color Hex number in the Profiler class.</li>
+<li>Fixed an invalid color Hex number in the Perfilr class.</li>
 <li>Fixed a corrupted image in the user guide.</li>
 </ul>
 </div>
@@ -3731,7 +3731,7 @@ functions.</li>
 <li>Added <a class="reference internal" href="database/caching.html"><span class="doc">Database Caching Class</span></a>.</li>
 <li>Added <a class="reference internal" href="database/transactions.html"><span class="doc">transaction support</span></a> to the
 database classes.</li>
-<li>Added <a class="reference internal" href="general/profiling.html"><span class="doc">Profiler Class</span></a> which generates a
+<li>Added <a class="reference internal" href="general/profiling.html"><span class="doc">Perfilr Class</span></a> which generates a
 report of Benchmark execution times, queries, and POST data at the
 bottom of your pages.</li>
 <li>Added <a class="reference internal" href="libraries/user_agent.html"><span class="doc">User Agent Library</span></a> which

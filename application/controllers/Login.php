@@ -7,7 +7,7 @@ class Login extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
-        $this->load->model(array('Login_model','Users_model'));
+        $this->load->model(array('Login_model', 'Users_model'));
     }
 
     public function index() {
@@ -27,20 +27,22 @@ class Login extends CI_Controller {
                 $user_data = array(
                     'id' => $user->idUser,
                     'name' => $user->name,
-                    'permits' => $user->idRol
+                    'rol' => $user->rol,
+                    'idRol' => $user->idRol
                 );
+                $this->session->set_userdata('datos_usuario', $user_data);
                 redirect('Atm');
             }
         } else {
+            $this->session->unset_userdata('datos_usuario');
             $data['msn'] = 'Usuario y/o Contraseña erroneas';
             $this->load->view('login', $data);
         }
     }
-    
+
     public function logout() {
         $this->session->sess_destroy();
         redirect(base_url());
     }
-    
 
 }

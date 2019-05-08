@@ -554,13 +554,13 @@ declare module 'fullcalendar/EventDef' {
 declare module 'fullcalendar/EventInstance' {
 	export class Default {
 	    def: any;
-	    dateProfile: any;
-	    constructor(def: any, dateProfile: any);
+	    datePerfil: any;
+	    constructor(def: any, datePerfil: any);
 	    toLegacy(): any;
 	}
 	export default Default;
 }
-declare module 'fullcalendar/EventDateProfile' {
+declare module 'fullcalendar/EventDatePerfil' {
 	import UnzonedRange from 'fullcalendar/UnzonedRange';
 	export class Default {
 	    start: any;
@@ -579,7 +579,7 @@ declare module 'fullcalendar/SingleEventDef' {
 	import EventDef from 'fullcalendar/EventDef';
 	import EventInstance from 'fullcalendar/EventInstance';
 	export class Default extends EventDef {
-	    dateProfile: any;
+	    datePerfil: any;
 	    buildInstances(): EventInstance[];
 	    buildInstance(): EventInstance;
 	    isAllDay(): any;
@@ -848,7 +848,7 @@ declare module 'fullcalendar/BusinessHourGenerator' {
 	export default Default;
 }
 declare module 'fullcalendar/EventDefDateMutation' {
-	import EventDateProfile from 'fullcalendar/EventDateProfile';
+	import EventDatePerfil from 'fullcalendar/EventDatePerfil';
 	export class Default {
 	    clearEnd: boolean;
 	    forceTimed: boolean;
@@ -856,8 +856,8 @@ declare module 'fullcalendar/EventDefDateMutation' {
 	    dateDelta: any;
 	    startDelta: any;
 	    endDelta: any;
-	    static createFromDiff(dateProfile0: any, dateProfile1: any, largeUnit: any): any;
-	    buildNewDateProfile(eventDateProfile: any, calendar: any): EventDateProfile;
+	    static createFromDiff(datePerfil0: any, datePerfil1: any, largeUnit: any): any;
+	    buildNewDatePerfil(eventDatePerfil: any, calendar: any): EventDatePerfil;
 	    setDateDelta(dateDelta: any): void;
 	    setStartDelta(startDelta: any): void;
 	    setEndDelta(endDelta: any): void;
@@ -909,7 +909,7 @@ declare module 'fullcalendar/Calendar' {
 	import Constraints from 'fullcalendar/Constraints';
 	import UnzonedRange from 'fullcalendar/UnzonedRange';
 	import ComponentFootprint from 'fullcalendar/ComponentFootprint';
-	import EventDateProfile from 'fullcalendar/EventDateProfile';
+	import EventDatePerfil from 'fullcalendar/EventDatePerfil';
 	import EventManager from 'fullcalendar/EventManager';
 	import BusinessHourGenerator from 'fullcalendar/BusinessHourGenerator';
 	import EventSource from 'fullcalendar/EventSource';
@@ -1002,7 +1002,7 @@ declare module 'fullcalendar/Calendar' {
 	    renderHeader(): void;
 	    renderFooter(): void;
 	    setToolbarsTitle(title: string): void;
-	    updateToolbarButtons(dateProfile: any): void;
+	    updateToolbarButtons(datePerfil: any): void;
 	    queryToolbarsHeight(): any;
 	    select(zonedStartInput: MomentInput, zonedEndInput?: MomentInput): void;
 	    unselect(): void;
@@ -1014,7 +1014,7 @@ declare module 'fullcalendar/Calendar' {
 	    localizeMoment(mom: any): void;
 	    getIsAmbigTimezone(): boolean;
 	    applyTimezone(date: moment.Moment): moment.Moment;
-	    footprintToDateProfile(componentFootprint: any, ignoreEnd?: boolean): EventDateProfile;
+	    footprintToDatePerfil(componentFootprint: any, ignoreEnd?: boolean): EventDatePerfil;
 	    getNow(): moment.Moment;
 	    humanizeDuration(duration: moment.Duration): string;
 	    parseUnzonedRange(rangeInput: RangeInput): UnzonedRange;
@@ -1039,7 +1039,7 @@ declare module 'fullcalendar/Calendar' {
 	}
 	export default Default;
 }
-declare module 'fullcalendar/DateProfileGenerator' {
+declare module 'fullcalendar/DatePerfilGenerator' {
 	import * as moment from 'moment';
 	import UnzonedRange from 'fullcalendar/UnzonedRange';
 	export class Default {
@@ -1048,7 +1048,7 @@ declare module 'fullcalendar/DateProfileGenerator' {
 	    opt(name: any): any;
 	    trimHiddenDays(unzonedRange: any): any;
 	    msToUtcMoment(ms: any, forceAllDay: any): any;
-	    buildPrev(currentDateProfile: any): {
+	    buildPrev(currentDatePerfil: any): {
 	        validUnzonedRange: any;
 	        currentUnzonedRange: any;
 	        currentRangeUnit: any;
@@ -1061,7 +1061,7 @@ declare module 'fullcalendar/DateProfileGenerator' {
 	        date: any;
 	        dateIncrement: any;
 	    };
-	    buildNext(currentDateProfile: any): {
+	    buildNext(currentDatePerfil: any): {
 	        validUnzonedRange: any;
 	        currentUnzonedRange: any;
 	        currentRangeUnit: any;
@@ -1134,7 +1134,7 @@ declare module 'fullcalendar/DateComponent' {
 	    childrenByUid: any;
 	    isRTL: boolean;
 	    nextDayThreshold: any;
-	    dateProfile: any;
+	    datePerfil: any;
 	    eventRenderer: any;
 	    helperRenderer: any;
 	    businessHourRenderer: any;
@@ -1149,9 +1149,9 @@ declare module 'fullcalendar/DateComponent' {
 	    opt(name: any): any;
 	    publiclyTrigger(...args: any[]): any;
 	    hasPublicHandlers(...args: any[]): any;
-	    executeDateRender(dateProfile: any): void;
+	    executeDateRender(datePerfil: any): void;
 	    executeDateUnrender(): void;
-	    renderDates(dateProfile: any): void;
+	    renderDates(datePerfil: any): void;
 	    unrenderDates(): void;
 	    getNowIndicatorUnit(): void;
 	    renderNowIndicator(date: any): void;
@@ -1195,7 +1195,7 @@ declare module 'fullcalendar/DateComponent' {
 	    iterChildren(func: any): void;
 	    _getCalendar(): any;
 	    _getView(): any;
-	    _getDateProfile(): any;
+	    _getDatePerfil(): any;
 	    buildGotoAnchorHtml(gotoOptions: any, attrs: any, innerHtml: any): string;
 	    getAllDayHtml(): any;
 	    getDayClasses(date: any, noThemeHighlight?: any): any[];
@@ -1281,8 +1281,8 @@ declare module 'fullcalendar/View' {
 	    initialNowQueriedMs: number;
 	    nowIndicatorTimeoutID: any;
 	    nowIndicatorIntervalID: any;
-	    dateProfileGeneratorClass: any;
-	    dateProfileGenerator: any;
+	    datePerfilGeneratorClass: any;
+	    datePerfilGenerator: any;
 	    usesMinMaxTime: boolean;
 	    start: moment.Moment;
 	    end: moment.Moment;
@@ -1298,19 +1298,19 @@ declare module 'fullcalendar/View' {
 	    stopBatchRender(): void;
 	    requestRender(func: any, namespace: any, actionType: any): void;
 	    whenSizeUpdated(func: any): void;
-	    computeTitle(dateProfile: any): any;
-	    computeTitleFormat(dateProfile: any): any;
+	    computeTitle(datePerfil: any): any;
+	    computeTitleFormat(datePerfil: any): any;
 	    setDate(date: any): void;
 	    unsetDate(): void;
-	    fetchInitialEvents(dateProfile: any): any;
+	    fetchInitialEvents(datePerfil: any): any;
 	    bindEventChanges(): void;
 	    unbindEventChanges(): void;
 	    setEvents(eventsPayload: any): void;
 	    unsetEvents(): void;
 	    resetEvents(eventsPayload: any): void;
-	    requestDateRender(dateProfile: any): void;
+	    requestDateRender(datePerfil: any): void;
 	    requestDateUnrender(): void;
-	    executeDateRender(dateProfile: any): void;
+	    executeDateRender(datePerfil: any): void;
 	    executeDateUnrender(): void;
 	    bindBaseRenderHandlers(): void;
 	    triggerViewRender(): void;
@@ -1354,7 +1354,7 @@ declare module 'fullcalendar/View' {
 	    triggerBaseRendered(): void;
 	    triggerBaseUnrendered(): void;
 	    triggerDayClick(footprint: any, dayEl: any, ev: any): void;
-	    isDateInOtherMonth(date: any, dateProfile: any): boolean;
+	    isDateInOtherMonth(date: any, datePerfil: any): boolean;
 	    getUnzonedRangeOption(name: any): UnzonedRange;
 	    initHiddenDays(): void;
 	    trimHiddenDays(inputUnzonedRange: any): UnzonedRange;
@@ -2185,7 +2185,7 @@ declare module 'fullcalendar/TimeGrid' {
 	    sliceRangeByTimes(unzonedRange: any): any[];
 	    processOptions(): void;
 	    computeLabelInterval(slotDuration: any): any;
-	    renderDates(dateProfile: any): void;
+	    renderDates(datePerfil: any): void;
 	    unrenderDates(): void;
 	    renderSkeleton(): void;
 	    renderSlats(): void;
@@ -2298,7 +2298,7 @@ declare module 'fullcalendar/DayGrid' {
 	    popoverSegs: any;
 	    constructor(view: any);
 	    componentFootprintToSegs(componentFootprint: any): any;
-	    renderDates(dateProfile: any): void;
+	    renderDates(datePerfil: any): void;
 	    unrenderDates(): void;
 	    renderGrid(): void;
 	    renderDayRowHtml(row: any, isRigid: any): string;
@@ -2371,10 +2371,10 @@ declare module 'fullcalendar/AgendaView' {
 	}
 	export default Default;
 }
-declare module 'fullcalendar/BasicViewDateProfileGenerator' {
+declare module 'fullcalendar/BasicViewDatePerfilGenerator' {
 	import UnzonedRange from 'fullcalendar/UnzonedRange';
-	import DateProfileGenerator from 'fullcalendar/DateProfileGenerator';
-	export class Default extends DateProfileGenerator {
+	import DatePerfilGenerator from 'fullcalendar/DatePerfilGenerator';
+	export class Default extends DatePerfilGenerator {
 	    buildRenderRange(currentUnzonedRange: any, currentRangeUnit: any, isRangeAllDay: any): UnzonedRange;
 	}
 	export default Default;
@@ -2382,14 +2382,14 @@ declare module 'fullcalendar/BasicViewDateProfileGenerator' {
 declare module 'fullcalendar/BasicView' {
 	import View from 'fullcalendar/View';
 	export class Default extends View {
-	    dateProfileGeneratorClass: any;
+	    datePerfilGeneratorClass: any;
 	    dayGridClass: any;
 	    scroller: any;
 	    dayGrid: any;
 	    weekNumberWidth: any;
 	    constructor(calendar: any, viewSpec: any);
 	    instantiateDayGrid(): any;
-	    executeDateRender(dateProfile: any): void;
+	    executeDateRender(datePerfil: any): void;
 	    renderSkeleton(): void;
 	    unrenderSkeleton(): void;
 	    renderSkeletonHtml(): string;
@@ -2408,10 +2408,10 @@ declare module 'fullcalendar/BasicView' {
 	}
 	export default Default;
 }
-declare module 'fullcalendar/MonthViewDateProfileGenerator' {
-	import BasicViewDateProfileGenerator from 'fullcalendar/BasicViewDateProfileGenerator';
+declare module 'fullcalendar/MonthViewDatePerfilGenerator' {
+	import BasicViewDatePerfilGenerator from 'fullcalendar/BasicViewDatePerfilGenerator';
 	import UnzonedRange from 'fullcalendar/UnzonedRange';
-	export class Default extends BasicViewDateProfileGenerator {
+	export class Default extends BasicViewDatePerfilGenerator {
 	    buildRenderRange(currentUnzonedRange: any, currentRangeUnit: any, isRangeAllDay: any): UnzonedRange;
 	}
 	export default Default;
@@ -2420,7 +2420,7 @@ declare module 'fullcalendar/MonthView' {
 	import BasicView from 'fullcalendar/BasicView';
 	export class Default extends BasicView {
 	    setGridHeight(height: any, isAuto: any): void;
-	    isDateInOtherMonth(date: any, dateProfile: any): boolean;
+	    isDateInOtherMonth(date: any, datePerfil: any): boolean;
 	}
 	export default Default;
 }
@@ -2455,7 +2455,7 @@ declare module 'fullcalendar/ListView' {
 	    unrenderSkeleton(): void;
 	    updateSize(totalHeight: any, isAuto: any, isResize: any): void;
 	    computeScrollerHeight(totalHeight: any): number;
-	    renderDates(dateProfile: any): void;
+	    renderDates(datePerfil: any): void;
 	    componentFootprintToSegs(footprint: any): any[];
 	    renderEmptyMessage(): void;
 	    renderSegList(allSegs: any): void;
@@ -2477,7 +2477,7 @@ declare module 'fullcalendar/src/exports' {
 	export { default as ListenerMixin, ListenerInterface } from 'fullcalendar/ListenerMixin';
 	export { default as Model } from 'fullcalendar/Model';
 	export { default as Constraints } from 'fullcalendar/Constraints';
-	export { default as DateProfileGenerator } from 'fullcalendar/DateProfileGenerator';
+	export { default as DatePerfilGenerator } from 'fullcalendar/DatePerfilGenerator';
 	export { default as UnzonedRange } from 'fullcalendar/UnzonedRange';
 	export { default as ComponentFootprint } from 'fullcalendar/ComponentFootprint';
 	export { default as BusinessHourGenerator } from 'fullcalendar/BusinessHourGenerator';
@@ -2491,7 +2491,7 @@ declare module 'fullcalendar/src/exports' {
 	export { default as RecurringEventDef } from 'fullcalendar/RecurringEventDef';
 	export { default as SingleEventDef } from 'fullcalendar/SingleEventDef';
 	export { default as EventDefDateMutation } from 'fullcalendar/EventDefDateMutation';
-	export { default as EventDateProfile } from 'fullcalendar/EventDateProfile';
+	export { default as EventDatePerfil } from 'fullcalendar/EventDatePerfil';
 	export { default as EventSourceParser } from 'fullcalendar/EventSourceParser';
 	export { default as EventSource } from 'fullcalendar/EventSource';
 	export { defineThemeSystem, getThemeSystemClass } from 'fullcalendar/ThemeRegistry';
@@ -2543,9 +2543,9 @@ declare module 'fullcalendar/src/exports' {
 	export { default as DayGridFillRenderer } from 'fullcalendar/DayGridFillRenderer';
 	export { default as DayGridHelperRenderer } from 'fullcalendar/DayGridHelperRenderer';
 	export { default as BasicView } from 'fullcalendar/BasicView';
-	export { default as BasicViewDateProfileGenerator } from 'fullcalendar/BasicViewDateProfileGenerator';
+	export { default as BasicViewDatePerfilGenerator } from 'fullcalendar/BasicViewDatePerfilGenerator';
 	export { default as MonthView } from 'fullcalendar/MonthView';
-	export { default as MonthViewDateProfileGenerator } from 'fullcalendar/MonthViewDateProfileGenerator';
+	export { default as MonthViewDatePerfilGenerator } from 'fullcalendar/MonthViewDatePerfilGenerator';
 	export { default as ListView } from 'fullcalendar/ListView';
 	export { default as ListEventPointing } from 'fullcalendar/ListEventPointing';
 	export { default as ListEventRenderer } from 'fullcalendar/ListEventRenderer';

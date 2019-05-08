@@ -9,7 +9,7 @@ Author: pumbur <pumbur@pumbur.net>
   background: #222;
 }
 
-.profile .hljs-header *,
+.Perfil .hljs-header *,
 .ini .hljs-title,
 .nginx .hljs-title
 {
@@ -22,7 +22,7 @@ Author: pumbur <pumbur@pumbur.net>
 .hljs-preprocessor .hljs-title,
 .hljs-pragma,
 .hljs-shebang,
-.profile .hljs-summary,
+.Perfil .hljs-summary,
 .diff,
 .hljs-pi,
 .hljs-doctype,
@@ -121,7 +121,7 @@ Author: pumbur <pumbur@pumbur.net>
 
 .hljs-yardoctag,
 .hljs-phpdoc,
-.profile .hljs-header,
+.Perfil .hljs-header,
 .ini .hljs-title,
 .apache .hljs-tag,
 .parser3 .hljs-title

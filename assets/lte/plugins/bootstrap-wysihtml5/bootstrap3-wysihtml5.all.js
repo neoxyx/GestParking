@@ -10219,7 +10219,7 @@ wysihtml5.Commands = Base.extend(
    * @param {String} command The command string which to execute (eg. "bold", "italic", "insertUnorderedList")
    * @param {String} [value] The command value parameter, needed for some commands ("createLink", "insertImage", ...), optional for commands that don't require one ("bold", "underline", ...)
    * @example
-   *    commands.exec("insertImage", "http://a1.twimg.com/profile_images/113868655/schrei_twitter_reasonably_small.jpg");
+   *    commands.exec("insertImage", "http://a1.twimg.com/Perfil_images/113868655/schrei_twitter_reasonably_small.jpg");
    */
   exec: function(command, value) {
     var obj     = wysihtml5.commands[command],

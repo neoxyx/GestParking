@@ -86,11 +86,11 @@ class CI_Output {
 	protected $mime_type = 'text/html';
 
 	/**
-	 * Enable Profiler flag
+	 * Enable Perfilr flag
 	 *
 	 * @var	bool
 	 */
-	public $enable_profiler = FALSE;
+	public $enable_Perfilr = FALSE;
 
 	/**
 	 * php.ini zlib.output_compression flag
@@ -107,11 +107,11 @@ class CI_Output {
 	protected $_compress_output = FALSE;
 
 	/**
-	 * List of profiler sections
+	 * List of Perfilr sections
 	 *
 	 * @var	array
 	 */
-	protected $_profiler_sections =	array();
+	protected $_Perfilr_sections =	array();
 
 	/**
 	 * Parse markers flag
@@ -344,39 +344,39 @@ class CI_Output {
 	// --------------------------------------------------------------------
 
 	/**
-	 * Enable/disable Profiler
+	 * Enable/disable Perfilr
 	 *
 	 * @param	bool	$val	TRUE to enable or FALSE to disable
 	 * @return	CI_Output
 	 */
-	public function enable_profiler($val = TRUE)
+	public function enable_Perfilr($val = TRUE)
 	{
-		$this->enable_profiler = is_bool($val) ? $val : TRUE;
+		$this->enable_Perfilr = is_bool($val) ? $val : TRUE;
 		return $this;
 	}
 
 	// --------------------------------------------------------------------
 
 	/**
-	 * Set Profiler Sections
+	 * Set Perfilr Sections
 	 *
 	 * Allows override of default/config settings for
-	 * Profiler section display.
+	 * Perfilr section display.
 	 *
-	 * @param	array	$sections	Profiler sections
+	 * @param	array	$sections	Perfilr sections
 	 * @return	CI_Output
 	 */
-	public function set_profiler_sections($sections)
+	public function set_Perfilr_sections($sections)
 	{
 		if (isset($sections['query_toggle_count']))
 		{
-			$this->_profiler_sections['query_toggle_count'] = (int) $sections['query_toggle_count'];
+			$this->_Perfilr_sections['query_toggle_count'] = (int) $sections['query_toggle_count'];
 			unset($sections['query_toggle_count']);
 		}
 
 		foreach ($sections as $section => $enable)
 		{
-			$this->_profiler_sections[$section] = ($enable !== FALSE);
+			$this->_Perfilr_sections[$section] = ($enable !== FALSE);
 		}
 
 		return $this;
@@ -402,7 +402,7 @@ class CI_Output {
 	 * Display Output
 	 *
 	 * Processes and sends finalized output data to the browser along
-	 * with any server headers and profile data. It also stops benchmark
+	 * with any server headers and Perfil data. It also stops benchmark
 	 * timers so the page rendering speed and memory usage can be shown.
 	 *
 	 * Note: All "view" data is automatically put into $this->final_output
@@ -508,19 +508,19 @@ class CI_Output {
 
 		// --------------------------------------------------------------------
 
-		// Do we need to generate profile data?
-		// If so, load the Profile class and run it.
-		if ($this->enable_profiler === TRUE)
+		// Do we need to generate Perfil data?
+		// If so, load the Perfil class and run it.
+		if ($this->enable_Perfilr === TRUE)
 		{
-			$CI->load->library('profiler');
-			if ( ! empty($this->_profiler_sections))
+			$CI->load->library('Perfilr');
+			if ( ! empty($this->_Perfilr_sections))
 			{
-				$CI->profiler->set_sections($this->_profiler_sections);
+				$CI->Perfilr->set_sections($this->_Perfilr_sections);
 			}
 
 			// If the output data contains closing </body> and </html> tags
-			// we will remove them and add them back after we insert the profile data
-			$output = preg_replace('|</body>.*?</html>|is', '', $output, -1, $count).$CI->profiler->run();
+			// we will remove them and add them back after we insert the Perfil data
+			$output = preg_replace('|</body>.*?</html>|is', '', $output, -1, $count).$CI->Perfilr->run();
 			if ($count > 0)
 			{
 				$output .= '</body></html>';

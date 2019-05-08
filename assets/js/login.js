@@ -9,25 +9,25 @@ function login() {
 
         if (resp === '0') {
 
-            window.location = get_base_url() + "admin/Dashboard";
+            window.location = get_base_url() + "admin/Panel";
 
         }
 
         if (resp === '1') {
 
-            window.location = get_base_url() + "empresa/Dashboard";
+            window.location = get_base_url() + "empresa/Panel";
 
         }
 
         if (resp === '2') {
 
-            window.location = get_base_url() + "conductor/Dashboard";
+            window.location = get_base_url() + "conductor/Panel";
 
         }
 
         if (resp === '3') {
 
-            window.location = get_base_url() + "gps/Dashboard";
+            window.location = get_base_url() + "gps/Panel";
 
         }
 

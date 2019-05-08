@@ -464,13 +464,13 @@ For tablets and phones
 	}
 
 	/***
-	Dashboard date range panel
+	Panel date range panel
 	***/
-	.page-content .breadcrumb .dashboard-date-range  {
+	.page-content .breadcrumb .Panel-date-range  {
 		padding-bottom: 8px;
 	} 
 
-	.page-content .breadcrumb .dashboard-date-range span {
+	.page-content .breadcrumb .Panel-date-range span {
 		display: none;
 	}
 

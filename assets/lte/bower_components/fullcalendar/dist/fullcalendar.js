@@ -1253,7 +1253,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(2);
 var EventDef_1 = __webpack_require__(37);
 var EventInstance_1 = __webpack_require__(53);
-var EventDateProfile_1 = __webpack_require__(16);
+var EventDatePerfil_1 = __webpack_require__(16);
 var SingleEventDef = /** @class */ (function (_super) {
     tslib_1.__extends(SingleEventDef, _super);
     function SingleEventDef() {
@@ -1267,29 +1267,29 @@ var SingleEventDef = /** @class */ (function (_super) {
     };
     SingleEventDef.prototype.buildInstance = function () {
         return new EventInstance_1.default(this, // definition
-        this.dateProfile);
+        this.datePerfil);
     };
     SingleEventDef.prototype.isAllDay = function () {
-        return this.dateProfile.isAllDay();
+        return this.datePerfil.isAllDay();
     };
     SingleEventDef.prototype.clone = function () {
         var def = _super.prototype.clone.call(this);
-        def.dateProfile = this.dateProfile;
+        def.datePerfil = this.datePerfil;
         return def;
     };
     SingleEventDef.prototype.rezone = function () {
         var calendar = this.source.calendar;
-        var dateProfile = this.dateProfile;
-        this.dateProfile = new EventDateProfile_1.default(calendar.moment(dateProfile.start), dateProfile.end ? calendar.moment(dateProfile.end) : null, calendar);
+        var datePerfil = this.datePerfil;
+        this.datePerfil = new EventDatePerfil_1.default(calendar.moment(datePerfil.start), datePerfil.end ? calendar.moment(datePerfil.end) : null, calendar);
     };
     /*
     NOTE: if super-method fails, should still attempt to apply
     */
     SingleEventDef.prototype.applyManualStandardProps = function (rawProps) {
         var superSuccess = _super.prototype.applyManualStandardProps.call(this, rawProps);
-        var dateProfile = EventDateProfile_1.default.parse(rawProps, this.source); // returns null on failure
-        if (dateProfile) {
-            this.dateProfile = dateProfile;
+        var datePerfil = EventDatePerfil_1.default.parse(rawProps, this.source); // returns null on failure
+        if (datePerfil) {
+            this.datePerfil = datePerfil;
             // make sure `date` shows up in the legacy event objects as-is
             if (rawProps.date != null) {
                 this.miscProps.date = rawProps.date;
@@ -1729,8 +1729,8 @@ var UnzonedRange_1 = __webpack_require__(5);
 /*
 Meant to be immutable
 */
-var EventDateProfile = /** @class */ (function () {
-    function EventDateProfile(start, end, calendar) {
+var EventDatePerfil = /** @class */ (function () {
+    function EventDatePerfil(start, end, calendar) {
         this.start = start;
         this.end = end || null;
         this.unzonedRange = this.buildUnzonedRange(calendar);
@@ -1738,7 +1738,7 @@ var EventDateProfile = /** @class */ (function () {
     /*
     Needs an EventSource object
     */
-    EventDateProfile.parse = function (rawProps, source) {
+    EventDatePerfil.parse = function (rawProps, source) {
         var startInput = rawProps.start || rawProps.date;
         var endInput = rawProps.end;
         if (!startInput) {
@@ -1778,18 +1778,18 @@ var EventDateProfile = /** @class */ (function () {
         if (!end && forceEventDuration) {
             end = calendar.getDefaultEventEnd(!start.hasTime(), start);
         }
-        return new EventDateProfile(start, end, calendar);
+        return new EventDatePerfil(start, end, calendar);
     };
-    EventDateProfile.isStandardProp = function (propName) {
+    EventDatePerfil.isStandardProp = function (propName) {
         return propName === 'start' || propName === 'date' || propName === 'end' || propName === 'allDay';
     };
-    EventDateProfile.prototype.isAllDay = function () {
+    EventDatePerfil.prototype.isAllDay = function () {
         return !(this.start.hasTime() || (this.end && this.end.hasTime()));
     };
     /*
     Needs a Calendar object
     */
-    EventDateProfile.prototype.buildUnzonedRange = function (calendar) {
+    EventDatePerfil.prototype.buildUnzonedRange = function (calendar) {
         var startMs = this.start.clone().stripZone().valueOf();
         var endMs = this.getEnd(calendar).stripZone().valueOf();
         return new UnzonedRange_1.default(startMs, endMs);
@@ -1797,15 +1797,15 @@ var EventDateProfile = /** @class */ (function () {
     /*
     Needs a Calendar object
     */
-    EventDateProfile.prototype.getEnd = function (calendar) {
+    EventDatePerfil.prototype.getEnd = function (calendar) {
         return this.end ?
             this.end.clone() :
             // derive the end from the start and allDay. compute allDay if necessary
             calendar.getDefaultEventEnd(this.isAllDay(), this.start);
     };
-    return EventDateProfile;
+    return EventDatePerfil;
 }());
-exports.default = EventDateProfile;
+exports.default = EventDatePerfil;
 
 
 /***/ }),
@@ -2067,8 +2067,8 @@ var Model_1 = __webpack_require__(51);
 exports.Model = Model_1.default;
 var Constraints_1 = __webpack_require__(217);
 exports.Constraints = Constraints_1.default;
-var DateProfileGenerator_1 = __webpack_require__(55);
-exports.DateProfileGenerator = DateProfileGenerator_1.default;
+var DatePerfilGenerator_1 = __webpack_require__(55);
+exports.DatePerfilGenerator = DatePerfilGenerator_1.default;
 var UnzonedRange_1 = __webpack_require__(5);
 exports.UnzonedRange = UnzonedRange_1.default;
 var ComponentFootprint_1 = __webpack_require__(12);
@@ -2095,8 +2095,8 @@ var SingleEventDef_1 = __webpack_require__(9);
 exports.SingleEventDef = SingleEventDef_1.default;
 var EventDefDateMutation_1 = __webpack_require__(40);
 exports.EventDefDateMutation = EventDefDateMutation_1.default;
-var EventDateProfile_1 = __webpack_require__(16);
-exports.EventDateProfile = EventDateProfile_1.default;
+var EventDatePerfil_1 = __webpack_require__(16);
+exports.EventDatePerfil = EventDatePerfil_1.default;
 var EventSourceParser_1 = __webpack_require__(38);
 exports.EventSourceParser = EventSourceParser_1.default;
 var EventSource_1 = __webpack_require__(6);
@@ -2201,12 +2201,12 @@ var DayGridHelperRenderer_1 = __webpack_require__(244);
 exports.DayGridHelperRenderer = DayGridHelperRenderer_1.default;
 var BasicView_1 = __webpack_require__(67);
 exports.BasicView = BasicView_1.default;
-var BasicViewDateProfileGenerator_1 = __webpack_require__(68);
-exports.BasicViewDateProfileGenerator = BasicViewDateProfileGenerator_1.default;
+var BasicViewDatePerfilGenerator_1 = __webpack_require__(68);
+exports.BasicViewDatePerfilGenerator = BasicViewDatePerfilGenerator_1.default;
 var MonthView_1 = __webpack_require__(246);
 exports.MonthView = MonthView_1.default;
-var MonthViewDateProfileGenerator_1 = __webpack_require__(247);
-exports.MonthViewDateProfileGenerator = MonthViewDateProfileGenerator_1.default;
+var MonthViewDatePerfilGenerator_1 = __webpack_require__(247);
+exports.MonthViewDatePerfilGenerator = MonthViewDatePerfilGenerator_1.default;
 var ListView_1 = __webpack_require__(248);
 exports.ListView = ListView_1.default;
 var ListEventPointing_1 = __webpack_require__(250);
@@ -2234,7 +2234,7 @@ function eventDefsToEventInstances(eventDefs, unzonedRange) {
 }
 exports.eventDefsToEventInstances = eventDefsToEventInstances;
 function eventInstanceToEventRange(eventInstance) {
-    return new EventRange_1.default(eventInstance.dateProfile.unzonedRange, eventInstance.def, eventInstance);
+    return new EventRange_1.default(eventInstance.datePerfil.unzonedRange, eventInstance.def, eventInstance);
 }
 exports.eventInstanceToEventRange = eventInstanceToEventRange;
 function eventRangeToEventFootprint(eventRange) {
@@ -2243,7 +2243,7 @@ function eventRangeToEventFootprint(eventRange) {
 }
 exports.eventRangeToEventFootprint = eventRangeToEventFootprint;
 function eventInstanceToUnzonedRange(eventInstance) {
-    return eventInstance.dateProfile.unzonedRange;
+    return eventInstance.datePerfil.unzonedRange;
 }
 exports.eventInstanceToUnzonedRange = eventInstanceToUnzonedRange;
 function eventFootprintToComponentFootprint(eventFootprint) {
@@ -2292,7 +2292,7 @@ var EventInstanceGroup = /** @class */ (function () {
         var slicedEventRanges = [];
         for (i = 0; i < eventInstances.length; i++) {
             eventInstance = eventInstances[i];
-            slicedRange = eventInstance.dateProfile.unzonedRange.intersect(constraintRange);
+            slicedRange = eventInstance.datePerfil.unzonedRange.intersect(constraintRange);
             if (slicedRange) {
                 slicedEventRanges.push(new EventRange_1.default(slicedRange, eventInstance.def, eventInstance));
             }
@@ -3176,7 +3176,7 @@ exports.default = {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var util_1 = __webpack_require__(4);
-var EventDateProfile_1 = __webpack_require__(16);
+var EventDatePerfil_1 = __webpack_require__(16);
 var EventDef_1 = __webpack_require__(37);
 var EventDefDateMutation_1 = __webpack_require__(40);
 var SingleEventDef_1 = __webpack_require__(9);
@@ -3192,11 +3192,11 @@ var EventDefMutation = /** @class */ (function () {
         var eventDefId = null;
         var className = null;
         var propName;
-        var dateProfile;
+        var datePerfil;
         var dateMutation;
         var defMutation;
         for (propName in rawProps) {
-            if (EventDateProfile_1.default.isStandardProp(propName)) {
+            if (EventDatePerfil_1.default.isStandardProp(propName)) {
                 dateProps[propName] = rawProps[propName];
             }
             else if (eventDef.isStandardProp(propName)) {
@@ -3206,9 +3206,9 @@ var EventDefMutation = /** @class */ (function () {
                 miscProps[propName] = rawProps[propName];
             }
         }
-        dateProfile = EventDateProfile_1.default.parse(dateProps, eventDef.source);
-        if (dateProfile) { // no failure?
-            dateMutation = EventDefDateMutation_1.default.createFromDiff(eventInstance.dateProfile, dateProfile, largeUnit);
+        datePerfil = EventDatePerfil_1.default.parse(dateProps, eventDef.source);
+        if (datePerfil) { // no failure?
+            dateMutation = EventDefDateMutation_1.default.createFromDiff(eventInstance.datePerfil, datePerfil, largeUnit);
         }
         if (standardProps.id !== eventDef.id) {
             eventDefId = standardProps.id; // only apply if there's a change
@@ -3234,10 +3234,10 @@ var EventDefMutation = /** @class */ (function () {
     returns an undo function.
     */
     EventDefMutation.prototype.mutateSingle = function (eventDef) {
-        var origDateProfile;
+        var origDatePerfil;
         if (this.dateMutation) {
-            origDateProfile = eventDef.dateProfile;
-            eventDef.dateProfile = this.dateMutation.buildNewDateProfile(origDateProfile, eventDef.source.calendar);
+            origDatePerfil = eventDef.datePerfil;
+            eventDef.datePerfil = this.dateMutation.buildNewDatePerfil(origDatePerfil, eventDef.source.calendar);
         }
         // can't undo
         // TODO: more DRY with EventDef::applyManualStandardProps
@@ -3259,9 +3259,9 @@ var EventDefMutation = /** @class */ (function () {
         if (this.miscProps) {
             eventDef.applyMiscProps(this.miscProps);
         }
-        if (origDateProfile) {
+        if (origDatePerfil) {
             return function () {
-                eventDef.dateProfile = origDateProfile;
+                eventDef.datePerfil = origDatePerfil;
             };
         }
         else {
@@ -3290,17 +3290,17 @@ exports.default = EventDefMutation;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var util_1 = __webpack_require__(4);
-var EventDateProfile_1 = __webpack_require__(16);
+var EventDatePerfil_1 = __webpack_require__(16);
 var EventDefDateMutation = /** @class */ (function () {
     function EventDefDateMutation() {
         this.clearEnd = false;
         this.forceTimed = false;
         this.forceAllDay = false;
     }
-    EventDefDateMutation.createFromDiff = function (dateProfile0, dateProfile1, largeUnit) {
-        var clearEnd = dateProfile0.end && !dateProfile1.end;
-        var forceTimed = dateProfile0.isAllDay() && !dateProfile1.isAllDay();
-        var forceAllDay = !dateProfile0.isAllDay() && dateProfile1.isAllDay();
+    EventDefDateMutation.createFromDiff = function (datePerfil0, datePerfil1, largeUnit) {
+        var clearEnd = datePerfil0.end && !datePerfil1.end;
+        var forceTimed = datePerfil0.isAllDay() && !datePerfil1.isAllDay();
+        var forceAllDay = !datePerfil0.isAllDay() && datePerfil1.isAllDay();
         var dateDelta;
         var endDiff;
         var endDelta;
@@ -3310,17 +3310,17 @@ var EventDefDateMutation = /** @class */ (function () {
             if (largeUnit) {
                 return util_1.diffByUnit(date1, date0, largeUnit); // poorly named
             }
-            else if (dateProfile1.isAllDay()) {
+            else if (datePerfil1.isAllDay()) {
                 return util_1.diffDay(date1, date0); // poorly named
             }
             else {
                 return util_1.diffDayTime(date1, date0); // poorly named
             }
         }
-        dateDelta = subtractDates(dateProfile1.start, dateProfile0.start);
-        if (dateProfile1.end) {
-            // use unzonedRanges because dateProfile0.end might be null
-            endDiff = subtractDates(dateProfile1.unzonedRange.getEnd(), dateProfile0.unzonedRange.getEnd());
+        dateDelta = subtractDates(datePerfil1.start, datePerfil0.start);
+        if (datePerfil1.end) {
+            // use unzonedRanges because datePerfil0.end might be null
+            endDiff = subtractDates(datePerfil1.unzonedRange.getEnd(), datePerfil0.unzonedRange.getEnd());
             endDelta = endDiff.subtract(dateDelta);
         }
         mutation = new EventDefDateMutation();
@@ -3334,15 +3334,15 @@ var EventDefDateMutation = /** @class */ (function () {
     /*
     returns an undo function.
     */
-    EventDefDateMutation.prototype.buildNewDateProfile = function (eventDateProfile, calendar) {
-        var start = eventDateProfile.start.clone();
+    EventDefDateMutation.prototype.buildNewDatePerfil = function (eventDatePerfil, calendar) {
+        var start = eventDatePerfil.start.clone();
         var end = null;
         var shouldRezone = false;
-        if (eventDateProfile.end && !this.clearEnd) {
-            end = eventDateProfile.end.clone();
+        if (eventDatePerfil.end && !this.clearEnd) {
+            end = eventDatePerfil.end.clone();
         }
         else if (this.endDelta && !end) {
-            end = calendar.getDefaultEventEnd(eventDateProfile.isAllDay(), start);
+            end = calendar.getDefaultEventEnd(eventDatePerfil.isAllDay(), start);
         }
         if (this.forceTimed) {
             shouldRezone = true;
@@ -3385,9 +3385,9 @@ var EventDefDateMutation = /** @class */ (function () {
         }
         // TODO: okay to access calendar option?
         if (!end && calendar.opt('forceEventDuration')) {
-            end = calendar.getDefaultEventEnd(eventDateProfile.isAllDay(), start);
+            end = calendar.getDefaultEventEnd(eventDatePerfil.isAllDay(), start);
         }
-        return new EventDateProfile_1.default(start, end, calendar);
+        return new EventDatePerfil_1.default(start, end, calendar);
     };
     EventDefDateMutation.prototype.setDateDelta = function (dateDelta) {
         if (dateDelta && dateDelta.valueOf()) {
@@ -3730,12 +3730,12 @@ var InteractiveDateComponent = /** @class */ (function (_super) {
     // NOTE: very similar to isExternalInstanceGroupAllowed
     InteractiveDateComponent.prototype.isEventInstanceGroupAllowed = function (eventInstanceGroup) {
         var view = this._getView();
-        var dateProfile = this.dateProfile;
+        var datePerfil = this.datePerfil;
         var eventFootprints = this.eventRangesToEventFootprints(eventInstanceGroup.getAllEventRanges());
         var i;
         for (i = 0; i < eventFootprints.length; i++) {
             // TODO: just use getAllEventRanges directly
-            if (!dateProfile.validUnzonedRange.containsRange(eventFootprints[i].componentFootprint.unzonedRange)) {
+            if (!datePerfil.validUnzonedRange.containsRange(eventFootprints[i].componentFootprint.unzonedRange)) {
                 return false;
             }
         }
@@ -3745,11 +3745,11 @@ var InteractiveDateComponent = /** @class */ (function (_super) {
     // when it's a completely anonymous external drag, no event.
     InteractiveDateComponent.prototype.isExternalInstanceGroupAllowed = function (eventInstanceGroup) {
         var view = this._getView();
-        var dateProfile = this.dateProfile;
+        var datePerfil = this.datePerfil;
         var eventFootprints = this.eventRangesToEventFootprints(eventInstanceGroup.getAllEventRanges());
         var i;
         for (i = 0; i < eventFootprints.length; i++) {
-            if (!dateProfile.validUnzonedRange.containsRange(eventFootprints[i].componentFootprint.unzonedRange)) {
+            if (!datePerfil.validUnzonedRange.containsRange(eventFootprints[i].componentFootprint.unzonedRange)) {
                 return false;
             }
         }
@@ -3779,7 +3779,7 @@ var $ = __webpack_require__(3);
 var moment = __webpack_require__(0);
 var util_1 = __webpack_require__(4);
 var RenderQueue_1 = __webpack_require__(229);
-var DateProfileGenerator_1 = __webpack_require__(55);
+var DatePerfilGenerator_1 = __webpack_require__(55);
 var InteractiveDateComponent_1 = __webpack_require__(42);
 var GlobalEmitter_1 = __webpack_require__(23);
 var UnzonedRange_1 = __webpack_require__(5);
@@ -3799,7 +3799,7 @@ var View = /** @class */ (function (_super) {
         _this.name = _this.type;
         _this.initRenderQueue();
         _this.initHiddenDays();
-        _this.dateProfileGenerator = new _this.dateProfileGeneratorClass(_this);
+        _this.datePerfilGenerator = new _this.datePerfilGeneratorClass(_this);
         _this.bindBaseRenderHandlers();
         _this.eventOrderSpecs = util_1.parseFieldSpecs(_this.opt('eventOrder'));
         // legacy
@@ -3861,31 +3861,31 @@ var View = /** @class */ (function (_super) {
     /* Title and Date Formatting
     ------------------------------------------------------------------------------------------------------------------*/
     // Computes what the title at the top of the calendar should be for this view
-    View.prototype.computeTitle = function (dateProfile) {
+    View.prototype.computeTitle = function (datePerfil) {
         var unzonedRange;
         // for views that span a large unit of time, show the proper interval, ignoring stray days before and after
-        if (/^(year|month)$/.test(dateProfile.currentRangeUnit)) {
-            unzonedRange = dateProfile.currentUnzonedRange;
+        if (/^(year|month)$/.test(datePerfil.currentRangeUnit)) {
+            unzonedRange = datePerfil.currentUnzonedRange;
         }
         else { // for day units or smaller, use the actual day range
-            unzonedRange = dateProfile.activeUnzonedRange;
+            unzonedRange = datePerfil.activeUnzonedRange;
         }
         return this.formatRange({
-            start: this.calendar.msToMoment(unzonedRange.startMs, dateProfile.isRangeAllDay),
-            end: this.calendar.msToMoment(unzonedRange.endMs, dateProfile.isRangeAllDay)
-        }, dateProfile.isRangeAllDay, this.opt('titleFormat') || this.computeTitleFormat(dateProfile), this.opt('titleRangeSeparator'));
+            start: this.calendar.msToMoment(unzonedRange.startMs, datePerfil.isRangeAllDay),
+            end: this.calendar.msToMoment(unzonedRange.endMs, datePerfil.isRangeAllDay)
+        }, datePerfil.isRangeAllDay, this.opt('titleFormat') || this.computeTitleFormat(datePerfil), this.opt('titleRangeSeparator'));
     };
     // Generates the format string that should be used to generate the title for the current date range.
     // Attempts to compute the most appropriate format if not explicitly specified with `titleFormat`.
-    View.prototype.computeTitleFormat = function (dateProfile) {
-        var currentRangeUnit = dateProfile.currentRangeUnit;
+    View.prototype.computeTitleFormat = function (datePerfil) {
+        var currentRangeUnit = datePerfil.currentRangeUnit;
         if (currentRangeUnit === 'year') {
             return 'YYYY';
         }
         else if (currentRangeUnit === 'month') {
             return this.opt('monthYearFormat'); // like "September 2014"
         }
-        else if (dateProfile.currentUnzonedRange.as('days') > 1) {
+        else if (datePerfil.currentUnzonedRange.as('days') > 1) {
             return 'll'; // multi-day range. shorter, like "Sep 9 - 10 2014"
         }
         else {
@@ -3895,22 +3895,22 @@ var View = /** @class */ (function (_super) {
     // Date Setting/Unsetting
     // -----------------------------------------------------------------------------------------------------------------
     View.prototype.setDate = function (date) {
-        var currentDateProfile = this.get('dateProfile');
-        var newDateProfile = this.dateProfileGenerator.build(date, undefined, true); // forceToValid=true
-        if (!currentDateProfile ||
-            !currentDateProfile.activeUnzonedRange.equals(newDateProfile.activeUnzonedRange)) {
-            this.set('dateProfile', newDateProfile);
+        var currentDatePerfil = this.get('datePerfil');
+        var newDatePerfil = this.datePerfilGenerator.build(date, undefined, true); // forceToValid=true
+        if (!currentDatePerfil ||
+            !currentDatePerfil.activeUnzonedRange.equals(newDatePerfil.activeUnzonedRange)) {
+            this.set('datePerfil', newDatePerfil);
         }
     };
     View.prototype.unsetDate = function () {
-        this.unset('dateProfile');
+        this.unset('datePerfil');
     };
     // Event Data
     // -----------------------------------------------------------------------------------------------------------------
-    View.prototype.fetchInitialEvents = function (dateProfile) {
+    View.prototype.fetchInitialEvents = function (datePerfil) {
         var calendar = this.calendar;
-        var forceAllDay = dateProfile.isRangeAllDay && !this.usesMinMaxTime;
-        return calendar.requestEvents(calendar.msToMoment(dateProfile.activeUnzonedRange.startMs, forceAllDay), calendar.msToMoment(dateProfile.activeUnzonedRange.endMs, forceAllDay));
+        var forceAllDay = datePerfil.isRangeAllDay && !this.usesMinMaxTime;
+        return calendar.requestEvents(calendar.msToMoment(datePerfil.activeUnzonedRange.startMs, forceAllDay), calendar.msToMoment(datePerfil.activeUnzonedRange.endMs, forceAllDay));
     };
     View.prototype.bindEventChanges = function () {
         this.listenTo(this.calendar, 'eventsReset', this.resetEvents); // TODO: make this a real event
@@ -3934,10 +3934,10 @@ var View = /** @class */ (function (_super) {
     };
     // Date High-level Rendering
     // -----------------------------------------------------------------------------------------------------------------
-    View.prototype.requestDateRender = function (dateProfile) {
+    View.prototype.requestDateRender = function (datePerfil) {
         var _this = this;
         this.requestRender(function () {
-            _this.executeDateRender(dateProfile);
+            _this.executeDateRender(datePerfil);
         }, 'date', 'init');
     };
     View.prototype.requestDateUnrender = function () {
@@ -3946,9 +3946,9 @@ var View = /** @class */ (function (_super) {
             _this.executeDateUnrender();
         }, 'date', 'destroy');
     };
-    // if dateProfile not specified, uses current
-    View.prototype.executeDateRender = function (dateProfile) {
-        _super.prototype.executeDateRender.call(this, dateProfile);
+    // if datePerfil not specified, uses current
+    View.prototype.executeDateRender = function (datePerfil) {
+        _super.prototype.executeDateRender.call(this, datePerfil);
         if (this['render']) {
             this['render'](); // TODO: deprecate
         }
@@ -4148,7 +4148,7 @@ var View = /** @class */ (function (_super) {
         var dateMutation = eventMutation.dateMutation;
         // update the EventInstance, for handlers
         if (dateMutation) {
-            eventInstance.dateProfile = dateMutation.buildNewDateProfile(eventInstance.dateProfile, this.calendar);
+            eventInstance.datePerfil = dateMutation.buildNewDatePerfil(eventInstance.datePerfil, this.calendar);
         }
         this.triggerEventDrop(eventInstance, 
         // a drop doesn't necessarily mean a date mutation (ex: resource change)
@@ -4185,7 +4185,7 @@ var View = /** @class */ (function (_super) {
         this.publiclyTrigger('drop', {
             context: el[0],
             args: [
-                singleEventDef.dateProfile.start.clone(),
+                singleEventDef.datePerfil.start.clone(),
                 ev,
                 ui,
                 this
@@ -4209,7 +4209,7 @@ var View = /** @class */ (function (_super) {
         var eventManager = this.calendar.eventManager;
         var undoFunc = eventManager.mutateEventsWithId(eventInstance.def.id, eventMutation);
         // update the EventInstance, for handlers
-        eventInstance.dateProfile = eventMutation.dateMutation.buildNewDateProfile(eventInstance.dateProfile, this.calendar);
+        eventInstance.datePerfil = eventMutation.dateMutation.buildNewDatePerfil(eventInstance.datePerfil, this.calendar);
         var resizeDelta = eventMutation.dateMutation.endDelta || eventMutation.dateMutation.startDelta;
         this.triggerEventResize(eventInstance, resizeDelta, undoFunc, el, ev);
     };
@@ -4251,12 +4251,12 @@ var View = /** @class */ (function (_super) {
     };
     // Triggers handlers to 'select'
     View.prototype.triggerSelect = function (footprint, ev) {
-        var dateProfile = this.calendar.footprintToDateProfile(footprint); // abuse of "Event"DateProfile?
+        var datePerfil = this.calendar.footprintToDatePerfil(footprint); // abuse of "Event"DatePerfil?
         this.publiclyTrigger('select', {
             context: this,
             args: [
-                dateProfile.start,
-                dateProfile.end,
+                datePerfil.start,
+                datePerfil.end,
                 ev,
                 this
             ]
@@ -4356,16 +4356,16 @@ var View = /** @class */ (function (_super) {
     // Triggers handlers to 'dayClick'
     // Span has start/end of the clicked area. Only the start is useful.
     View.prototype.triggerDayClick = function (footprint, dayEl, ev) {
-        var dateProfile = this.calendar.footprintToDateProfile(footprint); // abuse of "Event"DateProfile?
+        var datePerfil = this.calendar.footprintToDatePerfil(footprint); // abuse of "Event"DatePerfil?
         this.publiclyTrigger('dayClick', {
             context: dayEl,
-            args: [dateProfile.start, ev, this]
+            args: [datePerfil.start, ev, this]
         });
     };
     /* Date Utils
     ------------------------------------------------------------------------------------------------------------------*/
     // For DateComponent::getDayClasses
-    View.prototype.isDateInOtherMonth = function (date, dateProfile) {
+    View.prototype.isDateInOtherMonth = function (date, datePerfil) {
         return false;
     };
     // Arguments after name will be forwarded to a hypothetical function value
@@ -4443,9 +4443,9 @@ var View = /** @class */ (function (_super) {
 }(InteractiveDateComponent_1.default));
 exports.default = View;
 View.prototype.usesMinMaxTime = false;
-View.prototype.dateProfileGeneratorClass = DateProfileGenerator_1.default;
-View.watch('displayingDates', ['isInDom', 'dateProfile'], function (deps) {
-    this.requestDateRender(deps.dateProfile);
+View.prototype.datePerfilGeneratorClass = DatePerfilGenerator_1.default;
+View.watch('displayingDates', ['isInDom', 'datePerfil'], function (deps) {
+    this.requestDateRender(deps.datePerfil);
 }, function () {
     this.requestDateUnrender();
 });
@@ -4454,8 +4454,8 @@ View.watch('displayingBusinessHours', ['displayingDates', 'businessHourGenerator
 }, function () {
     this.requestBusinessHoursUnrender();
 });
-View.watch('initialEvents', ['dateProfile'], function (deps) {
-    return this.fetchInitialEvents(deps.dateProfile);
+View.watch('initialEvents', ['datePerfil'], function (deps) {
+    return this.fetchInitialEvents(deps.datePerfil);
 });
 View.watch('bindingEvents', ['initialEvents'], function (deps) {
     this.setEvents(deps.initialEvents);
@@ -4469,17 +4469,17 @@ View.watch('displayingEvents', ['displayingDates', 'hasEvents'], function () {
 }, function () {
     this.requestEventsUnrender();
 });
-View.watch('title', ['dateProfile'], function (deps) {
-    return (this.title = this.computeTitle(deps.dateProfile)); // assign to View for legacy reasons
+View.watch('title', ['datePerfil'], function (deps) {
+    return (this.title = this.computeTitle(deps.datePerfil)); // assign to View for legacy reasons
 });
-View.watch('legacyDateProps', ['dateProfile'], function (deps) {
+View.watch('legacyDateProps', ['datePerfil'], function (deps) {
     var calendar = this.calendar;
-    var dateProfile = deps.dateProfile;
+    var datePerfil = deps.datePerfil;
     // DEPRECATED, but we need to keep it updated...
-    this.start = calendar.msToMoment(dateProfile.activeUnzonedRange.startMs, dateProfile.isRangeAllDay);
-    this.end = calendar.msToMoment(dateProfile.activeUnzonedRange.endMs, dateProfile.isRangeAllDay);
-    this.intervalStart = calendar.msToMoment(dateProfile.currentUnzonedRange.startMs, dateProfile.isRangeAllDay);
-    this.intervalEnd = calendar.msToMoment(dateProfile.currentUnzonedRange.endMs, dateProfile.isRangeAllDay);
+    this.start = calendar.msToMoment(datePerfil.activeUnzonedRange.startMs, datePerfil.isRangeAllDay);
+    this.end = calendar.msToMoment(datePerfil.activeUnzonedRange.endMs, datePerfil.isRangeAllDay);
+    this.intervalStart = calendar.msToMoment(datePerfil.currentUnzonedRange.startMs, datePerfil.isRangeAllDay);
+    this.intervalEnd = calendar.msToMoment(datePerfil.currentUnzonedRange.endMs, datePerfil.isRangeAllDay);
 });
 
 
@@ -4519,7 +4519,7 @@ var EventRenderer = /** @class */ (function () {
         this.displayEventEnd = displayEventEnd;
     };
     EventRenderer.prototype.render = function (eventsPayload) {
-        var dateProfile = this.component._getDateProfile();
+        var datePerfil = this.component._getDatePerfil();
         var eventDefId;
         var instanceGroup;
         var eventRanges;
@@ -4527,7 +4527,7 @@ var EventRenderer = /** @class */ (function () {
         var fgRanges = [];
         for (eventDefId in eventsPayload) {
             instanceGroup = eventsPayload[eventDefId];
-            eventRanges = instanceGroup.sliceRenderRanges(dateProfile.activeUnzonedRange);
+            eventRanges = instanceGroup.sliceRenderRanges(datePerfil.activeUnzonedRange);
             if (instanceGroup.getEventDef().hasBgRendering()) {
                 bgRanges.push.apply(bgRanges, eventRanges);
             }
@@ -4685,7 +4685,7 @@ var EventRenderer = /** @class */ (function () {
     // If not specified, formatStr will default to the eventTimeFormat setting,
     // and displayEnd will default to the displayEventEnd setting.
     EventRenderer.prototype.getTimeText = function (eventFootprint, formatStr, displayEnd) {
-        return this._getTimeText(eventFootprint.eventInstance.dateProfile.start, eventFootprint.eventInstance.dateProfile.end, eventFootprint.componentFootprint.isAllDay, formatStr, displayEnd);
+        return this._getTimeText(eventFootprint.eventInstance.datePerfil.start, eventFootprint.eventInstance.datePerfil.end, eventFootprint.componentFootprint.isAllDay, formatStr, displayEnd);
     };
     EventRenderer.prototype._getTimeText = function (start, end, isAllDay, formatStr, displayEnd) {
         if (formatStr == null) {
@@ -5558,15 +5558,15 @@ ParsableModelMixin.prototype.standardPropMap = {}; // will be cloned by defineSt
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var EventInstance = /** @class */ (function () {
-    function EventInstance(def, dateProfile) {
+    function EventInstance(def, datePerfil) {
         this.def = def;
-        this.dateProfile = dateProfile;
+        this.datePerfil = datePerfil;
     }
     EventInstance.prototype.toLegacy = function () {
-        var dateProfile = this.dateProfile;
+        var datePerfil = this.datePerfil;
         var obj = this.def.toLegacy();
-        obj.start = dateProfile.start.clone();
-        obj.end = dateProfile.end ? dateProfile.end.clone() : null;
+        obj.start = datePerfil.start.clone();
+        obj.end = datePerfil.end ? datePerfil.end.clone() : null;
         return obj;
     };
     return EventInstance;
@@ -5584,7 +5584,7 @@ var $ = __webpack_require__(3);
 var moment = __webpack_require__(0);
 var EventDef_1 = __webpack_require__(37);
 var EventInstance_1 = __webpack_require__(53);
-var EventDateProfile_1 = __webpack_require__(16);
+var EventDatePerfil_1 = __webpack_require__(16);
 var RecurringEventDef = /** @class */ (function (_super) {
     tslib_1.__extends(RecurringEventDef, _super);
     function RecurringEventDef() {
@@ -5617,7 +5617,7 @@ var RecurringEventDef = /** @class */ (function (_super) {
                     instanceEnd = zonedDayStart.clone().time(this.endTime);
                 }
                 instances.push(new EventInstance_1.default(this, // definition
-                new EventDateProfile_1.default(instanceStart, instanceEnd, calendar)));
+                new EventDatePerfil_1.default(instanceStart, instanceEnd, calendar)));
             }
             unzonedDate.add(1, 'days');
         }
@@ -5681,39 +5681,39 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var moment = __webpack_require__(0);
 var util_1 = __webpack_require__(4);
 var UnzonedRange_1 = __webpack_require__(5);
-var DateProfileGenerator = /** @class */ (function () {
-    function DateProfileGenerator(_view) {
+var DatePerfilGenerator = /** @class */ (function () {
+    function DatePerfilGenerator(_view) {
         this._view = _view;
     }
-    DateProfileGenerator.prototype.opt = function (name) {
+    DatePerfilGenerator.prototype.opt = function (name) {
         return this._view.opt(name);
     };
-    DateProfileGenerator.prototype.trimHiddenDays = function (unzonedRange) {
+    DatePerfilGenerator.prototype.trimHiddenDays = function (unzonedRange) {
         return this._view.trimHiddenDays(unzonedRange);
     };
-    DateProfileGenerator.prototype.msToUtcMoment = function (ms, forceAllDay) {
+    DatePerfilGenerator.prototype.msToUtcMoment = function (ms, forceAllDay) {
         return this._view.calendar.msToUtcMoment(ms, forceAllDay);
     };
     /* Date Range Computation
     ------------------------------------------------------------------------------------------------------------------*/
     // Builds a structure with info about what the dates/ranges will be for the "prev" view.
-    DateProfileGenerator.prototype.buildPrev = function (currentDateProfile) {
-        var prevDate = currentDateProfile.date.clone()
-            .startOf(currentDateProfile.currentRangeUnit)
-            .subtract(currentDateProfile.dateIncrement);
+    DatePerfilGenerator.prototype.buildPrev = function (currentDatePerfil) {
+        var prevDate = currentDatePerfil.date.clone()
+            .startOf(currentDatePerfil.currentRangeUnit)
+            .subtract(currentDatePerfil.dateIncrement);
         return this.build(prevDate, -1);
     };
     // Builds a structure with info about what the dates/ranges will be for the "next" view.
-    DateProfileGenerator.prototype.buildNext = function (currentDateProfile) {
-        var nextDate = currentDateProfile.date.clone()
-            .startOf(currentDateProfile.currentRangeUnit)
-            .add(currentDateProfile.dateIncrement);
+    DatePerfilGenerator.prototype.buildNext = function (currentDatePerfil) {
+        var nextDate = currentDatePerfil.date.clone()
+            .startOf(currentDatePerfil.currentRangeUnit)
+            .add(currentDatePerfil.dateIncrement);
         return this.build(nextDate, 1);
     };
     // Builds a structure holding dates/ranges for rendering around the given date.
     // Optional direction param indicates whether the date is being incremented/decremented
     // from its previous value. decremented = -1, incremented = 1 (default).
-    DateProfileGenerator.prototype.build = function (date, direction, forceToValid) {
+    DatePerfilGenerator.prototype.build = function (date, direction, forceToValid) {
         if (forceToValid === void 0) { forceToValid = false; }
         var isDateAllDay = !date.hasTime();
         var validUnzonedRange;
@@ -5779,7 +5779,7 @@ var DateProfileGenerator = /** @class */ (function () {
     // Builds an object with optional start/end properties.
     // Indicates the minimum/maximum dates to display.
     // not responsible for trimming hidden days.
-    DateProfileGenerator.prototype.buildValidRange = function () {
+    DatePerfilGenerator.prototype.buildValidRange = function () {
         return this._view.getUnzonedRangeOption('validRange', this._view.calendar.getNow()) ||
             new UnzonedRange_1.default(); // completely open-ended
     };
@@ -5788,7 +5788,7 @@ var DateProfileGenerator = /** @class */ (function () {
     // See build() for a description of `direction`.
     // Guaranteed to have `range` and `unit` properties. `duration` is optional.
     // TODO: accept a MS-time instead of a moment `date`?
-    DateProfileGenerator.prototype.buildCurrentRangeInfo = function (date, direction) {
+    DatePerfilGenerator.prototype.buildCurrentRangeInfo = function (date, direction) {
         var viewSpec = this._view.viewSpec;
         var duration = null;
         var unit = null;
@@ -5813,12 +5813,12 @@ var DateProfileGenerator = /** @class */ (function () {
         }
         return { duration: duration, unit: unit, unzonedRange: unzonedRange };
     };
-    DateProfileGenerator.prototype.getFallbackDuration = function () {
+    DatePerfilGenerator.prototype.getFallbackDuration = function () {
         return moment.duration({ days: 1 });
     };
     // Returns a new activeUnzonedRange to have time values (un-ambiguate)
     // minTime or maxTime causes the range to expand.
-    DateProfileGenerator.prototype.adjustActiveRange = function (unzonedRange, minTime, maxTime) {
+    DatePerfilGenerator.prototype.adjustActiveRange = function (unzonedRange, minTime, maxTime) {
         var start = unzonedRange.getStart();
         var end = unzonedRange.getEnd();
         if (this._view.usesMinMaxTime) {
@@ -5834,7 +5834,7 @@ var DateProfileGenerator = /** @class */ (function () {
     // Builds the "current" range when it is specified as an explicit duration.
     // `unit` is the already-computed computeGreatestUnit value of duration.
     // TODO: accept a MS-time instead of a moment `date`?
-    DateProfileGenerator.prototype.buildRangeFromDuration = function (date, direction, duration, unit) {
+    DatePerfilGenerator.prototype.buildRangeFromDuration = function (date, direction, duration, unit) {
         var alignment = this.opt('dateAlignment');
         var dateIncrementInput;
         var dateIncrementDuration;
@@ -5880,7 +5880,7 @@ var DateProfileGenerator = /** @class */ (function () {
     };
     // Builds the "current" range when a dayCount is specified.
     // TODO: accept a MS-time instead of a moment `date`?
-    DateProfileGenerator.prototype.buildRangeFromDayCount = function (date, direction, dayCount) {
+    DatePerfilGenerator.prototype.buildRangeFromDayCount = function (date, direction, dayCount) {
         var customAlignment = this.opt('dateAlignment');
         var runningCount = 0;
         var start;
@@ -5916,7 +5916,7 @@ var DateProfileGenerator = /** @class */ (function () {
     // Builds a normalized range object for the "visible" range,
     // which is a way to define the currentUnzonedRange and activeUnzonedRange at the same time.
     // TODO: accept a MS-time instead of a moment `date`?
-    DateProfileGenerator.prototype.buildCustomVisibleRange = function (date) {
+    DatePerfilGenerator.prototype.buildCustomVisibleRange = function (date) {
         var visibleUnzonedRange = this._view.getUnzonedRangeOption('visibleRange', this._view.calendar.applyTimezone(date) // correct zone. also generates new obj that avoids mutations
         );
         if (visibleUnzonedRange && (visibleUnzonedRange.startMs == null || visibleUnzonedRange.endMs == null)) {
@@ -5927,12 +5927,12 @@ var DateProfileGenerator = /** @class */ (function () {
     // Computes the range that will represent the element/cells for *rendering*,
     // but which may have voided days/times.
     // not responsible for trimming hidden days.
-    DateProfileGenerator.prototype.buildRenderRange = function (currentUnzonedRange, currentRangeUnit, isRangeAllDay) {
+    DatePerfilGenerator.prototype.buildRenderRange = function (currentUnzonedRange, currentRangeUnit, isRangeAllDay) {
         return currentUnzonedRange.clone();
     };
     // Compute the duration value that should be added/substracted to the current date
     // when a prev/next operation happens.
-    DateProfileGenerator.prototype.buildDateIncrement = function (fallback) {
+    DatePerfilGenerator.prototype.buildDateIncrement = function (fallback) {
         var dateIncrementInput = this.opt('dateIncrement');
         var customAlignment;
         if (dateIncrementInput) {
@@ -5948,9 +5948,9 @@ var DateProfileGenerator = /** @class */ (function () {
             return moment.duration({ days: 1 });
         }
     };
-    return DateProfileGenerator;
+    return DatePerfilGenerator;
 }());
-exports.default = DateProfileGenerator;
+exports.default = DatePerfilGenerator;
 
 
 /***/ }),
@@ -6646,8 +6646,8 @@ var DayTableMixin = /** @class */ (function (_super) {
         var t = this;
         var view = t.view;
         var calendar = view.calendar;
-        var date = calendar.msToUtcMoment(t.dateProfile.renderUnzonedRange.startMs, true);
-        var end = calendar.msToUtcMoment(t.dateProfile.renderUnzonedRange.endMs, true);
+        var date = calendar.msToUtcMoment(t.datePerfil.renderUnzonedRange.startMs, true);
+        var end = calendar.msToUtcMoment(t.datePerfil.renderUnzonedRange.endMs, true);
         var dayIndex = -1;
         var dayIndices = [];
         var dayDates = [];
@@ -6869,7 +6869,7 @@ var DayTableMixin = /** @class */ (function (_super) {
     DayTableMixin.prototype.renderHeadDateCellHtml = function (date, colspan, otherAttrs) {
         var t = this;
         var view = t.view;
-        var isDateValid = t.dateProfile.activeUnzonedRange.containsDate(date); // TODO: called too frequently. cache somehow.
+        var isDateValid = t.datePerfil.activeUnzonedRange.containsDate(date); // TODO: called too frequently. cache somehow.
         var classNames = [
             'fc-day-header',
             view.calendar.theme.getClass('widgetHeader')
@@ -6939,7 +6939,7 @@ var DayTableMixin = /** @class */ (function (_super) {
     DayTableMixin.prototype.renderBgCellHtml = function (date, otherAttrs) {
         var t = this;
         var view = t.view;
-        var isDateValid = t.dateProfile.activeUnzonedRange.containsDate(date); // TODO: called too frequently. cache somehow.
+        var isDateValid = t.datePerfil.activeUnzonedRange.containsDate(date); // TODO: called too frequently. cache somehow.
         var classes = t.getDayClasses(date);
         classes.unshift('fc-day', view.calendar.theme.getClass('widgetContent'));
         return '<td class="' + classes.join(' ') + '"' +
@@ -6996,7 +6996,7 @@ var BusinessHourRenderer = /** @class */ (function () {
     }
     BusinessHourRenderer.prototype.render = function (businessHourGenerator) {
         var component = this.component;
-        var unzonedRange = component._getDateProfile().activeUnzonedRange;
+        var unzonedRange = component._getDatePerfil().activeUnzonedRange;
         var eventInstanceGroup = businessHourGenerator.buildEventInstanceGroup(component.hasAllDayBusinessHours, unzonedRange);
         var eventFootprints = eventInstanceGroup ?
             component.eventRangesToEventFootprints(eventInstanceGroup.sliceRenderRanges(unzonedRange)) :
@@ -7179,10 +7179,10 @@ var HelperRenderer = /** @class */ (function () {
     };
     HelperRenderer.prototype.fabricateEventFootprint = function (componentFootprint) {
         var calendar = this.view.calendar;
-        var eventDateProfile = calendar.footprintToDateProfile(componentFootprint);
+        var eventDatePerfil = calendar.footprintToDatePerfil(componentFootprint);
         var dummyEvent = new SingleEventDef_1.default(new EventSource_1.default(calendar));
         var dummyInstance;
-        dummyEvent.dateProfile = eventDateProfile;
+        dummyEvent.datePerfil = eventDatePerfil;
         dummyInstance = dummyEvent.buildInstance();
         return new EventFootprint_1.default(componentFootprint, dummyEvent, dummyInstance);
     };
@@ -7350,8 +7350,8 @@ var DayGrid = /** @class */ (function (_super) {
     };
     /* Date Rendering
     ------------------------------------------------------------------------------------------------------------------*/
-    DayGrid.prototype.renderDates = function (dateProfile) {
-        this.dateProfile = dateProfile;
+    DayGrid.prototype.renderDates = function (datePerfil) {
+        this.datePerfil = datePerfil;
         this.updateDayTable();
         this.renderGrid();
     };
@@ -7457,7 +7457,7 @@ var DayGrid = /** @class */ (function (_super) {
     DayGrid.prototype.renderNumberCellHtml = function (date) {
         var view = this.view;
         var html = '';
-        var isDateValid = this.dateProfile.activeUnzonedRange.containsDate(date); // TODO: called too frequently. cache somehow.
+        var isDateValid = this.datePerfil.activeUnzonedRange.containsDate(date); // TODO: called too frequently. cache somehow.
         var isDayNumberVisible = this.getIsDayNumbersVisible() && isDateValid;
         var classes;
         var weekCalcFirstDoW;
@@ -7924,7 +7924,7 @@ var $ = __webpack_require__(3);
 var util_1 = __webpack_require__(4);
 var Scroller_1 = __webpack_require__(41);
 var View_1 = __webpack_require__(43);
-var BasicViewDateProfileGenerator_1 = __webpack_require__(68);
+var BasicViewDatePerfilGenerator_1 = __webpack_require__(68);
 var DayGrid_1 = __webpack_require__(66);
 /* An abstract class for the "basic" views, as well as month view. Renders one or more rows of day cells.
 ----------------------------------------------------------------------------------------------------------------------*/
@@ -7960,9 +7960,9 @@ var BasicView = /** @class */ (function (_super) {
         var subclass = makeDayGridSubclass(this.dayGridClass);
         return new subclass(this);
     };
-    BasicView.prototype.executeDateRender = function (dateProfile) {
-        this.dayGrid.breakOnWeeks = /year|month|week/.test(dateProfile.currentRangeUnit);
-        _super.prototype.executeDateRender.call(this, dateProfile);
+    BasicView.prototype.executeDateRender = function (datePerfil) {
+        this.dayGrid.breakOnWeeks = /year|month|week/.test(datePerfil.currentRangeUnit);
+        _super.prototype.executeDateRender.call(this, datePerfil);
     };
     BasicView.prototype.renderSkeleton = function () {
         var dayGridContainerEl;
@@ -8093,7 +8093,7 @@ var BasicView = /** @class */ (function (_super) {
     return BasicView;
 }(View_1.default));
 exports.default = BasicView;
-BasicView.prototype.dateProfileGeneratorClass = BasicViewDateProfileGenerator_1.default;
+BasicView.prototype.datePerfilGeneratorClass = BasicViewDatePerfilGenerator_1.default;
 BasicView.prototype.dayGridClass = DayGrid_1.default;
 // customize the rendering behavior of BasicView's dayGrid
 function makeDayGridSubclass(SuperClass) {
@@ -8164,14 +8164,14 @@ function makeDayGridSubclass(SuperClass) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(2);
 var UnzonedRange_1 = __webpack_require__(5);
-var DateProfileGenerator_1 = __webpack_require__(55);
-var BasicViewDateProfileGenerator = /** @class */ (function (_super) {
-    tslib_1.__extends(BasicViewDateProfileGenerator, _super);
-    function BasicViewDateProfileGenerator() {
+var DatePerfilGenerator_1 = __webpack_require__(55);
+var BasicViewDatePerfilGenerator = /** @class */ (function (_super) {
+    tslib_1.__extends(BasicViewDatePerfilGenerator, _super);
+    function BasicViewDatePerfilGenerator() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     // Computes the date range that will be rendered.
-    BasicViewDateProfileGenerator.prototype.buildRenderRange = function (currentUnzonedRange, currentRangeUnit, isRangeAllDay) {
+    BasicViewDatePerfilGenerator.prototype.buildRenderRange = function (currentUnzonedRange, currentRangeUnit, isRangeAllDay) {
         var renderUnzonedRange = _super.prototype.buildRenderRange.call(this, currentUnzonedRange, currentRangeUnit, isRangeAllDay); // an UnzonedRange
         var start = this.msToUtcMoment(renderUnzonedRange.startMs, isRangeAllDay);
         var end = this.msToUtcMoment(renderUnzonedRange.endMs, isRangeAllDay);
@@ -8185,9 +8185,9 @@ var BasicViewDateProfileGenerator = /** @class */ (function (_super) {
         }
         return new UnzonedRange_1.default(start, end);
     };
-    return BasicViewDateProfileGenerator;
-}(DateProfileGenerator_1.default));
-exports.default = BasicViewDateProfileGenerator;
+    return BasicViewDatePerfilGenerator;
+}(DatePerfilGenerator_1.default));
+exports.default = BasicViewDatePerfilGenerator;
 
 
 /***/ }),
@@ -8466,7 +8466,7 @@ var Constraints = /** @class */ (function () {
     Constraints.prototype.buildCurrentBusinessFootprints = function (isAllDay) {
         var view = this._calendar.view;
         var businessHourGenerator = view.get('businessHourGenerator');
-        var unzonedRange = view.dateProfile.activeUnzonedRange;
+        var unzonedRange = view.datePerfil.activeUnzonedRange;
         var eventInstanceGroup = businessHourGenerator.buildEventInstanceGroup(isAllDay, unzonedRange);
         if (eventInstanceGroup) {
             return this.eventInstancesToFootprints(eventInstanceGroup.eventInstances);
@@ -8524,7 +8524,7 @@ var Constraints = /** @class */ (function () {
     };
     /*
     Parses footprints directly.
-    Very similar to EventDateProfile::parse :(
+    Very similar to EventDatePerfil::parse :(
     */
     Constraints.prototype.parseFootprints = function (rawInput) {
         var start;
@@ -10096,20 +10096,20 @@ var DateComponent = /** @class */ (function (_super) {
     };
     // Date
     // -----------------------------------------------------------------------------------------------------------------
-    DateComponent.prototype.executeDateRender = function (dateProfile) {
-        this.dateProfile = dateProfile; // for rendering
-        this.renderDates(dateProfile);
+    DateComponent.prototype.executeDateRender = function (datePerfil) {
+        this.datePerfil = datePerfil; // for rendering
+        this.renderDates(datePerfil);
         this.isDatesRendered = true;
         this.callChildren('executeDateRender', arguments);
     };
     DateComponent.prototype.executeDateUnrender = function () {
         this.callChildren('executeDateUnrender', arguments);
-        this.dateProfile = null;
+        this.datePerfil = null;
         this.unrenderDates();
         this.isDatesRendered = false;
     };
     // date-cell content only
-    DateComponent.prototype.renderDates = function (dateProfile) {
+    DateComponent.prototype.renderDates = function (datePerfil) {
         // subclasses should implement
     };
     // date-cell content only
@@ -10363,7 +10363,7 @@ var DateComponent = /** @class */ (function (_super) {
     };
     DateComponent.prototype.getSafeHitFootprint = function (hit) {
         var footprint = this.getHitFootprint(hit);
-        if (!this.dateProfile.activeUnzonedRange.containsRange(footprint.unzonedRange)) {
+        if (!this.datePerfil.activeUnzonedRange.containsRange(footprint.unzonedRange)) {
             return null;
         }
         return footprint;
@@ -10446,8 +10446,8 @@ var DateComponent = /** @class */ (function (_super) {
     DateComponent.prototype._getView = function () {
         return this.view;
     };
-    DateComponent.prototype._getDateProfile = function () {
-        return this._getView().get('dateProfile');
+    DateComponent.prototype._getDatePerfil = function () {
+        return this._getView().get('datePerfil');
     };
     // Generates HTML for an anchor to another view into the calendar.
     // Will either generate an <a> tag or a non-clickable <span> tag, depending on enabled settings.
@@ -10499,12 +10499,12 @@ var DateComponent = /** @class */ (function (_super) {
         var view = this._getView();
         var classes = [];
         var today;
-        if (!this.dateProfile.activeUnzonedRange.containsDate(date)) {
+        if (!this.datePerfil.activeUnzonedRange.containsDate(date)) {
             classes.push('fc-disabled-day'); // TODO: jQuery UI theme?
         }
         else {
             classes.push('fc-' + util_1.dayIDs[date.day()]);
-            if (view.isDateInOtherMonth(date, this.dateProfile)) { // TODO: use DateComponent subclass somehow
+            if (view.isDateInOtherMonth(date, this.datePerfil)) { // TODO: use DateComponent subclass somehow
                 classes.push('fc-other-month');
             }
             today = view.calendar.getNow();
@@ -10536,7 +10536,7 @@ var DateComponent = /** @class */ (function (_super) {
     // Compute the number of the give units in the "current" range.
     // Will return a floating-point number. Won't round.
     DateComponent.prototype.currentRangeAs = function (unit) {
-        return this._getDateProfile().currentUnzonedRange.as(unit);
+        return this._getDatePerfil().currentUnzonedRange.as(unit);
     };
     // Returns the date range of the full days the given range visually appears to occupy.
     // Returns a plain object with start/end, NOT an UnzonedRange!
@@ -10604,7 +10604,7 @@ var locale_1 = __webpack_require__(32);
 var moment_ext_1 = __webpack_require__(11);
 var UnzonedRange_1 = __webpack_require__(5);
 var ComponentFootprint_1 = __webpack_require__(12);
-var EventDateProfile_1 = __webpack_require__(16);
+var EventDatePerfil_1 = __webpack_require__(16);
 var EventManager_1 = __webpack_require__(220);
 var BusinessHourGenerator_1 = __webpack_require__(218);
 var EventSourceParser_1 = __webpack_require__(38);
@@ -10737,7 +10737,7 @@ var Calendar = /** @class */ (function () {
     };
     Calendar.prototype.prev = function () {
         var view = this.view;
-        var prevInfo = view.dateProfileGenerator.buildPrev(view.get('dateProfile'));
+        var prevInfo = view.datePerfilGenerator.buildPrev(view.get('datePerfil'));
         if (prevInfo.isValid) {
             this.currentDate = prevInfo.date;
             this.renderView();
@@ -10745,7 +10745,7 @@ var Calendar = /** @class */ (function () {
     };
     Calendar.prototype.next = function () {
         var view = this.view;
-        var nextInfo = view.dateProfileGenerator.buildNext(view.get('dateProfile'));
+        var nextInfo = view.datePerfilGenerator.buildNext(view.get('datePerfil'));
         if (nextInfo.isValid) {
             this.currentDate = nextInfo.date;
             this.renderView();
@@ -10892,16 +10892,16 @@ var Calendar = /** @class */ (function () {
                 _this.setToolbarsTitle(deps.title);
             }
         });
-        view.watch('dateProfileForCalendar', ['dateProfile'], function (deps) {
+        view.watch('datePerfilForCalendar', ['datePerfil'], function (deps) {
             if (view === _this.view) { // hack
-                _this.currentDate = deps.dateProfile.date; // might have been constrained by view dates
-                _this.updateToolbarButtons(deps.dateProfile);
+                _this.currentDate = deps.datePerfil.date; // might have been constrained by view dates
+                _this.updateToolbarButtons(deps.datePerfil);
             }
         });
     };
     Calendar.prototype.unbindViewHandlers = function (view) {
         view.unwatch('titleForCalendar');
-        view.unwatch('dateProfileForCalendar');
+        view.unwatch('datePerfilForCalendar');
     };
     // View Rendering
     // -----------------------------------------------------------------------------------
@@ -11096,13 +11096,13 @@ var Calendar = /** @class */ (function () {
     Calendar.prototype.setToolbarsTitle = function (title) {
         this.toolbarsManager.proxyCall('updateTitle', title);
     };
-    Calendar.prototype.updateToolbarButtons = function (dateProfile) {
+    Calendar.prototype.updateToolbarButtons = function (datePerfil) {
         var now = this.getNow();
         var view = this.view;
-        var todayInfo = view.dateProfileGenerator.build(now);
-        var prevInfo = view.dateProfileGenerator.buildPrev(view.get('dateProfile'));
-        var nextInfo = view.dateProfileGenerator.buildNext(view.get('dateProfile'));
-        this.toolbarsManager.proxyCall((todayInfo.isValid && !dateProfile.currentUnzonedRange.containsDate(now)) ?
+        var todayInfo = view.datePerfilGenerator.build(now);
+        var prevInfo = view.datePerfilGenerator.buildPrev(view.get('datePerfil'));
+        var nextInfo = view.datePerfilGenerator.buildNext(view.get('datePerfil'));
+        this.toolbarsManager.proxyCall((todayInfo.isValid && !datePerfil.currentUnzonedRange.containsDate(now)) ?
             'enableButton' :
             'disableButton', 'today');
         this.toolbarsManager.proxyCall(prevInfo.isValid ?
@@ -11272,7 +11272,7 @@ var Calendar = /** @class */ (function () {
     /*
     Assumes the footprint is non-open-ended.
     */
-    Calendar.prototype.footprintToDateProfile = function (componentFootprint, ignoreEnd) {
+    Calendar.prototype.footprintToDatePerfil = function (componentFootprint, ignoreEnd) {
         if (ignoreEnd === void 0) { ignoreEnd = false; }
         var start = moment_ext_1.default.utc(componentFootprint.unzonedRange.startMs);
         var end;
@@ -11295,7 +11295,7 @@ var Calendar = /** @class */ (function () {
         if (end) {
             this.localizeMoment(end);
         }
-        return new EventDateProfile_1.default(start, end, this);
+        return new EventDatePerfil_1.default(start, end, this);
     };
     // Returns a moment for the current date, as defined by the client's computer or from the `now` option.
     // Will return an moment with an ambiguous timezone.
@@ -11633,7 +11633,7 @@ var ExternalDropping = /** @class */ (function (_super) {
                 }
                 if (singleEventDef) {
                     component.renderDrag(// called without a seg parameter
-                    component.eventRangesToEventFootprints(mutatedEventInstanceGroup.sliceRenderRanges(component.dateProfile.renderUnzonedRange, view.calendar)));
+                    component.eventRangesToEventFootprints(mutatedEventInstanceGroup.sliceRenderRanges(component.datePerfil.renderUnzonedRange, view.calendar)));
                 }
             },
             hitOut: function () {
@@ -11856,7 +11856,7 @@ var EventResizing = /** @class */ (function (_super) {
                 }
                 if (resizeMutation) {
                     view.hideEventsWithId(seg.footprint.eventDef.id);
-                    view.renderEventResize(component.eventRangesToEventFootprints(mutatedEventInstanceGroup.sliceRenderRanges(component.dateProfile.renderUnzonedRange, calendar)), seg);
+                    view.renderEventResize(component.eventRangesToEventFootprints(mutatedEventInstanceGroup.sliceRenderRanges(component.datePerfil.renderUnzonedRange, calendar)), seg);
                 }
             },
             hitOut: function () {
@@ -12114,7 +12114,7 @@ var EventDragging = /** @class */ (function (_super) {
                 // if a valid drop location, have the subclass render a visual indication
                 if (eventDefMutation &&
                     view.renderDrag(// truthy if rendered something
-                    component.eventRangesToEventFootprints(mutatedEventInstanceGroup.sliceRenderRanges(component.dateProfile.renderUnzonedRange, calendar)), seg, dragListener.isTouch)) {
+                    component.eventRangesToEventFootprints(mutatedEventInstanceGroup.sliceRenderRanges(component.datePerfil.renderUnzonedRange, calendar)), seg, dragListener.isTouch)) {
                     mouseFollower.hide(); // if the subclass is already using a mock event "helper", hide our own
                 }
                 else {
@@ -12344,7 +12344,7 @@ var DateSelecting = /** @class */ (function (_super) {
         return new ComponentFootprint_1.default(new UnzonedRange_1.default(ms[0], ms[3]), footprint0.isAllDay);
     };
     DateSelecting.prototype.isSelectionFootprintAllowed = function (componentFootprint) {
-        return this.component.dateProfile.validUnzonedRange.containsRange(componentFootprint.unzonedRange) &&
+        return this.component.datePerfil.validUnzonedRange.containsRange(componentFootprint.unzonedRange) &&
             this.view.calendar.constraints.isSelectionFootprintAllowed(componentFootprint);
     };
     return DateSelecting;
@@ -12698,7 +12698,7 @@ agendaTimeGridMethods = {
     renderHeadIntroHtml: function () {
         var view = this.view;
         var calendar = view.calendar;
-        var weekStart = calendar.msToUtcMoment(this.dateProfile.renderUnzonedRange.startMs, true);
+        var weekStart = calendar.msToUtcMoment(this.datePerfil.renderUnzonedRange.startMs, true);
         var weekText;
         if (this.opt('weekNumbers')) {
             weekText = weekStart.format(this.opt('smallWeekFormat'));
@@ -12874,8 +12874,8 @@ var TimeGrid = /** @class */ (function (_super) {
     };
     /* Date Rendering
     ------------------------------------------------------------------------------------------------------------------*/
-    TimeGrid.prototype.renderDates = function (dateProfile) {
-        this.dateProfile = dateProfile;
+    TimeGrid.prototype.renderDates = function (datePerfil) {
+        this.datePerfil = datePerfil;
         this.updateDayTable();
         this.renderSlats();
         this.renderColumns();
@@ -12910,16 +12910,16 @@ var TimeGrid = /** @class */ (function (_super) {
         var calendar = view.calendar;
         var theme = calendar.theme;
         var isRTL = this.isRTL;
-        var dateProfile = this.dateProfile;
+        var datePerfil = this.datePerfil;
         var html = '';
-        var slotTime = moment.duration(+dateProfile.minTime); // wish there was .clone() for durations
+        var slotTime = moment.duration(+datePerfil.minTime); // wish there was .clone() for durations
         var slotIterator = moment.duration(0);
         var slotDate; // will be on the view's first day, but we only care about its time
         var isLabeled;
         var axisHtml;
         // Calculate the time for each slot
-        while (slotTime < dateProfile.maxTime) {
-            slotDate = calendar.msToUtcMoment(dateProfile.renderUnzonedRange.startMs).time(slotTime);
+        while (slotTime < datePerfil.maxTime) {
+            slotDate = calendar.msToUtcMoment(datePerfil.renderUnzonedRange.startMs).time(slotTime);
             isLabeled = util_1.isInt(util_1.divideDurationByDuration(slotIterator, this.labelInterval));
             axisHtml =
                 '<td class="fc-axis fc-time ' + theme.getClass('widgetContent') + '" ' + view.axisStyleAttr() + '>' +
@@ -12943,10 +12943,10 @@ var TimeGrid = /** @class */ (function (_super) {
         return html;
     };
     TimeGrid.prototype.renderColumns = function () {
-        var dateProfile = this.dateProfile;
+        var datePerfil = this.datePerfil;
         var theme = this.view.calendar.theme;
         this.dayRanges = this.dayDates.map(function (dayDate) {
-            return new UnzonedRange_1.default(dayDate.clone().add(dateProfile.minTime), dayDate.clone().add(dateProfile.maxTime));
+            return new UnzonedRange_1.default(dayDate.clone().add(datePerfil.minTime), dayDate.clone().add(datePerfil.maxTime));
         });
         if (this.headContainerEl) {
             this.headContainerEl.html(this.renderHeadHtml());
@@ -13093,8 +13093,8 @@ var TimeGrid = /** @class */ (function (_super) {
     // Computes the top coordinate, relative to the bounds of the grid, of the given time (a Duration).
     TimeGrid.prototype.computeTimeTop = function (time) {
         var len = this.slatEls.length;
-        var dateProfile = this.dateProfile;
-        var slatCoverage = (time - dateProfile.minTime) / this.slotDuration; // floating-point value of # of slots covered
+        var datePerfil = this.datePerfil;
+        var slatCoverage = (time - datePerfil.minTime) / this.slotDuration; // floating-point value of # of slots covered
         var slatIndex;
         var slatRemainder;
         // compute a floating-point number for how many slats should be progressed through.
@@ -13196,7 +13196,7 @@ var TimeGrid = /** @class */ (function (_super) {
     };
     // Given a row number of the grid, representing a "snap", returns a time (Duration) from its start-of-day
     TimeGrid.prototype.computeSnapTime = function (snapIndex) {
-        return moment.duration(this.dateProfile.minTime + this.snapDuration * snapIndex);
+        return moment.duration(this.datePerfil.minTime + this.snapDuration * snapIndex);
     };
     TimeGrid.prototype.getHitEl = function (hit) {
         return this.colEls.eq(hit.col);
@@ -14030,7 +14030,7 @@ var tslib_1 = __webpack_require__(2);
 var moment = __webpack_require__(0);
 var util_1 = __webpack_require__(4);
 var BasicView_1 = __webpack_require__(67);
-var MonthViewDateProfileGenerator_1 = __webpack_require__(247);
+var MonthViewDatePerfilGenerator_1 = __webpack_require__(247);
 /* A month view with day cells running in rows (one-per-week) and columns
 ----------------------------------------------------------------------------------------------------------------------*/
 var MonthView = /** @class */ (function (_super) {
@@ -14046,13 +14046,13 @@ var MonthView = /** @class */ (function (_super) {
         }
         util_1.distributeHeight(this.dayGrid.rowEls, height, !isAuto); // if auto, don't compensate for height-hogging rows
     };
-    MonthView.prototype.isDateInOtherMonth = function (date, dateProfile) {
-        return date.month() !== moment.utc(dateProfile.currentUnzonedRange.startMs).month(); // TODO: optimize
+    MonthView.prototype.isDateInOtherMonth = function (date, datePerfil) {
+        return date.month() !== moment.utc(datePerfil.currentUnzonedRange.startMs).month(); // TODO: optimize
     };
     return MonthView;
 }(BasicView_1.default));
 exports.default = MonthView;
-MonthView.prototype.dateProfileGeneratorClass = MonthViewDateProfileGenerator_1.default;
+MonthView.prototype.datePerfilGeneratorClass = MonthViewDatePerfilGenerator_1.default;
 
 
 /***/ }),
@@ -14061,15 +14061,15 @@ MonthView.prototype.dateProfileGeneratorClass = MonthViewDateProfileGenerator_1.
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = __webpack_require__(2);
-var BasicViewDateProfileGenerator_1 = __webpack_require__(68);
+var BasicViewDatePerfilGenerator_1 = __webpack_require__(68);
 var UnzonedRange_1 = __webpack_require__(5);
-var MonthViewDateProfileGenerator = /** @class */ (function (_super) {
-    tslib_1.__extends(MonthViewDateProfileGenerator, _super);
-    function MonthViewDateProfileGenerator() {
+var MonthViewDatePerfilGenerator = /** @class */ (function (_super) {
+    tslib_1.__extends(MonthViewDatePerfilGenerator, _super);
+    function MonthViewDatePerfilGenerator() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     // Computes the date range that will be rendered.
-    MonthViewDateProfileGenerator.prototype.buildRenderRange = function (currentUnzonedRange, currentRangeUnit, isRangeAllDay) {
+    MonthViewDatePerfilGenerator.prototype.buildRenderRange = function (currentUnzonedRange, currentRangeUnit, isRangeAllDay) {
         var renderUnzonedRange = _super.prototype.buildRenderRange.call(this, currentUnzonedRange, currentRangeUnit, isRangeAllDay);
         var start = this.msToUtcMoment(renderUnzonedRange.startMs, isRangeAllDay);
         var end = this.msToUtcMoment(renderUnzonedRange.endMs, isRangeAllDay);
@@ -14083,9 +14083,9 @@ var MonthViewDateProfileGenerator = /** @class */ (function (_super) {
         }
         return new UnzonedRange_1.default(start, end);
     };
-    return MonthViewDateProfileGenerator;
-}(BasicViewDateProfileGenerator_1.default));
-exports.default = MonthViewDateProfileGenerator;
+    return MonthViewDatePerfilGenerator;
+}(BasicViewDatePerfilGenerator_1.default));
+exports.default = MonthViewDatePerfilGenerator;
 
 
 /***/ }),
@@ -14136,10 +14136,10 @@ var ListView = /** @class */ (function (_super) {
         return totalHeight -
             util_1.subtractInnerElHeight(this.el, this.scroller.el); // everything that's NOT the scroller
     };
-    ListView.prototype.renderDates = function (dateProfile) {
+    ListView.prototype.renderDates = function (datePerfil) {
         var calendar = this.calendar;
-        var dayStart = calendar.msToUtcMoment(dateProfile.renderUnzonedRange.startMs, true);
-        var viewEnd = calendar.msToUtcMoment(dateProfile.renderUnzonedRange.endMs, true);
+        var dayStart = calendar.msToUtcMoment(datePerfil.renderUnzonedRange.startMs, true);
+        var viewEnd = calendar.msToUtcMoment(datePerfil.renderUnzonedRange.endMs, true);
         var dayDates = [];
         var dayRanges = [];
         while (dayStart < viewEnd) {
