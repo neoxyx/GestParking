@@ -343,12 +343,12 @@ $rol = $usuario_data['rol'];
                         <li class="treeview">
                             <a href="#">
                                 <i class="fa fa-info-circle"></i>
-                                <span>Informes</span>
+                                <span>Reportes</span>
                             </a>
                             <ul class="treeview-menu">
-                                <li><a href="<?= base_url() ?>assets/lte/pages/layout/top-nav.html"><i class="fa fa-circle-o"></i> Top Navigation</a></li>
-                                <li><a href="<?= base_url() ?>assets/lte/pages/layout/boxed.html"><i class="fa fa-circle-o"></i> Boxed</a></li>
-                                <li><a href="<?= base_url() ?>assets/lte/pages/layout/fixed.html"><i class="fa fa-circle-o"></i> Fixed</a></li>
+                                <li><a href="<?= base_url() ?>index.php/Report"><i class="fa fa-circle-o"></i> Diario</a></li>
+                                <li><a href="<?= base_url() ?>assets/lte/pages/layout/boxed.html"><i class="fa fa-circle-o"></i> Semanal</a></li>
+                                <li><a href="<?= base_url() ?>assets/lte/pages/layout/fixed.html"><i class="fa fa-circle-o"></i> Mensual</a></li>
                                 <li><a href="<?= base_url() ?>assets/lte/pages/layout/collapsed-sidebar.html"><i class="fa fa-circle-o"></i> Collapsed Sidebar</a></li>
                             </ul>
                         </li>
