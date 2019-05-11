@@ -2,13 +2,14 @@
 $usuario_data = $this->session->userdata('datos_usuario');
 $nombre = $usuario_data['name'];
 $rol = $usuario_data['rol'];
+$idrol = $usuario_data['idRol'];
 ?>
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>AdminLTE 2 | Advanced form elements</title>
+        <title>GestParking | Ingresos</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <!-- Bootstrap 3.3.7 -->
@@ -134,20 +135,25 @@ $rol = $usuario_data['rol'];
                     <ul class="sidebar-menu" data-widget="tree">
                         <li class="header">MENU DE NAVEGACIÓN</li>
                         <li class="active">
-                            <a href="<?= base_url() ?>index.php/Atm"">
+                            <a href="<?= base_url() ?>index.php/Atm">
                                 <i class="fa fa-home"></i> <span>Panel</span>
                             </a>
                         </li>
                         <li>
-                            <a href="#">
-                                <i class="fa fa-dollar"></i> <span>Cuadre Caja</span>
+                            <a href="<?= base_url() ?>/index.php/Agreements">
+                                <i class="fa fa-file-o"></i> <span>Convenios</span>
+                            </a>
+                        </li> 
+                        <li>
+                            <a href="<?= base_url() ?>index.php/Square">
+                                <i class="fa fa-dollar"></i> <span>Cuadre Diario</span>
                                 <span class="pull-right-container">
                                     <small class="label pull-right bg-green">$</small>
                                 </span>
                             </a>
                         </li>
-                        <li class="treeview">
-                            <a href="#">
+                        <!--<li class="treeview">
+                            <a href="<?= base_url() ?>index.php/Atm">
                                 <i class="fa fa-info-circle"></i>
                                 <span>Informes</span>
                             </a>
@@ -157,22 +163,23 @@ $rol = $usuario_data['rol'];
                                 <li><a href="<?= base_url() ?>assets/lte/pages/layout/fixed.html"><i class="fa fa-circle-o"></i> Fixed</a></li>
                                 <li><a href="<?= base_url() ?>assets/lte/pages/layout/collapsed-sidebar.html"><i class="fa fa-circle-o"></i> Collapsed Sidebar</a></li>
                             </ul>
-                        </li>
-                        <li class="treeview">
-                            <a href="#">
-                                <i class="fa fa-laptop"></i>
-                                <span>Administración</span>
-                                <span class="pull-right-container">
-                                    <i class="fa fa-angle-left pull-right"></i>
-                                </span>
-                            </a>
-                            <ul class="treeview-menu">
-                                <li><a href="<?= base_url() ?>"><i class="fa fa-users"></i> Usuarios</a></li>
-                                <li><a href="<?= base_url() ?>"><i class="fa fa-dollar"></i> Tarifas</a></li>
-                                <li><a href="<?= base_url() ?>"><i class="fa fa-car"></i> Tipos Vehiculos</a></li>
-                                <li><a href="<?= base_url() ?>"><i class="fa fa-file-o"></i> Convenios</a></li>
-                            </ul>
-                        </li>                        
+                        </li>-->
+                        <?php if ($idrol == 1) { ?>
+                            <li class="treeview">
+                                <a href="#">
+                                    <i class="fa fa-laptop"></i>
+                                    <span>Administración</span>
+                                    <span class="pull-right-container">
+                                        <i class="fa fa-angle-left pull-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li><a href="<?= base_url() ?>/index.php/Users"><i class="fa fa-users"></i> Usuarios</a></li>
+                                    <li><a href="<?= base_url() ?>/index.php/Rates"><i class="fa fa-dollar"></i> Tarifas</a></li>
+                                    <li><a href="<?= base_url() ?>/index.php/Types"><i class="fa fa-car"></i> Tipos Vehiculos</a></li>
+                                </ul>
+                            </li>  
+                        <?php } ?>
                     </ul>
                 </section>
                 <!-- /.sidebar -->
@@ -204,13 +211,10 @@ $rol = $usuario_data['rol'];
                                             <div class="input-group">
                                                 <select class="form-control input-lg" name="type" id="type" required="">
                                                     <option value="">Seleccionar</option>
-                                                    <option value="1">Cicla</option>
-                                                    <option value="2">Moto</option>
-                                                    <option value="3">Moto Cicla</option>
-                                                    <option value="4">Moto Electrica</option>
-                                                    <option value="5">Moto Carro</option>
-                                                    <option value="6">Carro</option>
-                                                    <option value="7">Otros</option>
+                                                    <?php foreach ($types as $type) { ?>
+                                                        <option value="<?= $type->idType ?>"><?= $type->type ?></option> 
+                                                    <?php }
+                                                    ?>
                                                 </select>
                                             </div>
                                             <!-- /.input group -->

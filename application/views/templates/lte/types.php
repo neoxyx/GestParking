@@ -2,14 +2,14 @@
 $usuario_data = $this->session->userdata('datos_usuario');
 $nombre = $usuario_data['name'];
 $rol = $usuario_data['rol'];
-$idrol = $usuario_data['idRol'];
+setlocale(LC_MONETARY, 'es_CO');
 ?>
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>GestParking | Salidas</title>
+        <title>GestParking | Usuarios</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <!-- Bootstrap 3.3.7 -->
@@ -35,7 +35,9 @@ $idrol = $usuario_data['idRol'];
         <!-- AdminLTE Skins. Choose a skin from the css/skins
              folder instead of downloading all of them to reduce the load. -->
         <link rel="stylesheet" href="<?= base_url() ?>assets/lte/dist/css/skins/_all-skins.min.css">
-
+        <!-- datatable jquery -->
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+        <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css">
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -135,7 +137,7 @@ $idrol = $usuario_data['idRol'];
                     <ul class="sidebar-menu" data-widget="tree">
                         <li class="header">MENU DE NAVEGACIÓN</li>
                         <li class="active">
-                            <a href="<?= base_url() ?>index.php/Atm"">
+                            <a href="<?= base_url() ?>index.php/Atm">
                                 <i class="fa fa-home"></i> <span>Panel</span>
                             </a>
                         </li>
@@ -152,9 +154,8 @@ $idrol = $usuario_data['idRol'];
                                 </span>
                             </a>
                         </li>
-
                         <!--<li class="treeview">
-                            <a href="#">
+                            <a href="<?= base_url() ?>index.php/Atm">
                                 <i class="fa fa-info-circle"></i>
                                 <span>Informes</span>
                             </a>
@@ -165,22 +166,20 @@ $idrol = $usuario_data['idRol'];
                                 <li><a href="<?= base_url() ?>assets/lte/pages/layout/collapsed-sidebar.html"><i class="fa fa-circle-o"></i> Collapsed Sidebar</a></li>
                             </ul>
                         </li>-->
-                        <?php if ($idrol == 1) { ?>
-                            <li class="treeview">
-                                <a href="#">
-                                    <i class="fa fa-laptop"></i>
-                                    <span>Administración</span>
-                                    <span class="pull-right-container">
-                                        <i class="fa fa-angle-left pull-right"></i>
-                                    </span>
-                                </a>
-                                <ul class="treeview-menu">
-                                    <li><a href="<?= base_url() ?>/index.php/Users"><i class="fa fa-users"></i> Usuarios</a></li>
-                                    <li><a href="<?= base_url() ?>/index.php/Rates"><i class="fa fa-dollar"></i> Tarifas</a></li>
-                                    <li><a href="<?= base_url() ?>/index.php/Types"><i class="fa fa-car"></i> Tipos Vehiculos</a></li>
-                                </ul>
-                            </li>  
-                        <?php } ?>                       
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-laptop"></i>
+                                <span>Administración</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href="<?= base_url() ?>/index.php/Users"><i class="fa fa-users"></i> Usuarios</a></li>
+                                <li><a href="<?= base_url() ?>/index.php/Rates"><i class="fa fa-dollar"></i> Tarifas</a></li>
+                                <li><a href="<?= base_url() ?>/index.php/Types"><i class="fa fa-car"></i> Tipos Vehiculos</a></li>
+                            </ul>
+                        </li>                        
                     </ul>
                 </section>
                 <!-- /.sidebar -->
@@ -191,7 +190,7 @@ $idrol = $usuario_data['idRol'];
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
                     <h1>
-                        Salida de Vehiculo
+                        Ingreso Vehiculo
                     </h1>
                     <ol class="breadcrumb">
                         <li><a href="<?= base_url() ?>index.php/atm"><i class="fa fa-Panel"></i> Inicio</a></li>
@@ -202,52 +201,33 @@ $idrol = $usuario_data['idRol'];
                 <!-- Main content -->
                 <section class="content">
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="box box-info">
                                 <div class="box-body">
-                                    <form id="frmOut">
-
-                                        <!-- Placa -->
-                                        <div class="form-group">
-                                            <label>Placa Vehiculo:</label>
-                                            <div class="input-group">
-                                                <input type="text" id="placa" name="placa" class="form-control input-lg" required="">
-                                            </div>
-                                            <!-- /.input group -->
-                                        </div>
-                                        <!-- /.form group -->                                        
-
-                                        <div class="input-group">
-                                            <button type="submit" id="registrar" name="registrar" class="btn btn-success">Registrar
-                                            </button>
-                                        </div>
-                                    </form>
+                                    <table id="dataTable" class="table table-bordered">
+                                        <thead>                                            
+                                            <tr>
+                                                <th>Tipo Vehiculo</th>
+                                                <th>Tarifa</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php foreach ($datos as $dato) { ?>                                                                                            
+                                                <tr>
+                                                    <td><?= $dato->type ?></td>
+                                                    <td><?= $dato->rate ?></td>
+                                                </tr>
+                                            <?php } ?>
+                                        </tbody>
+                                    </table>
                                 </div>
                                 <!-- /.box-body -->
                             </div>
                             <!-- /.box -->
+                        </div>                      
 
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="box box-success">
-                                <div class="box-body">
-                                    <div id="typeout" style="color: orange"></div>
-                                    <div id="obsvout" style="color: green"></div>
-                                    <div id="datein" style="color: green"></div>
-                                    <div id="hourin" style="color: green"></div>
-                                    <div id="dateout" style="color: blue"></div>
-                                    <div id="hourout" style="color: blue"></div>                                    
-                                    <div id="vrfracc" style="color: blue"></div>
-                                    <div id="totaltime" style="color: red"></div>
-                                </div>
-                                <!-- /.box-body -->
-                            </div>
-                            <!-- /.box -->
-
-                        </div>
                     </div>
-                    <!-- /.row -->                    
+                    <!-- /.row -->
                 </section>
                 <!-- /.content -->
             </div>
@@ -458,6 +438,14 @@ $idrol = $usuario_data['idRol'];
 
         <!-- jQuery 3 -->
         <script src="<?= base_url() ?>assets/lte/bower_components/jquery/dist/jquery.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.flash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+        <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script>
         <!-- Bootstrap 3.3.7 -->
         <script src="<?= base_url() ?>assets/lte/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
         <!-- Select2 -->
@@ -488,99 +476,14 @@ $idrol = $usuario_data['idRol'];
         <!-- Page script -->
         <script>
             $(function () {
-                //Initialize Select2 Elements
-                $('.select2').select2()
-
-                //Datemask dd/mm/yyyy
-                $('#datemask').inputmask('dd/mm/yyyy', {'placeholder': 'dd/mm/yyyy'})
-                //Datemask2 mm/dd/yyyy
-                $('#datemask2').inputmask('mm/dd/yyyy', {'placeholder': 'mm/dd/yyyy'})
-                //Money Euro
-                $('[data-mask]').inputmask()
-
-                //Date range picker
-                $('#reservation').daterangepicker()
-                //Date range picker with time picker
-                $('#reservationtime').daterangepicker({timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A'})
-                //Date range as a button
-                $('#daterange-btn').daterangepicker(
-                        {
-                            ranges: {
-                                'Today': [moment(), moment()],
-                                'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-                                'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-                                'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-                                'This Month': [moment().startOf('month'), moment().endOf('month')],
-                                'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-                            },
-                            startDate: moment().subtract(29, 'days'),
-                            endDate: moment()
-                        },
-                function (start, end) {
-                    $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
-                }
-                )
-
-                //Date picker
-                $('#datepicker').datepicker({
-                    autoclose: true
-                })
-
-                //iCheck for checkbox and radio inputs
-                $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
-                    checkboxClass: 'icheckbox_minimal-blue',
-                    radioClass: 'iradio_minimal-blue'
-                })
-                //Red color scheme for iCheck
-                $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
-                    checkboxClass: 'icheckbox_minimal-red',
-                    radioClass: 'iradio_minimal-red'
-                })
-                //Flat red color scheme for iCheck
-                $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
-                    checkboxClass: 'icheckbox_flat-green',
-                    radioClass: 'iradio_flat-green'
-                })
-
-                //Colorpicker
-                $('.my-colorpicker1').colorpicker()
-                //color picker with addon
-                $('.my-colorpicker2').colorpicker()
-
-                //Timepicker
-                $('.timepicker').timepicker({
-                    showInputs: false
-                })
-
-                $("#placa").blur(function () {
-                    var url = "<?= base_url() ?>index.php/Atm/get_registry?jsoncallback=?";
-                    $.getJSON(url, {placa: $("#placa").val()}).done(function (res) {
-                        $("#typeout").html("<h3>" + res.vehicle.type + " " + res.vehicle.color + " " + res.vehicle.plate + "</h3>");
-                        $("#obsvout").html("<h3>Observaciones: " + res.vehicle.observations + "</h3>");
-                        $("#vrfracc").html("<h3>Valor Hora/Fracción: $ " + res.vehicle.rate + "<input type='hidden' id='vrf' value=" + res.vehicle.rate + "></h3>");
-                        $("#datein").html("<h3>Fecha ingreso: " + res.record.date_in + "<input type='hidden' id='dtin' value=" + res.record.date_in + "></h3>");
-                        $("#hourin").html("<h3>Hora ingreso: " + res.record.hour_in + "<input type='hidden' id='hin' value=" + res.record.hour_in + "></h3>");
-                    })
-                })
-                $("#frmOut").submit(function (event) {
-                    event.preventDefault();
-                    var url = "<?= base_url() ?>index.php/Atm/set_registry_out";
-                    var placa = $("#placa").val();
-                    var vr = $("#vrf").val();
-                    var date_in = $("#dtin").val();
-                    var hour_in = $("#hin").val();
-                    $.ajax({
-                        type: "POST",
-                        url: url,
-                        data: {placa: placa, vr: vr, date_in: date_in, hour_in: hour_in, date_out: '<?= date('Y-m-d') ?>', hour_out: '<?= date('H:i:s') ?>'},
-                        success: function (response) {
-                            $("#dateout").html("<h3>Fecha salida: " + '<?= date('Y-m-d'); ?>' + "</h3>");
-                            $("#hourout").html("<h3>Hora salida: " + '<?= date('H:i:s'); ?>' + "</h3>");
-                            $("#totaltime").html("<h1>Tiempo y costo total: " + response + "</h1>");
-                        }
-                    });
+                $('#dataTable').DataTable({
+                    dom: 'Bfrtip',
+                    buttons: [
+                        'copy', 'csv', 'excel', 'pdf', 'print'
+                    ]
                 });
             })
         </script>
     </body>
 </html>
+

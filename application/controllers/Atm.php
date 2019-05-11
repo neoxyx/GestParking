@@ -25,7 +25,9 @@ class Atm extends CI_Controller {
 
     public function in() {
         $this->load->helper('date');
-        $this->load->view('templates/lte/in');
+        $this->load->model('Types_model');
+        $data['types'] = $this->Types_model->get_types();
+        $this->load->view('templates/lte/in', $data);
     }
 
     public function out() {
@@ -89,17 +91,17 @@ class Atm extends CI_Controller {
     public function set_registry_out() {
         $this->load->model(array('Vehicles_model', 'Records_model'));
         $placa = $this->input->post("placa");
-        $vr = $this->input->post("vr");
+        $vrrate = $this->input->post("vr");
         $dateIn = $this->input->post("date_in");
         $dateOut = $this->input->post("date_out");
         $hourIn = $this->input->post("hour_in");
         $hourOut = $this->input->post("hour_out");
-        $idVehicle = $this->Vehicles_model->get_vehicle($placa)->idVehicle;
+        $Vehicle = $this->Vehicles_model->get_vehicle($placa);
         $record = array(
             'date_out' => $dateOut,
             'hour_out' => $hourOut
         );
-        $this->Records_model->update_record($idVehicle, $record);
+        $this->Records_model->update_record($Vehicle->idVehicle, $record);
         $date1 = new DateTime($dateIn);
         $date2 = new DateTime($dateOut);
         $difDays = $date1->diff($date2);
@@ -108,10 +110,63 @@ class Atm extends CI_Controller {
         $totalSegundos = abs($hour1->getTimestamp() - $hour2->getTimestamp());
         $totalMinutos = $totalSegundos / 60;
         $totalHoras = $totalMinutos / 60;
+        //echo $totalHoras;
         setlocale(LC_MONETARY, 'es_CO');
-        $totalHorasFormat = number_format($totalHoras, 0, ",", ".");
-        $vrtotal = $vr * $totalHorasFormat;
+        $totalHorasFormat = number_format($totalHoras, 0, ".", ",");
+        if ($Vehicle->idType == 1) {
+            if ($totalHoras > 8.10 && $totalHoras < 16) {
+                $vrtotal = $vrrate * 2;
+            } else
+            if ($totalHoras > 16.10 && $totalHoras <= 24) {
+                $vrtotal = $vrrate * 3;
+            } else
+            if ($difDays->days > 0 && $totalHoras < 0.10) {
+                $vrtotal = ($vrrate * 3) * $difDays->days;
+            } else
+            if ($difDays->days > 0 && $totalHoras > 0.10) {
+                $vrtotal = ($vrrate * 4) * $difDays->days;
+            } else {
+                $vrtotal = $vrrate;
+            }
+        }
+
+        if ($Vehicle->idType == 2 || $Vehicle->idType == 3 || $Vehicle->idType == 4 || $Vehicle->idType == 5 || $Vehicle->idType == 7) {
+            if ($totalHoras > 5.10 && $totalHoras <= 12) {
+                $vrtotal = $vrrate + 600;
+            } else
+            if ($totalHoras > 12.10 && $difDays->days < 1) {
+                $vrtotal = $vrrate + 600;
+            } else
+            if ($difDays->days > 0) {
+                $vrtotal = $vrrate + (600 * 2 * $difDays->days);
+            } else {
+                $vrtotal = $vrrate;
+            }
+        }
+
+        if ($Vehicle->idType == 6) {
+            if ($totalHoras > 4.10 && $totalHoras <= 5) {
+                $vrtotal = $vrrate + 1200;
+            } else
+            if ($totalHoras > 5.10 && $totalHoras < 12) {
+                $vrtotal = $vrrate + 2600;
+            } else
+            if ($difDays->days < 1 && $totalHoras = 12) {
+                $vrtotal = $vrrate + 3200;
+            } else
+            if ($difDays->days > 0) {
+                $vrtotal = ($vrrate + 3200) * $difDays->days;
+            } else {
+                $vrtotal = $vrrate * $totalHoras;
+            }
+        }
+        //$vrrateformat = number_format($vrrate, 0, ".", ",");
+        //$vrtotal = (float) $vrrate * (float) $totalHorasFormat;
         $vrformat = number_format($vrtotal, 0, ",", ".");
+        $recordpay = array(
+            'totalpay' => $vrformat
+        );
+        $this->Records_model->update_record_pay($Vehicle->idVehicle, $recordpay);
         $res = $difDays->days . ' Días ' . $totalHorasFormat .
                 ' Horas<br>Valor a pagar: $ ' . $vrformat;
         echo $res;
