@@ -8,7 +8,7 @@ $rol = $usuario_data['rol'];
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>GestParking | Ingresos Convenios</title>
+        <title>GestParking | Editar Tarifa</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <!-- Bootstrap 3.3.7 -->
@@ -193,11 +193,11 @@ $rol = $usuario_data['rol'];
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
                     <h1>
-                        Ingreso Vehiculo
+                        Editar Tarifa
                     </h1>
                     <ol class="breadcrumb">
                         <li><a href="<?= base_url() ?>index.php/atm"><i class="fa fa-Panel"></i> Inicio</a></li>
-                        <li class="active">Ingresos Convenios</li>
+                        <li class="active">Editar Tarifa</li>
                     </ol>
                 </section>
 
@@ -207,123 +207,27 @@ $rol = $usuario_data['rol'];
                         <div class="col-md-6">
                             <div class="box box-info">
                                 <div class="box-body">
-                                    <form id="frmInAgree">
-                                        <!-- Tipo Vehiculo -->
-                                        <div class="form-group">
-                                            <label>Tipo Vehiculo(*):</label>
-                                            <div class="input-group">
-                                                <select class="form-control input-lg" name="type" id="type" required="">
-                                                    <option value="">Seleccionar</option>
-                                                    <?php foreach ($types as $type) { ?>
-                                                        <option value="<?= $type->idType ?>"><?= $type->type ?></option> 
-                                                    <?php }
-                                                    ?>
-                                                </select>
-                                            </div>
-                                            <!-- /.input group -->
-                                        </div>
-                                        <!-- /.form group -->
+                                    <form id="frmEditRate">                                       
                                         <!-- Color Vehiculo -->
                                         <div class="form-group">
-                                            <label>Color Vehiculo:</label>
+                                            <label>Tipo Vehiculo:</label>
                                             <div class="input-group">
-                                                <input type="text" name="color" id="color" class="form-control input-lg" placeholder="Opcional">
+                                                <input type="hidden" name="id" value="<?= $dato->idType?>">
+                                                <input type="text" value="<?= $dato->type?>" class="form-control input-lg">
                                             </div>
                                             <!-- /.input group -->
                                         </div>
-                                        <!-- /.form group -->
-                                        <!-- Observaciones Vehiculo -->
-                                        <div class="form-group">
-                                            <label>Observaciones:</label>
-                                            <div class="input-group">
-                                                <textarea name="obsv" id="obsv" class="form-control input-lg" placeholder="Opcional"></textarea>
-                                            </div>
-                                            <!-- /.input group -->
-                                        </div>
-                                        <!-- /.form group -->
                                         <!-- Placa -->
                                         <div class="form-group">
-                                            <label>Placa Vehiculo(*):</label>
+                                            <label>Tarifa Vehiculo(*):</label>
                                             <div class="input-group">
-                                                <input type="text" name="placa" id="placa" class="form-control input-lg" required="">
+                                                <input type="number" name="rate" id="rate" value="<?= $dato->rate?>" class="form-control input-lg" required="">
                                             </div>
                                             <!-- /.input group -->
                                         </div>
                                         <!-- /.form group -->
-
-                                        <!-- Adicional -->
-                                        <div class="form-group" id="adicional">
-                                            <label>Opcional:</label>
-                                            <div class="input-group">
-                                                <input type="text" name="opc" id="opc" class="form-control input-lg">
-                                            </div>
-                                            <!-- /.input group -->
-                                        </div>
-                                        <!-- /.form group -->
-                                        <!-- Fecha -->
                                         <div class="input-group">
-                                            <div class="form-group">
-                                                <label>Fecha Entrada(*):</label>
-
-                                                <div class="input-group">
-                                                    <input type="date" name="date_in" value="<?= date("Y-m-d") ?>" class="form-control input-lg" required="">                                                    
-                                                </div>
-                                                <!-- /.input group -->
-                                            </div>
-                                            <!-- /.form group -->
-                                        </div>
-                                        <!-- Hora -->
-                                        <div class="input-group">
-                                            <div class="form-group">
-                                                <label>Hora Entrada(*):</label>
-
-                                                <div class="input-group">
-                                                    <input type="time" name="hour_in" value="<?= date("H:i:s") ?>" class="form-control input-lg" required="">
-                                                    <div class="input-group-addon">
-                                                        <i class="fa fa-clock-o"></i>
-                                                    </div>
-                                                </div>
-                                                <!-- /.input group -->
-                                            </div>
-                                            <!-- /.form group -->
-                                        </div>
-                                        <!-- Fecha Sal -->
-                                        <div class="input-group">
-                                            <div class="form-group">
-                                                <label>Fecha Salida(*):</label>
-
-                                                <div class="input-group">
-                                                    <input type="date" name="date_out" value="<?= date("Y-m-d") ?>" class="form-control input-lg" required="">                                                    
-                                                </div>
-                                                <!-- /.input group -->
-                                            </div>
-                                            <!-- /.form group -->
-                                        </div>
-                                        <!-- Hora Sal -->
-                                        <div class="input-group">
-                                            <div class="form-group">
-                                                <label>Hora Salida(*):</label>
-
-                                                <div class="input-group">
-                                                    <input type="time" name="hour_out" value="<?= date("H:i:s") ?>" class="form-control input-lg" required="">
-                                                    <div class="input-group-addon">
-                                                        <i class="fa fa-clock-o"></i>
-                                                    </div>
-                                                </div>
-                                                <!-- /.input group -->
-                                            </div>
-                                            <!-- /.form group -->
-                                        </div>
-                                        <!-- Vr Convenio -->
-                                        <div class="form-group">
-                                            <label>Valor Convenio(*):</label>
-                                            <div class="input-group">
-                                                <input type="number" name="totalpay" id="totalpay" placeholder="Valor" class="form-control input-lg" required="">
-                                            </div>
-                                            <!-- /.input group -->
-                                        </div>
-                                        <div class="input-group">
-                                            <button type="submit" name="Registrar" class="btn btn-success">Registrar
+                                            <button type="submit" name="Actualizar" class="btn btn-success">Actualizar
                                             </button>
                                         </div>
                                     </form>
@@ -332,24 +236,9 @@ $rol = $usuario_data['rol'];
                             </div>
                             <!-- /.box -->
 
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="box box-success">
-                                <div class="box-body" id="dataVehicle">
-
-                                </div>
-                                <!-- /.box-body -->
-                            </div>
-                            <!-- /.box -->
-
-                        </div>
-
+                        </div>                        
                     </div>
                     <!-- /.row -->
-
-
-
                 </section>
                 <!-- /.content -->
             </div>
@@ -590,60 +479,16 @@ $rol = $usuario_data['rol'];
         <!-- Page script -->
         <script>
             $(function () {
-
-                $('#adicional').hide();
-
-                $('#type').change(function () {
-                    if ($('#type').val() == 1) {
-                        $('#placa').attr('placeholder', 'Número de 3 digitos');
-                        $('#placa').attr('pattern', '[0-9]{3}');
-                        $('#adicional').hide();
-                    }
-                    if ($('#type').val() == 2) {
-                        $('#placa').attr('placeholder', '3 Letras + 2 Números');
-                        $('#adicional').show();
-                    }
-                    if ($('#type').val() == 3) {
-                        $('#placa').attr('placeholder', 'MC');
-                        $('#adicional').show();
-                    }
-                    if ($('#type').val() == 4) {
-                        $('#placa').attr('placeholder', 'ME');
-                        $('#adicional').show();
-                    }
-                    if ($('#type').val() == 5) {
-                        $('#placa').attr('placeholder', '3 Números + 3 Letras');
-                        $('#adicional').hide();
-                    }
-                    if ($('#type').val() == 6) {
-                        $('#placa').attr('placeholder', '3 Números + 3 Letras');
-                        $('#adicional').hide();
-                    }
-                    if ($('#type').val() == 7) {
-                        $('#placa').attr('placeholder', 'Otros');
-                        $('#adicional').hide();
-                    }
-                })
-
-                $("#placa").blur(function () {
-                    var url = "<?= base_url() ?>index.php/Agreements/get_registry?jsoncallback=?";
-                    $.getJSON(url, {placa: $("#placa").val()}).done(function (res) {
-                        $("#type option[value=" + res.vehicle.idType + "]").attr('selected', 'selected');
-                        $("#color").val(res.vehicle.color);
-                        $("#obsv").val(res.vehicle.observations);
-                        $("#dataVehicle").html("<h1>" + res.vehicle.type + "</h1>");
-                    })
-                })
-                $("#frmInAgree").submit(function (event) {
+                $("#frmEditRate").submit(function (event) {
                     event.preventDefault();
-                    var url = "<?= base_url() ?>index.php/Agreements/set_registry";
+                    var url = "<?= base_url() ?>index.php/Rates/update";
                     $.ajax({
                         type: "POST",
                         url: url,
-                        data: $("#frmInAgree").serialize(),
+                        data: $("#frmEditRate").serialize(),
                         success: function (response) {
                             alert(response);
-                            location.reload();
+                            location.href = '<?= base_url() ?>index.php/Rates' ;
                         }
                     });
                 });

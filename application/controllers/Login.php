@@ -22,7 +22,7 @@ class Login extends CI_Controller {
         $variable = $this->Login_model->very_sesion($user, $passw);
 
         if ($variable != FALSE) {
-            $user = $this->Users_model->get_user($user);
+            $user = $this->Users_model->get_user_xuser($user);
             if ($user) {
                 $user_data = array(
                     'id' => $user->idUser,

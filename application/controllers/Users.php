@@ -47,4 +47,23 @@ class Users extends CI_Controller {
         }
     }
 
+    public function edit() {
+        $this->load->model('Users_model');
+        $data['dato'] = $this->Users_model->get_user($this->input->get('id'));
+        $this->load->view('templates/lte/edit_user', $data);
+    }
+
+    public function update() {
+        $this->load->model('Users_model');
+        $params = array(
+            'passw' => sha1($this->input->post('passw')),
+        );
+        $res = $this->Users_model->update($this->input->post('id'), $params);
+        if ($res) {
+            echo "Actualización exitosa";
+        } else {
+            echo "error en bbdd";
+        }
+    }
+
 }

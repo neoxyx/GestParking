@@ -2,13 +2,14 @@
 $usuario_data = $this->session->userdata('datos_usuario');
 $nombre = $usuario_data['name'];
 $rol = $usuario_data['rol'];
+$idrol = $usuario_data['idRol'];
 ?>
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>GestParking | Ingresos Convenios</title>
+        <title>GestParking | Salidas</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <!-- Bootstrap 3.3.7 -->
@@ -137,7 +138,7 @@ $rol = $usuario_data['rol'];
                             <a href="<?= base_url() ?>index.php/Atm">
                                 <i class="fa fa-home"></i> <span>Panel</span>
                             </a>
-                        </li>                        
+                        </li>
                         <li class="active">
                             <a href="<?= base_url() ?>index.php/Search">
                                 <i class="fa fa-search"></i> <span>Consultas</span>
@@ -156,8 +157,9 @@ $rol = $usuario_data['rol'];
                                 </span>
                             </a>
                         </li>
+
                         <!--<li class="treeview">
-                            <a href="<?= base_url() ?>index.php/Atm">
+                            <a href="#">
                                 <i class="fa fa-info-circle"></i>
                                 <span>Informes</span>
                             </a>
@@ -168,21 +170,23 @@ $rol = $usuario_data['rol'];
                                 <li><a href="<?= base_url() ?>assets/lte/pages/layout/collapsed-sidebar.html"><i class="fa fa-circle-o"></i> Collapsed Sidebar</a></li>
                             </ul>
                         </li>-->
-                        <li class="treeview">
-                            <a href="#">
-                                <i class="fa fa-laptop"></i>
-                                <span>Administración</span>
-                                <span class="pull-right-container">
-                                    <i class="fa fa-angle-left pull-right"></i>
-                                </span>
-                            </a>
-                            <ul class="treeview-menu">
-                                <li><a href="<?= base_url() ?>/index.php/Users"><i class="fa fa-users"></i> Usuarios</a></li>
-                                <li><a href="<?= base_url() ?>/index.php/Rates"><i class="fa fa-dollar"></i> Tarifas</a></li>
-                                <li><a href="<?= base_url() ?>/index.php/Types"><i class="fa fa-car"></i> Tipos Vehiculos</a></li>
-                                <li><a href="<?= base_url() ?>/index.php/Inventory"><i class="fa fa-paperclip"></i> Inventario</a></li>
-                            </ul>
-                        </li>                        
+                        <?php if ($idrol == 1) { ?>
+                            <li class="treeview">
+                                <a href="#">
+                                    <i class="fa fa-laptop"></i>
+                                    <span>Administración</span>
+                                    <span class="pull-right-container">
+                                        <i class="fa fa-angle-left pull-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li><a href="<?= base_url() ?>/index.php/Users"><i class="fa fa-users"></i> Usuarios</a></li>
+                                    <li><a href="<?= base_url() ?>/index.php/Rates"><i class="fa fa-dollar"></i> Tarifas</a></li>
+                                    <li><a href="<?= base_url() ?>/index.php/Types"><i class="fa fa-car"></i> Tipos Vehiculos</a></li>
+                                    <li><a href="<?= base_url() ?>/index.php/Inventory"><i class="fa fa-paperclip"></i> Inventario</a></li>
+                                </ul>
+                            </li>  
+                        <?php } ?>                       
                     </ul>
                 </section>
                 <!-- /.sidebar -->
@@ -193,11 +197,11 @@ $rol = $usuario_data['rol'];
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
                     <h1>
-                        Ingreso Vehiculo
+                        Consultar estado Vehiculo
                     </h1>
                     <ol class="breadcrumb">
                         <li><a href="<?= base_url() ?>index.php/atm"><i class="fa fa-Panel"></i> Inicio</a></li>
-                        <li class="active">Ingresos Convenios</li>
+                        <li class="active">Consultas</li>
                     </ol>
                 </section>
 
@@ -207,126 +211,15 @@ $rol = $usuario_data['rol'];
                         <div class="col-md-6">
                             <div class="box box-info">
                                 <div class="box-body">
-                                    <form id="frmInAgree">
-                                        <!-- Tipo Vehiculo -->
-                                        <div class="form-group">
-                                            <label>Tipo Vehiculo(*):</label>
-                                            <div class="input-group">
-                                                <select class="form-control input-lg" name="type" id="type" required="">
-                                                    <option value="">Seleccionar</option>
-                                                    <?php foreach ($types as $type) { ?>
-                                                        <option value="<?= $type->idType ?>"><?= $type->type ?></option> 
-                                                    <?php }
-                                                    ?>
-                                                </select>
-                                            </div>
-                                            <!-- /.input group -->
-                                        </div>
-                                        <!-- /.form group -->
-                                        <!-- Color Vehiculo -->
-                                        <div class="form-group">
-                                            <label>Color Vehiculo:</label>
-                                            <div class="input-group">
-                                                <input type="text" name="color" id="color" class="form-control input-lg" placeholder="Opcional">
-                                            </div>
-                                            <!-- /.input group -->
-                                        </div>
-                                        <!-- /.form group -->
-                                        <!-- Observaciones Vehiculo -->
-                                        <div class="form-group">
-                                            <label>Observaciones:</label>
-                                            <div class="input-group">
-                                                <textarea name="obsv" id="obsv" class="form-control input-lg" placeholder="Opcional"></textarea>
-                                            </div>
-                                            <!-- /.input group -->
-                                        </div>
-                                        <!-- /.form group -->
-                                        <!-- Placa -->
-                                        <div class="form-group">
-                                            <label>Placa Vehiculo(*):</label>
-                                            <div class="input-group">
-                                                <input type="text" name="placa" id="placa" class="form-control input-lg" required="">
-                                            </div>
-                                            <!-- /.input group -->
-                                        </div>
-                                        <!-- /.form group -->
-
-                                        <!-- Adicional -->
-                                        <div class="form-group" id="adicional">
-                                            <label>Opcional:</label>
-                                            <div class="input-group">
-                                                <input type="text" name="opc" id="opc" class="form-control input-lg">
-                                            </div>
-                                            <!-- /.input group -->
-                                        </div>
-                                        <!-- /.form group -->
-                                        <!-- Fecha -->
+                                    <!-- Placa -->
+                                    <div class="form-group">
+                                        <label>Placa Vehiculo:</label>
                                         <div class="input-group">
-                                            <div class="form-group">
-                                                <label>Fecha Entrada(*):</label>
-
-                                                <div class="input-group">
-                                                    <input type="date" name="date_in" value="<?= date("Y-m-d") ?>" class="form-control input-lg" required="">                                                    
-                                                </div>
-                                                <!-- /.input group -->
-                                            </div>
-                                            <!-- /.form group -->
+                                            <input type="text" id="placa" name="placa" class="form-control input-lg" required="">
                                         </div>
-                                        <!-- Hora -->
-                                        <div class="input-group">
-                                            <div class="form-group">
-                                                <label>Hora Entrada(*):</label>
-
-                                                <div class="input-group">
-                                                    <input type="time" name="hour_in" value="<?= date("H:i:s") ?>" class="form-control input-lg" required="">
-                                                    <div class="input-group-addon">
-                                                        <i class="fa fa-clock-o"></i>
-                                                    </div>
-                                                </div>
-                                                <!-- /.input group -->
-                                            </div>
-                                            <!-- /.form group -->
-                                        </div>
-                                        <!-- Fecha Sal -->
-                                        <div class="input-group">
-                                            <div class="form-group">
-                                                <label>Fecha Salida(*):</label>
-
-                                                <div class="input-group">
-                                                    <input type="date" name="date_out" value="<?= date("Y-m-d") ?>" class="form-control input-lg" required="">                                                    
-                                                </div>
-                                                <!-- /.input group -->
-                                            </div>
-                                            <!-- /.form group -->
-                                        </div>
-                                        <!-- Hora Sal -->
-                                        <div class="input-group">
-                                            <div class="form-group">
-                                                <label>Hora Salida(*):</label>
-
-                                                <div class="input-group">
-                                                    <input type="time" name="hour_out" value="<?= date("H:i:s") ?>" class="form-control input-lg" required="">
-                                                    <div class="input-group-addon">
-                                                        <i class="fa fa-clock-o"></i>
-                                                    </div>
-                                                </div>
-                                                <!-- /.input group -->
-                                            </div>
-                                            <!-- /.form group -->
-                                        </div>
-                                        <!-- Vr Convenio -->
-                                        <div class="form-group">
-                                            <label>Valor Convenio(*):</label>
-                                            <div class="input-group">
-                                                <input type="number" name="totalpay" id="totalpay" placeholder="Valor" class="form-control input-lg" required="">
-                                            </div>
-                                            <!-- /.input group -->
-                                        </div>
-                                        <div class="input-group">
-                                            <button type="submit" name="Registrar" class="btn btn-success">Registrar
-                                            </button>
-                                        </div>
-                                    </form>
+                                        <!-- /.input group -->
+                                    </div>
+                                    <!-- /.form group -->  
                                 </div>
                                 <!-- /.box-body -->
                             </div>
@@ -336,20 +229,23 @@ $rol = $usuario_data['rol'];
 
                         <div class="col-md-6">
                             <div class="box box-success">
-                                <div class="box-body" id="dataVehicle">
-
+                                <div class="box-body">
+                                    <div id="typeout" style="color: orange"></div>
+                                    <div id="obsvout" style="color: green"></div>
+                                    <div id="datein" style="color: green"></div>
+                                    <div id="hourin" style="color: green"></div>
+                                    <div id="dateout" style="color: blue"></div>
+                                    <div id="hourout" style="color: blue"></div>                                    
+                                    <div id="vrfracc" style="color: blue"></div>
+                                    <div id="totaltime" style="color: red"></div>
                                 </div>
                                 <!-- /.box-body -->
                             </div>
                             <!-- /.box -->
 
                         </div>
-
                     </div>
-                    <!-- /.row -->
-
-
-
+                    <!-- /.row -->                    
                 </section>
                 <!-- /.content -->
             </div>
@@ -590,65 +486,99 @@ $rol = $usuario_data['rol'];
         <!-- Page script -->
         <script>
             $(function () {
+                //Initialize Select2 Elements
+                $('.select2').select2()
 
-                $('#adicional').hide();
+                //Datemask dd/mm/yyyy
+                $('#datemask').inputmask('dd/mm/yyyy', {'placeholder': 'dd/mm/yyyy'})
+                //Datemask2 mm/dd/yyyy
+                $('#datemask2').inputmask('mm/dd/yyyy', {'placeholder': 'mm/dd/yyyy'})
+                //Money Euro
+                $('[data-mask]').inputmask()
 
-                $('#type').change(function () {
-                    if ($('#type').val() == 1) {
-                        $('#placa').attr('placeholder', 'Número de 3 digitos');
-                        $('#placa').attr('pattern', '[0-9]{3}');
-                        $('#adicional').hide();
-                    }
-                    if ($('#type').val() == 2) {
-                        $('#placa').attr('placeholder', '3 Letras + 2 Números');
-                        $('#adicional').show();
-                    }
-                    if ($('#type').val() == 3) {
-                        $('#placa').attr('placeholder', 'MC');
-                        $('#adicional').show();
-                    }
-                    if ($('#type').val() == 4) {
-                        $('#placa').attr('placeholder', 'ME');
-                        $('#adicional').show();
-                    }
-                    if ($('#type').val() == 5) {
-                        $('#placa').attr('placeholder', '3 Números + 3 Letras');
-                        $('#adicional').hide();
-                    }
-                    if ($('#type').val() == 6) {
-                        $('#placa').attr('placeholder', '3 Números + 3 Letras');
-                        $('#adicional').hide();
-                    }
-                    if ($('#type').val() == 7) {
-                        $('#placa').attr('placeholder', 'Otros');
-                        $('#adicional').hide();
-                    }
+                //Date range picker
+                $('#reservation').daterangepicker()
+                //Date range picker with time picker
+                $('#reservationtime').daterangepicker({timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A'})
+                //Date range as a button
+                $('#daterange-btn').daterangepicker(
+                        {
+                            ranges: {
+                                'Today': [moment(), moment()],
+                                'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                                'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                                'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                                'This Month': [moment().startOf('month'), moment().endOf('month')],
+                                'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                            },
+                            startDate: moment().subtract(29, 'days'),
+                            endDate: moment()
+                        },
+                function (start, end) {
+                    $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
+                }
+                )
+
+                //Date picker
+                $('#datepicker').datepicker({
+                    autoclose: true
+                })
+
+                //iCheck for checkbox and radio inputs
+                $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+                    checkboxClass: 'icheckbox_minimal-blue',
+                    radioClass: 'iradio_minimal-blue'
+                })
+                //Red color scheme for iCheck
+                $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
+                    checkboxClass: 'icheckbox_minimal-red',
+                    radioClass: 'iradio_minimal-red'
+                })
+                //Flat red color scheme for iCheck
+                $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+                    checkboxClass: 'icheckbox_flat-green',
+                    radioClass: 'iradio_flat-green'
+                })
+
+                //Colorpicker
+                $('.my-colorpicker1').colorpicker()
+                //color picker with addon
+                $('.my-colorpicker2').colorpicker()
+
+                //Timepicker
+                $('.timepicker').timepicker({
+                    showInputs: false
                 })
 
                 $("#placa").blur(function () {
-                    var url = "<?= base_url() ?>index.php/Agreements/get_registry?jsoncallback=?";
+                    var url = "<?= base_url() ?>index.php/Atm/get_registry?jsoncallback=?";
                     $.getJSON(url, {placa: $("#placa").val()}).done(function (res) {
-                        $("#type option[value=" + res.vehicle.idType + "]").attr('selected', 'selected');
-                        $("#color").val(res.vehicle.color);
-                        $("#obsv").val(res.vehicle.observations);
-                        $("#dataVehicle").html("<h1>" + res.vehicle.type + "</h1>");
+                        if (res) {
+                            $("#typeout").html("<h3>" + res.vehicle.type + " " + res.vehicle.color + " " + res.vehicle.plate + "</h3>");
+                            $("#obsvout").html("<h3>Observaciones: " + res.vehicle.observations + "</h3>");
+                            $("#vrfracc").html("<h3>Valor Hora/Fracción: $ " + res.vehicle.rate + "<input type='hidden' id='vrf' value=" + res.vehicle.rate + "></h3>");
+                            $("#datein").html("<h3>Fecha ingreso: " + res.record.date_in + "<input type='hidden' id='dtin' value=" + res.record.date_in + "></h3>");
+                            $("#hourin").html("<h3>Hora ingreso: " + res.record.hour_in + "<input type='hidden' id='hin' value=" + res.record.hour_in + "></h3>");
+
+                            var url2 = "<?= base_url() ?>index.php/Search/get_sale";
+                            var placa = $("#placa").val();
+                            var vr = $("#vrf").val();
+                            var date_in = $("#dtin").val();
+                            var hour_in = $("#hin").val();
+                            $.ajax({
+                                type: "POST",
+                                url: url2,
+                                data: {placa: placa, vr: vr, date_in: date_in, hour_in: hour_in, date_out: '<?= date('Y-m-d') ?>', hour_out: '<?= date('H:i:s') ?>'},
+                                success: function (response) {
+                                    $("#dateout").html("<h3>Fecha Actual: " + '<?= date('Y-m-d'); ?>' + "</h3>");
+                                    $("#hourout").html("<h3>Hora Actual: " + '<?= date('H:i:s'); ?>' + "</h3>");
+                                    $("#totaltime").html("<h1>Tiempo y costo total a la fecha: " + response + "</h1>");
+                                }
+                            });
+                        }
                     })
                 })
-                $("#frmInAgree").submit(function (event) {
-                    event.preventDefault();
-                    var url = "<?= base_url() ?>index.php/Agreements/set_registry";
-                    $.ajax({
-                        type: "POST",
-                        url: url,
-                        data: $("#frmInAgree").serialize(),
-                        success: function (response) {
-                            alert(response);
-                            location.reload();
-                        }
-                    });
-                });
             })
         </script>
     </body>
 </html>
-

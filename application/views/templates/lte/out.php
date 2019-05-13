@@ -135,8 +135,13 @@ $idrol = $usuario_data['idRol'];
                     <ul class="sidebar-menu" data-widget="tree">
                         <li class="header">MENU DE NAVEGACIÓN</li>
                         <li class="active">
-                            <a href="<?= base_url() ?>index.php/Atm"">
+                            <a href="<?= base_url() ?>index.php/Atm">
                                 <i class="fa fa-home"></i> <span>Panel</span>
+                            </a>
+                        </li>
+                        <li class="active">
+                            <a href="<?= base_url() ?>index.php/Search">
+                                <i class="fa fa-search"></i> <span>Consultas</span>
                             </a>
                         </li>
                         <li>
@@ -178,6 +183,7 @@ $idrol = $usuario_data['idRol'];
                                     <li><a href="<?= base_url() ?>/index.php/Users"><i class="fa fa-users"></i> Usuarios</a></li>
                                     <li><a href="<?= base_url() ?>/index.php/Rates"><i class="fa fa-dollar"></i> Tarifas</a></li>
                                     <li><a href="<?= base_url() ?>/index.php/Types"><i class="fa fa-car"></i> Tipos Vehiculos</a></li>
+                                    <li><a href="<?= base_url() ?>/index.php/Inventory"><i class="fa fa-paperclip"></i> Inventario</a></li>
                                 </ul>
                             </li>  
                         <?php } ?>                       
@@ -254,9 +260,9 @@ $idrol = $usuario_data['idRol'];
             <!-- /.content-wrapper -->
             <footer class="main-footer">
                 <div class="pull-right hidden-xs">
-                    <b>Version</b> 2.4.0
+                    <b>Version</b> 1.0.0
                 </div>
-                <strong>Copyright &copy; 2014-2016 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights
+                <strong>Copyright &copy; 2014-2019 <a href="https://instasoft.com.co">instasoft Colombia</a>.</strong> All rights
                 reserved.
             </footer>
 

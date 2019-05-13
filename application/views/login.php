@@ -5,12 +5,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <head>
         <meta charset="utf-8">
         <title>Bienvenido a GestParking</title>
-        <!--link the bootstrap css file-->
-        <link href="<?= base_url() ?>assets/css/bootstrap.min.css" rel="stylesheet">
-        <!--load jQuery library-->
-        <script src="<?= base_url() ?>assets/js/jquery.js"></script>
-        <!--load bootstrap.js-->
-        <script src="<?= base_url() ?>assets/js/bootstrap.min.js"></script>
+        <!-- Bootstrap 3.3.7 -->
+        <link rel="stylesheet" href="<?= base_url() ?>assets/lte/bower_components/bootstrap/dist/css/bootstrap.min.css">
+        <!-- jQuery 3 -->
+        <script src="<?= base_url() ?>assets/lte/bower_components/jquery/dist/jquery.min.js"></script>
+        <!-- Bootstrap 3.3.7 -->
+        <script src="<?= base_url() ?>assets/lte/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
         <style type="text/css">
             html {
                 background-color: #56baed;

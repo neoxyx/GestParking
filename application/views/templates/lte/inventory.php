@@ -2,13 +2,14 @@
 $usuario_data = $this->session->userdata('datos_usuario');
 $nombre = $usuario_data['name'];
 $rol = $usuario_data['rol'];
+setlocale(LC_MONETARY, 'es_CO');
 ?>
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>GestParking | Ingresos Convenios</title>
+        <title>GestParking | Inventario del Día</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <!-- Bootstrap 3.3.7 -->
@@ -34,7 +35,9 @@ $rol = $usuario_data['rol'];
         <!-- AdminLTE Skins. Choose a skin from the css/skins
              folder instead of downloading all of them to reduce the load. -->
         <link rel="stylesheet" href="<?= base_url() ?>assets/lte/dist/css/skins/_all-skins.min.css">
-
+        <!-- datatable jquery -->
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+        <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css">
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -193,157 +196,47 @@ $rol = $usuario_data['rol'];
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
                     <h1>
-                        Ingreso Vehiculo
+                        Inventario
                     </h1>
                     <ol class="breadcrumb">
                         <li><a href="<?= base_url() ?>index.php/atm"><i class="fa fa-Panel"></i> Inicio</a></li>
-                        <li class="active">Ingresos Convenios</li>
+                        <li class="active">Inventario</li>
                     </ol>
                 </section>
 
                 <!-- Main content -->
                 <section class="content">
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="box box-info">
                                 <div class="box-body">
-                                    <form id="frmInAgree">
-                                        <!-- Tipo Vehiculo -->
-                                        <div class="form-group">
-                                            <label>Tipo Vehiculo(*):</label>
-                                            <div class="input-group">
-                                                <select class="form-control input-lg" name="type" id="type" required="">
-                                                    <option value="">Seleccionar</option>
-                                                    <?php foreach ($types as $type) { ?>
-                                                        <option value="<?= $type->idType ?>"><?= $type->type ?></option> 
-                                                    <?php }
-                                                    ?>
-                                                </select>
-                                            </div>
-                                            <!-- /.input group -->
-                                        </div>
-                                        <!-- /.form group -->
-                                        <!-- Color Vehiculo -->
-                                        <div class="form-group">
-                                            <label>Color Vehiculo:</label>
-                                            <div class="input-group">
-                                                <input type="text" name="color" id="color" class="form-control input-lg" placeholder="Opcional">
-                                            </div>
-                                            <!-- /.input group -->
-                                        </div>
-                                        <!-- /.form group -->
-                                        <!-- Observaciones Vehiculo -->
-                                        <div class="form-group">
-                                            <label>Observaciones:</label>
-                                            <div class="input-group">
-                                                <textarea name="obsv" id="obsv" class="form-control input-lg" placeholder="Opcional"></textarea>
-                                            </div>
-                                            <!-- /.input group -->
-                                        </div>
-                                        <!-- /.form group -->
-                                        <!-- Placa -->
-                                        <div class="form-group">
-                                            <label>Placa Vehiculo(*):</label>
-                                            <div class="input-group">
-                                                <input type="text" name="placa" id="placa" class="form-control input-lg" required="">
-                                            </div>
-                                            <!-- /.input group -->
-                                        </div>
-                                        <!-- /.form group -->
-
-                                        <!-- Adicional -->
-                                        <div class="form-group" id="adicional">
-                                            <label>Opcional:</label>
-                                            <div class="input-group">
-                                                <input type="text" name="opc" id="opc" class="form-control input-lg">
-                                            </div>
-                                            <!-- /.input group -->
-                                        </div>
-                                        <!-- /.form group -->
-                                        <!-- Fecha -->
-                                        <div class="input-group">
-                                            <div class="form-group">
-                                                <label>Fecha Entrada(*):</label>
-
-                                                <div class="input-group">
-                                                    <input type="date" name="date_in" value="<?= date("Y-m-d") ?>" class="form-control input-lg" required="">                                                    
-                                                </div>
-                                                <!-- /.input group -->
-                                            </div>
-                                            <!-- /.form group -->
-                                        </div>
-                                        <!-- Hora -->
-                                        <div class="input-group">
-                                            <div class="form-group">
-                                                <label>Hora Entrada(*):</label>
-
-                                                <div class="input-group">
-                                                    <input type="time" name="hour_in" value="<?= date("H:i:s") ?>" class="form-control input-lg" required="">
-                                                    <div class="input-group-addon">
-                                                        <i class="fa fa-clock-o"></i>
-                                                    </div>
-                                                </div>
-                                                <!-- /.input group -->
-                                            </div>
-                                            <!-- /.form group -->
-                                        </div>
-                                        <!-- Fecha Sal -->
-                                        <div class="input-group">
-                                            <div class="form-group">
-                                                <label>Fecha Salida(*):</label>
-
-                                                <div class="input-group">
-                                                    <input type="date" name="date_out" value="<?= date("Y-m-d") ?>" class="form-control input-lg" required="">                                                    
-                                                </div>
-                                                <!-- /.input group -->
-                                            </div>
-                                            <!-- /.form group -->
-                                        </div>
-                                        <!-- Hora Sal -->
-                                        <div class="input-group">
-                                            <div class="form-group">
-                                                <label>Hora Salida(*):</label>
-
-                                                <div class="input-group">
-                                                    <input type="time" name="hour_out" value="<?= date("H:i:s") ?>" class="form-control input-lg" required="">
-                                                    <div class="input-group-addon">
-                                                        <i class="fa fa-clock-o"></i>
-                                                    </div>
-                                                </div>
-                                                <!-- /.input group -->
-                                            </div>
-                                            <!-- /.form group -->
-                                        </div>
-                                        <!-- Vr Convenio -->
-                                        <div class="form-group">
-                                            <label>Valor Convenio(*):</label>
-                                            <div class="input-group">
-                                                <input type="number" name="totalpay" id="totalpay" placeholder="Valor" class="form-control input-lg" required="">
-                                            </div>
-                                            <!-- /.input group -->
-                                        </div>
-                                        <div class="input-group">
-                                            <button type="submit" name="Registrar" class="btn btn-success">Registrar
-                                            </button>
-                                        </div>
-                                    </form>
+                                    <table id="dataTable" class="table table-bordered">
+                                        <thead>                                            
+                                            <tr>
+                                                <th>Tipo</th>
+                                                <th>Placa</th>
+                                                <th>Fecha y hora entrada</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php if ($datos && isset($datos)) {
+                                                foreach ($datos as $dato) {
+                                                    ?>                                                                                            
+                                                    <tr>
+                                                        <td><?= $dato->type ?></td>
+                                                        <td><?= $dato->plate ?></td>
+                                                        <td><?= $dato->date_in . " " . $dato->hour_in ?></td>
+                                                    </tr>
+                                                <?php }
+                                            }
+                                            ?>
+                                        </tbody>
+                                    </table>
                                 </div>
                                 <!-- /.box-body -->
                             </div>
                             <!-- /.box -->
-
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="box box-success">
-                                <div class="box-body" id="dataVehicle">
-
-                                </div>
-                                <!-- /.box-body -->
-                            </div>
-                            <!-- /.box -->
-
-                        </div>
+                        </div>                      
 
                     </div>
                     <!-- /.row -->
@@ -560,6 +453,14 @@ $rol = $usuario_data['rol'];
 
         <!-- jQuery 3 -->
         <script src="<?= base_url() ?>assets/lte/bower_components/jquery/dist/jquery.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.flash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+        <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script>
         <!-- Bootstrap 3.3.7 -->
         <script src="<?= base_url() ?>assets/lte/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
         <!-- Select2 -->
@@ -590,62 +491,11 @@ $rol = $usuario_data['rol'];
         <!-- Page script -->
         <script>
             $(function () {
-
-                $('#adicional').hide();
-
-                $('#type').change(function () {
-                    if ($('#type').val() == 1) {
-                        $('#placa').attr('placeholder', 'Número de 3 digitos');
-                        $('#placa').attr('pattern', '[0-9]{3}');
-                        $('#adicional').hide();
-                    }
-                    if ($('#type').val() == 2) {
-                        $('#placa').attr('placeholder', '3 Letras + 2 Números');
-                        $('#adicional').show();
-                    }
-                    if ($('#type').val() == 3) {
-                        $('#placa').attr('placeholder', 'MC');
-                        $('#adicional').show();
-                    }
-                    if ($('#type').val() == 4) {
-                        $('#placa').attr('placeholder', 'ME');
-                        $('#adicional').show();
-                    }
-                    if ($('#type').val() == 5) {
-                        $('#placa').attr('placeholder', '3 Números + 3 Letras');
-                        $('#adicional').hide();
-                    }
-                    if ($('#type').val() == 6) {
-                        $('#placa').attr('placeholder', '3 Números + 3 Letras');
-                        $('#adicional').hide();
-                    }
-                    if ($('#type').val() == 7) {
-                        $('#placa').attr('placeholder', 'Otros');
-                        $('#adicional').hide();
-                    }
-                })
-
-                $("#placa").blur(function () {
-                    var url = "<?= base_url() ?>index.php/Agreements/get_registry?jsoncallback=?";
-                    $.getJSON(url, {placa: $("#placa").val()}).done(function (res) {
-                        $("#type option[value=" + res.vehicle.idType + "]").attr('selected', 'selected');
-                        $("#color").val(res.vehicle.color);
-                        $("#obsv").val(res.vehicle.observations);
-                        $("#dataVehicle").html("<h1>" + res.vehicle.type + "</h1>");
-                    })
-                })
-                $("#frmInAgree").submit(function (event) {
-                    event.preventDefault();
-                    var url = "<?= base_url() ?>index.php/Agreements/set_registry";
-                    $.ajax({
-                        type: "POST",
-                        url: url,
-                        data: $("#frmInAgree").serialize(),
-                        success: function (response) {
-                            alert(response);
-                            location.reload();
-                        }
-                    });
+                $('#dataTable').DataTable({
+                    dom: 'Bfrtip',
+                    buttons: [
+                        'copy', 'csv', 'excel', 'pdf', 'print'
+                    ]
                 });
             })
         </script>

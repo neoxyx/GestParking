@@ -24,5 +24,22 @@ class Rates extends CI_Controller {
         $data['datos'] = $this->Rates_model->get_rates();
         $this->load->view('templates/lte/rates', $data);
     }
+    
+    public function edit() {
+        $this->load->model('Rates_model');        
+        $data['dato'] = $this->Rates_model->get_rate($this->input->get('id'));
+        $this->load->view('templates/lte/edit_rate', $data);
+    }
+    
+    public function update() {
+        $this->load->model('Rates_model');
+        $params = array('rate' => $this->input->post('rate'));
+        $res = $this->Rates_model->update($this->input->post('id'),$params);
+        if($res){
+            echo "Actualización exitosa";
+        } else {
+            echo "error en bbdd";
+        }
+    }
 
 }
